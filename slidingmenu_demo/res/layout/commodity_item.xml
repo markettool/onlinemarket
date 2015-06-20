@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/opera_item_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_entry_item_bg"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingBottom="8dp" >
+
+    <ImageView
+        android:id="@+id/commodity_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/image" />
+
+    <TextView
+        android:id="@+id/commodity_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:text="@string/default_username"
+        android:layout_toRightOf="@+id/commodity_pic"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/commodity_sold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/commodity_pic"
+        android:layout_below="@+id/commodity_name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="已售：0"
+        android:maxLines="1" />
+    
+    <TextView
+        android:id="@+id/commodity_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/commodity_pic"
+        android:layout_below="@+id/commodity_sold"
+        android:textColor="@color/orange"
+        android:textSize="18sp"
+        android:text="价格：10元"
+        android:maxLines="1" />
+    
+
+</RelativeLayout>
