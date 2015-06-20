@@ -21,8 +21,8 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 import com.online.market.R;
 import com.online.market.beans.MyUser;
-import com.online.market.opera.utils.BitmapUtil;
-import com.online.market.opera.utils.FileUtils;
+import com.online.market.utils.BitmapUtil;
+import com.online.market.utils.FileUtils;
 
 public class RegisterActivity extends BaseActivity {
 	int PICK_REQUEST_CODE = 0;

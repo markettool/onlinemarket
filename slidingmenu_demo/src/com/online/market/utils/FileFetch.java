@@ -2,7 +2,7 @@
  * Alipay.com Inc.
  * Copyright (c) 2005-2009 All Rights Reserved.
  */
-package com.online.market.opera.utils;
+package com.online.market.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

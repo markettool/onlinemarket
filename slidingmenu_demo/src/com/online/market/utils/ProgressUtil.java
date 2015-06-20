@@ -1,4 +1,4 @@
-package com.online.market.opera.utils;
+package com.online.market.utils;
 
 import com.online.market.view.LoadingDialog;
 import com.online.market.view.LoadingDialog.OnDialogBackListener;

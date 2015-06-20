@@ -23,7 +23,7 @@ import com.online.market.MyDataActivity;
 import com.online.market.R;
 import com.online.market.SettingActivity;
 import com.online.market.beans.MyUser;
-import com.online.market.opera.utils.FileUtils;
+import com.online.market.utils.FileUtils;
 /**
  * @date 2014/11/14
  * @author wuwenjie

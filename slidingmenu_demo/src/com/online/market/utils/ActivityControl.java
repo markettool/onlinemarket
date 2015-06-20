@@ -1,4 +1,4 @@
-package com.online.market.opera.utils;
+package com.online.market.utils;
 
 import java.util.ArrayList;
 import java.util.List;

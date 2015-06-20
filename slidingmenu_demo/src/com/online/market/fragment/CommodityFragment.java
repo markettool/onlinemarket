@@ -21,7 +21,7 @@ import com.lidroid.xutils.bitmap.PauseOnScrollListener;
 import com.online.market.R;
 import com.online.market.adapter.CommodityAdapter;
 import com.online.market.beans.CommodityBean;
-import com.online.market.opera.utils.BitmapHelp;
+import com.online.market.utils.BitmapHelp;
 import com.online.market.view.RefreshableView;
 import com.online.market.view.RefreshableView.PullToLoadListener;
 import com.online.market.view.RefreshableView.PullToRefreshListener;

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.online.market.R;
-import com.online.market.opera.utils.ActivityControl;
+import com.online.market.utils.ActivityControl;
 
 /**
  * base activity

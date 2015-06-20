@@ -29,9 +29,9 @@ import cn.bmob.v3.listener.UploadBatchListener;
 import com.online.market.R;
 import com.online.market.beans.MyBmobFile;
 import com.online.market.beans.MyUser;
-import com.online.market.opera.utils.BitmapUtil;
-import com.online.market.opera.utils.FileUtils;
-import com.online.market.opera.utils.ProgressUtil;
+import com.online.market.utils.BitmapUtil;
+import com.online.market.utils.FileUtils;
+import com.online.market.utils.ProgressUtil;
 import com.online.market.view.AlbumView;
 import com.online.market.view.AlbumView.onHandleListener;
 

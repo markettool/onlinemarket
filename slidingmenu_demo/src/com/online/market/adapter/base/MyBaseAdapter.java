@@ -13,7 +13,7 @@ import com.bmob.utils.BmobLog;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.DbUtils;
 import com.online.market.beans.MyUser;
-import com.online.market.opera.utils.BitmapHelp;
+import com.online.market.utils.BitmapHelp;
 
 public abstract class MyBaseAdapter extends BaseAdapter {
 	protected Context mContext;

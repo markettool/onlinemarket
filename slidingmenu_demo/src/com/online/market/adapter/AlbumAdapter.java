@@ -22,8 +22,8 @@ import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.online.market.MyApplication;
 import com.online.market.R;
 import com.online.market.beans.MyBmobFile;
-import com.online.market.opera.utils.BitmapHelp;
-import com.online.market.opera.utils.BitmapUtil;
+import com.online.market.utils.BitmapHelp;
+import com.online.market.utils.BitmapUtil;
 
 public class AlbumAdapter extends BaseAdapter {
 	
