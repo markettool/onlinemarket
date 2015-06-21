@@ -18,6 +18,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 import com.online.market.LoginActivity;
 import com.online.market.MainActivity;
+import com.online.market.MyOrderActivity;
 import com.online.market.MyShopCartActivity;
 import com.online.market.R;
 import com.online.market.SettingActivity;
@@ -29,9 +30,9 @@ import com.online.market.utils.FileUtils;
  * @description 侧边栏菜单
  */
 public class LeftFragment extends Fragment implements OnClickListener{
-	private View todayView;
-	private View lastListView;
-	private View settingsView;
+	private View myshopcart;
+	private View myorder;
+	private View settings;
 	private RelativeLayout myData;
 	private TextView username;
 	private ImageView userimg;
@@ -59,16 +60,16 @@ public class LeftFragment extends Fragment implements OnClickListener{
 	
 	
 	public void findViews(View view) {
-		todayView = view.findViewById(R.id.tvToday);
-		lastListView = view.findViewById(R.id.tvLastlist);
-		settingsView = view.findViewById(R.id.tvMySettings);
+		myshopcart = view.findViewById(R.id.tvToday);
+		myorder = view.findViewById(R.id.tvLastlist);
+		settings = view.findViewById(R.id.tvMySettings);
 		myData=(RelativeLayout) view.findViewById(R.id.my_data);
 		username=(TextView) view.findViewById(R.id.user_name);
 		userimg=(ImageView) view.findViewById(R.id.avatar_pic);
 		userimg.setOnClickListener(this);
-		todayView.setOnClickListener(this);
-		lastListView.setOnClickListener(this);
-		settingsView.setOnClickListener(this);
+		myshopcart.setOnClickListener(this);
+		myorder.setOnClickListener(this);
+		settings.setOnClickListener(this);
 		myData.setOnClickListener(this);
 	}
 	
@@ -81,7 +82,7 @@ public class LeftFragment extends Fragment implements OnClickListener{
 	
 	private void refresh(){
 		if(myUser!=null){
-			 username.setText(myUser.getUsername());
+			 username.setText(myUser.getRealname());
 			 if(myUser.getAvatar()!=null){
 					BmobFile avatar=myUser.getAvatar();
 					avatar.loadImageThumbnail(getActivity(), userimg, 100, 100);
@@ -100,9 +101,8 @@ public class LeftFragment extends Fragment implements OnClickListener{
 		case R.id.tvToday: // account
 			getActivity().startActivity(new Intent(getActivity(), MyShopCartActivity.class));
 			break;
-		case R.id.tvLastlist:// share
-//			Toast.makeText(getActivity(), "此功能暂时不开放,敬请期待", Toast.LENGTH_SHORT).show();
-			onClickShare();
+		case R.id.tvLastlist:// myorder
+			getActivity().startActivity(new Intent(getActivity(), MyOrderActivity.class));
 			break;
 		case R.id.tvMySettings: // 设置
 			getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));

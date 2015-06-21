@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
@@ -21,13 +20,9 @@ import com.online.market.utils.BitmapHelp;
 public class MyShopCartAdapter extends MyBaseAdapter {
 	private List<ShopCartaBean> cartaBeans;
 	
-	public MyShopCartAdapter(Context context){
+	public MyShopCartAdapter(Context context,List<ShopCartaBean> cartaBeans){
 		super(context);
-		try {
-			cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
-		} catch (DbException e) {
-			e.printStackTrace();
-		}
+		this.cartaBeans=cartaBeans;
 	}
 
 	@Override
@@ -76,9 +71,9 @@ public class MyShopCartAdapter extends MyBaseAdapter {
 			
 			@Override
 			public void onClick(View arg0) {
-				if(bean.getNumber()>1){
+				if(bean.getNumber()>0){
 					bean.setNumber(bean.getNumber()-1);
-//					updateDb(bean);
+					updateDb(bean);
 					notifyDataSetChanged();
 				}
 			}
@@ -88,7 +83,7 @@ public class MyShopCartAdapter extends MyBaseAdapter {
 			@Override
 			public void onClick(View arg0) {
 				bean.setNumber(bean.getNumber()+1);
-//				updateDb(bean);
+				updateDb(bean);
 				notifyDataSetChanged();
 
 			}
@@ -98,7 +93,7 @@ public class MyShopCartAdapter extends MyBaseAdapter {
 	
 	private void updateDb(ShopCartaBean bean){
 		try {
-			dbUtils.save(bean);
+			dbUtils.update(bean, "number");
 		} catch (DbException e) {
 			e.printStackTrace();
 		}

@@ -84,7 +84,7 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="com.online.market.OthersDataActivity"
+            android:name="com.online.market.MyOrderActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

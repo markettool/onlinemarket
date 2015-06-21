@@ -33,19 +33,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="昵称:" />
+                    android:text="账号:" />
 
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                     />
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/base_edit_input"
+                    android:hint="建议用手机号注册"
+                    android:inputType="number"
+                    android:padding="5dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/psw_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,8 +61,10 @@
                     android:id="@+id/userpsw"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:password="true" 
-                    />
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/base_edit_input"
+                    android:padding="5dp"
+                    android:password="true" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -105,20 +112,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sex"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp" >
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="年龄:" />
+            android:text="真实姓名:" />
 
         <EditText
-            android:id="@+id/userage"
+            android:id="@+id/realname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:inputType="number"
-             />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/base_edit_input"
+            android:hint="真实姓名用于配送"
+            android:padding="5dp" />
     </LinearLayout>
 
 </RelativeLayout>

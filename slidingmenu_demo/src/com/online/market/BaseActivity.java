@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import cn.bmob.v3.BmobUser;
+
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.online.market.R;
+import com.online.market.beans.MyUser;
 import com.online.market.utils.ActivityControl;
 import com.online.market.utils.BitmapHelp;
 
@@ -33,6 +36,7 @@ public abstract class BaseActivity extends Activity {
 	protected ImageView mImgLeft;
 	protected ImageView mImgRight;
 	protected BitmapUtils bitmapUtils;
+	protected MyUser user;
 	protected BitmapDisplayConfig config;
 	protected DbUtils dbUtils;
 	protected LayoutInflater mInflater;
@@ -55,6 +59,7 @@ public abstract class BaseActivity extends Activity {
 		bitmapUtils=BitmapHelp.getBitmapUtils(this);
 		config=BitmapHelp.getDisplayConfig(this, 50, 50);
 		dbUtils=DbUtils.create(this);
+		user=BmobUser.getCurrentUser(this, MyUser.class);
 		ActivityControl.getInstance().addActivity(this);
 	}
 
@@ -113,24 +118,11 @@ public abstract class BaseActivity extends Activity {
 		super.setContentView(view);
 	}
 	
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
+		user=BmobUser.getCurrentUser(this, MyUser.class);
 	}
 	
 	@Override

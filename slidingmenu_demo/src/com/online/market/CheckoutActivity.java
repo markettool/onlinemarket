@@ -18,10 +18,10 @@ import android.widget.EditText;
 
 public class CheckoutActivity extends BaseActivity {
 	
-	private EditText etName;
+	private EditText etReceiver;
 	private EditText etAddress;
 	private EditText etPhoneNum;
-	private Button btSubmit;
+//	private Button btSubmit;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,10 +35,15 @@ public class CheckoutActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 
-		etName=(EditText) findViewById(R.id.name);
+		etReceiver=(EditText) findViewById(R.id.name);
 		etAddress=(EditText) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
-		btSubmit=(Button) findViewById(R.id.submit);
+		
+		if(user!=null){
+			etReceiver.setText(user.getRealname());
+			etPhoneNum.setText(user.getUsername());
+		}
+//		btSubmit=(Button) findViewById(R.id.submit);
 
 	}
 
@@ -57,17 +62,21 @@ public class CheckoutActivity extends BaseActivity {
 				finish();
 			}
 		});
+		
+		mBtnTitleRight.setText("确定");
+		mBtnTitleRight.setVisibility(View.VISIBLE);
+		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 	}
 
 	@Override
 	protected void setListeners() {
-		btSubmit.setOnClickListener(new OnClickListener() {
+		mBtnTitleRight.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				String name=etName.getText().toString();
-				if(TextUtils.isEmpty(name)){
-					toastMsg("name is null");
+				String receiver=etReceiver.getText().toString();
+				if(TextUtils.isEmpty(receiver)){
+					toastMsg("receiver is null");
 					return;
 				}
 				String address=etAddress.getText().toString();
@@ -81,11 +90,13 @@ public class CheckoutActivity extends BaseActivity {
 					return;
 				}
 				OrderBean bean=new OrderBean();
-				bean.setName(name);
+				bean.setReceiver(receiver);
+				bean.setUsername(user.getUsername());
 				bean.setAddress(address);
 				bean.setPhonenum(phonenum);
+				List<ShopCartaBean> shopcarts=null;
 				try {
-					List<ShopCartaBean> shopcarts=dbUtils.findAll(Selector.from(ShopCartaBean.class));
+					shopcarts=dbUtils.findAll(Selector.from(ShopCartaBean.class));
 				    bean.setShopcarts(shopcarts);
 				    float price=0;
 				    for(ShopCartaBean p:shopcarts){
@@ -96,11 +107,19 @@ public class CheckoutActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 				ProgressUtil.showProgress(getApplicationContext(), "");
+				final 	List< ShopCartaBean> carts=shopcarts;
+
 				bean.save(CheckoutActivity.this, new SaveListener() {
 					
 					@Override
 					public void onSuccess() {
 						toastMsg("submit success");
+						try {
+							dbUtils.deleteAll(carts);
+						} catch (DbException e) {
+							e.printStackTrace();
+						}
+						finish();
 						ProgressUtil.closeProgress();
 					}
 					

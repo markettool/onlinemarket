@@ -12,20 +12,14 @@ public class OrderBean extends BmobObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
+	private String username;
+	private String receiver;
 	private String address;
 	private String phonenum;
 	private float price;
 	private List<ShopCartaBean> shopcarts;
 	private int status;
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getAddress() {
 		return address;
 	}
@@ -55,6 +49,18 @@ public class OrderBean extends BmobObject {
 	}
 	public void setPrice(float price) {
 		this.price = price;
+	}
+	public String getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

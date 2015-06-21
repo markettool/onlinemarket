@@ -12,6 +12,7 @@ import cn.bmob.v3.listener.SaveListener;
 
 import com.online.market.R;
 import com.online.market.beans.MyUser;
+import com.online.market.utils.ProgressUtil;
 
 public class LoginActivity extends BaseActivity {
 	private EditText username, userpsw;
@@ -30,7 +31,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
     protected void setListeners(){
-    	signin.setOnClickListener(new OnClickListener() {
+    	mBtnTitleRight.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -73,6 +74,10 @@ public class LoginActivity extends BaseActivity {
 				finish();
 			}
 		});
+		
+		mBtnTitleRight.setText("登陆");
+		mBtnTitleRight.setVisibility(View.VISIBLE);
+		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 	}
 
 
@@ -86,6 +91,7 @@ public class LoginActivity extends BaseActivity {
 	 * 登陆用户
 	 */
 	private void login(String name,String psw) {
+		ProgressUtil.showProgress(this, "");
 		final MyUser bu = new MyUser();
 		bu.setUsername(name);
 		bu.setPassword(psw);
@@ -94,11 +100,13 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onSuccess() {
 				toastMsg(bu.getUsername() + "登陆成功");
+				ProgressUtil.closeProgress();
 				finish();
 			}
 
 			@Override
 			public void onFailure(int code, String msg) {
+				ProgressUtil.closeProgress();
 				toastMsg("登陆失败:" + msg);
 				
 			}
