@@ -29,7 +29,7 @@ public abstract class MyBaseAdapter extends BaseAdapter {
 		mInflater=LayoutInflater.from(context);
 		user=BmobUser.getCurrentUser(context, MyUser.class);
 		bitmapUtils=BitmapHelp.getBitmapUtils(context);
-		config=BitmapHelp.getDisplayConfig(mContext, 50, 50);
+		config=BitmapHelp.getDisplayConfig(mContext, 150, 150);
 		dbUtils=DbUtils.create(context);
 	}
 	

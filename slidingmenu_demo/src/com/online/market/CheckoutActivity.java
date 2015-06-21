@@ -40,8 +40,8 @@ public class CheckoutActivity extends BaseActivity {
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		
 		if(user!=null){
-			etReceiver.setText(user.getRealname());
-			etPhoneNum.setText(user.getUsername());
+			etReceiver.setHint(user.getRealname());
+			etPhoneNum.setHint(user.getUsername());
 		}
 //		btSubmit=(Button) findViewById(R.id.submit);
 
@@ -49,6 +49,11 @@ public class CheckoutActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		if(user==null){
+			startActivity(LoginActivity.class);
+			finish();
+			return;
+		}
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("结算页");
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
@@ -76,8 +81,7 @@ public class CheckoutActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				String receiver=etReceiver.getText().toString();
 				if(TextUtils.isEmpty(receiver)){
-					toastMsg("receiver is null");
-					return;
+					receiver=etReceiver.getHint().toString();
 				}
 				String address=etAddress.getText().toString();
 				if(TextUtils.isEmpty(address)){
@@ -86,8 +90,7 @@ public class CheckoutActivity extends BaseActivity {
 				}
 				String phonenum=etPhoneNum.getText().toString();
 				if(TextUtils.isEmpty(phonenum)){
-					toastMsg("phonenum is null");
-					return;
+					phonenum=etPhoneNum.getHint().toString();
 				}
 				OrderBean bean=new OrderBean();
 				bean.setReceiver(receiver);

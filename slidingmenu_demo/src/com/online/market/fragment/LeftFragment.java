@@ -108,12 +108,6 @@ public class LeftFragment extends Fragment implements OnClickListener{
 			getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
 			break;
 		case R.id.my_data:
-			if(myUser==null){
-				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-			}else{
-//				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
-			}
-			break;
 		case R.id.avatar_pic:
 			if(myUser==null){
 				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
