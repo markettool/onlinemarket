@@ -3,17 +3,13 @@ package com.online.market.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
@@ -22,9 +18,6 @@ import com.online.market.R;
 import com.online.market.adapter.CommodityAdapter;
 import com.online.market.beans.CommodityBean;
 import com.online.market.utils.BitmapHelp;
-import com.online.market.view.RefreshableView;
-import com.online.market.view.RefreshableView.PullToLoadListener;
-import com.online.market.view.RefreshableView.PullToRefreshListener;
 import com.online.market.view.xlist.XListView;
 import com.online.market.view.xlist.XListView.IXListViewListener;
 public class CommodityFragment extends Fragment {
@@ -88,7 +81,7 @@ public class CommodityFragment extends Fragment {
 	
 	private void queryCommoditys(final int handle){
 		BmobQuery<CommodityBean> focusQuery	 = new BmobQuery<CommodityBean>();
-		focusQuery.order("-commentNum,-likeNum");
+//		focusQuery.order("-commentNum,-likeNum");
 		focusQuery.setLimit(10);
 		focusQuery.setSkip(focusSkip);
 		focusQuery.findObjects(getActivity(), new FindListener<CommodityBean>() {
@@ -117,9 +110,11 @@ public class CommodityFragment extends Fragment {
 	private void handle(int handle){
 		switch (handle) {
 		case FINISH_REFRESHING:
+			xlv.stopRefresh();
 			break;
 
 		case FINISH_LOADING:
+			xlv.stopLoadMore();
 			if(oldSize+1<commodityBeans.size()){
 				xlv.setSelection(oldSize+1);
 			}

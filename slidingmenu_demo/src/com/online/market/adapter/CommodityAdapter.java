@@ -49,8 +49,9 @@ public class CommodityAdapter extends MyBaseAdapter {
 		TextView commodityPrice = ViewHolder.get(convertView,R.id.commodity_price);
 		final CommodityBean bean=beans.get(arg0);
 		commodityName.setText(bean.getName());
-		commoditySold.setText("已售"+bean.getSold());
-		commodityPrice.setText(""+bean.getPrice());
+		commoditySold.setText("已售  "+bean.getSold());
+		commodityPrice.setText(bean.getPrice()+ " 元");
+		bitmapUtils.display(commodityPic, bean.getPics().getFileUrl(mContext),config);
 
 		return convertView;
 	}

@@ -12,6 +12,7 @@ import cn.bmob.v3.BmobUser;
 import com.bmob.utils.BmobLog;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.DbUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.online.market.beans.MyUser;
 import com.online.market.utils.BitmapHelp;
 
@@ -19,6 +20,7 @@ public abstract class MyBaseAdapter extends BaseAdapter {
 	protected Context mContext;
 	protected LayoutInflater mInflater;
 	protected BitmapUtils bitmapUtils;
+	protected BitmapDisplayConfig config;
 	protected DbUtils dbUtils;
 	protected MyUser user;
 	
@@ -27,6 +29,7 @@ public abstract class MyBaseAdapter extends BaseAdapter {
 		mInflater=LayoutInflater.from(context);
 		user=BmobUser.getCurrentUser(context, MyUser.class);
 		bitmapUtils=BitmapHelp.getBitmapUtils(context);
+		config=BitmapHelp.getDisplayConfig(mContext, 50, 50);
 		dbUtils=DbUtils.create(context);
 	}
 	
