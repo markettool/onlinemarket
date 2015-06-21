@@ -60,11 +60,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.online.market.AccountActivity"
+            android:name="com.online.market.CheckoutActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.online.market.WriteOperaActivity"
+            android:name="com.online.market.MyShopCartActivity"
             android:screenOrientation="portrait" 
             android:windowSoftInputMode="stateHidden">
         </activity>

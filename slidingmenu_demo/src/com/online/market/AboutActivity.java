@@ -16,6 +16,7 @@ public class AboutActivity extends BaseActivity {
 		
 		initView();
 		initData();
+		setListeners();
 	}
 
 	@Override
@@ -25,19 +26,24 @@ public class AboutActivity extends BaseActivity {
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
-		mImgLeft.setBackgroundResource(R.drawable.bt_back_dark);
-		mImgLeft.setOnClickListener(new OnClickListener() {
+		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
+		
+	}
+
+	@Override
+	protected void initData() {
+		BmobUpdateAgent.update(this);
+	}
+
+	@Override
+	protected void setListeners() {
+        mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				finish();
 			}
 		});
-	}
-
-	@Override
-	protected void initData() {
-		BmobUpdateAgent.update(this);
 	}
 
 }

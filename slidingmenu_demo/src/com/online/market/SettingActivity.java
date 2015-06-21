@@ -32,7 +32,7 @@ public class SettingActivity extends BaseActivity{
 		mBtnTitleMiddle.setText("设置");
 		
 		mImgLeft.setVisibility(View.VISIBLE);
-		mImgLeft.setBackgroundResource(R.drawable.bt_back_dark);
+		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -47,7 +47,7 @@ public class SettingActivity extends BaseActivity{
 		
 	}
 	
-	private void setListeners(){
+	protected void setListeners(){
 		tvAbout.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -66,7 +66,6 @@ public class RegisterActivity extends BaseActivity {
 					cursor.moveToFirst();
 					String path = cursor.getString(colunm_index);
 
-//					Log.e("majie", "path  " + path);
 					if (path != null) {
 					    Bitmap b= BitmapUtil.getThumbilBitmap(path,200);
 					    userimg.setImageBitmap(b);
@@ -98,7 +97,7 @@ public class RegisterActivity extends BaseActivity {
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
-		mImgLeft.setBackgroundResource(R.drawable.bt_back_dark);
+		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
 		mBtnTitleRight.setVisibility(View.VISIBLE);
 		mBtnTitleRight.setText("提交");
@@ -111,7 +110,7 @@ public class RegisterActivity extends BaseActivity {
 		
 	}
 	
-	private void setListeners(){
+	protected void setListeners(){
 		mBtnTitleRight.setOnClickListener(new OnClickListener() {
 
 			@Override

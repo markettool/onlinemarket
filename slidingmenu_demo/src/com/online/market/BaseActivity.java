@@ -13,8 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.DbUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.online.market.R;
 import com.online.market.utils.ActivityControl;
+import com.online.market.utils.BitmapHelp;
 
 /**
  * base activity
@@ -28,6 +32,9 @@ public abstract class BaseActivity extends Activity {
 	public Button mBtnTitleRight;
 	protected ImageView mImgLeft;
 	protected ImageView mImgRight;
+	protected BitmapUtils bitmapUtils;
+	protected BitmapDisplayConfig config;
+	protected DbUtils dbUtils;
 	protected LayoutInflater mInflater;
 	protected static final int STYLE_TITLE_C8 = 0x22;
 	protected static final int STYLE_TITLE_DC = 0x23;
@@ -45,6 +52,9 @@ public abstract class BaseActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		mInflater = LayoutInflater.from(this);
+		bitmapUtils=BitmapHelp.getBitmapUtils(this);
+		config=BitmapHelp.getDisplayConfig(this, 50, 50);
+		dbUtils=DbUtils.create(this);
 		ActivityControl.getInstance().addActivity(this);
 	}
 
@@ -182,6 +192,8 @@ public abstract class BaseActivity extends Activity {
 	protected void startActivity(Class c) {
 		startActivity(c, null);
 	}
+	
+	protected abstract void setListeners();
 	
 	/**
 	 * 跳转

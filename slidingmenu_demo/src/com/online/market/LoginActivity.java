@@ -29,7 +29,7 @@ public class LoginActivity extends BaseActivity {
 		initData();
 	}
 
-    private void setListeners(){
+    protected void setListeners(){
     	signin.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity {
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
-		mImgLeft.setBackgroundResource(R.drawable.bt_back_dark);
+		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override

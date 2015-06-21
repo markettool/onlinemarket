@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:background="@drawable/base_edit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="收货人姓名"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:id="@+id/name"
+        />
+    
+    <EditText
+        android:background="@drawable/base_edit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="收货人地址"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:id="@+id/address"
+        android:layout_below="@+id/name"
+        />
+    
+     <EditText
+        android:background="@drawable/base_edit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="手机号"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:id="@+id/phonenum"
+        android:layout_below="@+id/address"
+        />
+     
+     
+    
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit"
+        android:text="确定"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bt_red_corner_bg"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textColor="@color/red"
+        android:layout_margin="16dp"/>
+
+</RelativeLayout>

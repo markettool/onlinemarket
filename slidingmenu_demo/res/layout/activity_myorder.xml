@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.online.market.view.xlist.XListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/xlv"
+        />
+    
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkout"
+        android:text="结算"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bt_red_corner_bg"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:textColor="@color/red"
+        android:layout_margin="16dp"/>
+
+</RelativeLayout>

@@ -1,8 +1,9 @@
 package com.online.market.beans;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
-public class CommodityBean extends BmobFile{
+public class CommodityBean extends BmobObject{
 
 	/**
 	 * 

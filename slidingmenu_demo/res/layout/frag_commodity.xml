@@ -13,26 +13,29 @@
     -->
 
 
-    <!--
+    
        <com.online.market.view.AutoScrollTextView 
        android:layout_width="fill_parent" 
        android:id="@+id/autoscroll_tv" 
        android:textSize="16sp" 
        android:layout_height="wrap_content" 
-       android:layout_below="@+id/adcontainer"
        android:paddingTop="8dp"
        android:paddingBottom="8dp"
+       android:visibility="gone"
        />
-    -->
+    
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dip"
+        android:layout_below="@+id/autoscroll_tv"
+        android:visibility="gone"
         android:background="@drawable/biz_pc_account_line" />
 
     <com.online.market.view.xlist.XListView
         android:id="@+id/xlv"
+        android:layout_below="@+id/line"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

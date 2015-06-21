@@ -2,7 +2,6 @@ package com.online.market.fragment;
 
 import java.io.File;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 import com.online.market.LoginActivity;
 import com.online.market.MainActivity;
-import com.online.market.MyDataActivity;
+import com.online.market.MyShopCartActivity;
 import com.online.market.R;
 import com.online.market.SettingActivity;
 import com.online.market.beans.MyUser;
@@ -99,7 +98,7 @@ public class LeftFragment extends Fragment implements OnClickListener{
 		String title = null;
 		switch (v.getId()) {
 		case R.id.tvToday: // account
-//			getActivity().startActivity(new Intent(getActivity(), AccountActivity.class));
+			getActivity().startActivity(new Intent(getActivity(), MyShopCartActivity.class));
 			break;
 		case R.id.tvLastlist:// share
 //			Toast.makeText(getActivity(), "此功能暂时不开放,敬请期待", Toast.LENGTH_SHORT).show();
@@ -112,14 +111,14 @@ public class LeftFragment extends Fragment implements OnClickListener{
 			if(myUser==null){
 				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
 			}else{
-				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
+//				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
 			}
 			break;
 		case R.id.avatar_pic:
 			if(myUser==null){
 				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
 			}else{
-				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
+//				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
 			}
 			break;
 		default:
