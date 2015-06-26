@@ -1,5 +1,8 @@
 package com.online.market.popop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -10,14 +13,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.PopupWindow;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 import com.online.market.R;
+import com.online.market.beans.Category;
+import com.online.market.utils.ProgressUtil;
 
 public class CategoryPopup extends PopupWindow {
 	private Context mContext;
 	private GridView gv;
 	private OnClickListener listener;
-	public static String [] categorys={"吃的","喝的","用的","文具","吃的","喝的","用的","文具"};
+	private List<String > strList=new ArrayList<String>();
 	
 	public CategoryPopup(Context mContext){
 		this.mContext=mContext;
@@ -33,12 +40,15 @@ public class CategoryPopup extends PopupWindow {
 		setFocusable(true);
 		setBackgroundDrawable(new BitmapDrawable());
 		
-		setAdapter();
+//		setAdapter();
+		ProgressUtil.showProgress(mContext, "");
+		queryCategorys();
+		
 		setListeners();
 	}
 	
 	private void setAdapter(){
-		ArrayAdapter adapter = new ArrayAdapter(mContext,R.layout.category_item,categorys);
+		ArrayAdapter adapter = new ArrayAdapter(mContext,R.layout.category_item,strList);
         gv.setAdapter(adapter);	
 	}
 	
@@ -48,7 +58,7 @@ public class CategoryPopup extends PopupWindow {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				listener.onClick(categorys[arg2]);
+				listener.onClick(strList.get(arg2));
 				dismiss();
 			}
 		});
@@ -60,6 +70,29 @@ public class CategoryPopup extends PopupWindow {
 	
 	public void setOnClickListener(OnClickListener listener){
 		this.listener=listener;
+	}
+	
+	private void queryCategorys(){
+		BmobQuery<Category> query= new BmobQuery<Category>();
+		query.findObjects(mContext, new FindListener<Category>() {
+
+			@Override
+			public void onSuccess(List<Category> object) {
+				ProgressUtil.closeProgress();
+				for(Category gory:object){
+					strList.add(gory.getName());
+					
+				}
+				setAdapter();
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				ProgressUtil.closeProgress();
+				
+			}
+		});	
+		
 	}
 
 }

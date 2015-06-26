@@ -20,6 +20,7 @@ import com.online.market.R;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
 import com.online.market.popop.CategoryPopup;
+import com.online.market.utils.ProgressUtil;
 
 /**
  * @date 2014/11/14
@@ -154,6 +155,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 					public void onClick(String str) {
 						CommodityFragment cf=(CommodityFragment) mContent;
 						cf.reinit();
+						ProgressUtil.showProgress(MainActivity.this, "");
 						cf.queryCommoditys(CommodityFragment.FINISH_REFRESHING,"category", str);
 					}
 				});
