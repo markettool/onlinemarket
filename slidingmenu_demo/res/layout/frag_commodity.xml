@@ -14,7 +14,7 @@
 
 
     
-       <com.online.market.view.AutoScrollTextView 
+       <!-- <com.online.market.view.AutoScrollTextView 
        android:layout_width="fill_parent" 
        android:id="@+id/autoscroll_tv" 
        android:textSize="16sp" 
@@ -23,19 +23,37 @@
        android:paddingBottom="8dp"
        android:visibility="gone"
        />
-    
+     -->
 
-    <View
+    <!-- <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_below="@+id/autoscroll_tv"
         android:visibility="gone"
-        android:background="@drawable/biz_pc_account_line" />
+        android:background="@drawable/biz_pc_account_line" /> -->
+    
+    <com.online.market.view.ClearEditText
+            android:id="@+id/et_msg_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/base_edit_input"
+            android:drawableLeft="@drawable/icon_msg_search"
+            android:drawablePadding="10dp"
+            android:hint="搜索商品"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true" />
+    
 
     <com.online.market.view.xlist.XListView
         android:id="@+id/xlv"
-        android:layout_below="@+id/line"
+        android:layout_below="@+id/et_msg_search"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

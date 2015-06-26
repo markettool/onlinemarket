@@ -3,12 +3,10 @@ package com.online.market.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,33 +14,25 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.lidroid.xutils.bitmap.PauseOnScrollListener;
-import com.lidroid.xutils.exception.DbException;
 import com.online.market.R;
 import com.online.market.adapter.CommodityAdapter;
 import com.online.market.beans.CommodityBean;
-import com.online.market.beans.ShopCartaBean;
-import com.online.market.config.SystemConfig;
 import com.online.market.fragment.base.BaseFragment;
 import com.online.market.utils.BitmapHelp;
-import com.online.market.view.AutoScrollTextView;
+import com.online.market.utils.ProgressUtil;
+import com.online.market.view.ClearEditText;
 import com.online.market.view.xlist.XListView;
 import com.online.market.view.xlist.XListView.IXListViewListener;
 public class CommodityFragment extends BaseFragment {
-	
-	private XListView xlv;
-//	private AutoScrollTextView autoScrollTextView;
-
-	private CommodityAdapter adapter;
-	
 	public static final int FINISH_REFRESHING=0;
 	public static final int FINISH_LOADING=1;
 	
+	private XListView xlv;
+	private ClearEditText cet;
+	private CommodityAdapter adapter;
 	private int skip;
 	private List<CommodityBean> commodityBeans=new ArrayList<CommodityBean>();
-	
 	private int oldSize=0;
-//	private MyBroadCastReceiver receiver;
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,15 +41,12 @@ public class CommodityFragment extends BaseFragment {
 		xlv=(XListView) view.findViewById(R.id.xlv);
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
-//		autoScrollTextView=(AutoScrollTextView) view.findViewById(R.id.autoscroll_tv);
-//		autoScrollTextView.setVisibility(View.GONE);
-//		 autoScrollTextView.initScrollTextView(getActivity().getWindowManager(), 
-//	                "购物车为空"); 
-//	        autoScrollTextView.starScroll();
+		cet=(ClearEditText)view.findViewById(R.id.et_msg_search);
+		
 		setAdapter();
 		setListeners();
-		queryCommoditys(FINISH_REFRESHING);
-//		registerMyReceiver();
+		ProgressUtil.showProgress(getActivity(), "");
+		queryCommoditys(FINISH_REFRESHING,null);
 		return view;
 	}
 	
@@ -69,7 +56,8 @@ public class CommodityFragment extends BaseFragment {
 			
 			@Override
 			public void onRefresh() {
-				refresh();
+				reinit();
+				queryCommoditys(FINISH_REFRESHING,null);
 			}
 			
 			@Override
@@ -78,31 +66,65 @@ public class CommodityFragment extends BaseFragment {
 			}
 		});
 		
+		cet.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
+				reinit();
+				ProgressUtil.showProgress(getActivity(), "");
+				if(TextUtils.isEmpty(s)){
+					queryCommoditys(FINISH_REFRESHING, null);
+				}else{
+					queryCommoditys(FINISH_REFRESHING, s.toString());
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				
+			}
+		});
+		
 	}
 	
-	private void refresh(){
+	private void reinit(){
 		commodityBeans.clear();
 		skip=0;
-		queryCommoditys(FINISH_REFRESHING);
+		
 	}
 	
-	private void queryCommoditys(final int handle){
-		BmobQuery<CommodityBean> focusQuery	 = new BmobQuery<CommodityBean>();
-		focusQuery.setLimit(10);
-		focusQuery.setSkip(skip);
-		focusQuery.findObjects(getActivity(), new FindListener<CommodityBean>() {
+	private void queryCommoditys(final int method,String commodityName){
+		BmobQuery<CommodityBean> query	 = new BmobQuery<CommodityBean>();
+		if(commodityName!=null){
+			query.addWhereContains("name", commodityName);
+
+		}
+		query.order("sold");
+		query.setLimit(10);
+		query.setSkip(skip);
+		query.findObjects(getActivity(), new FindListener<CommodityBean>() {
 
 			@Override
 			public void onSuccess(List<CommodityBean> object) {
+				ProgressUtil.closeProgress();
 				oldSize=commodityBeans.size();
 				skip+=object.size();
 				commodityBeans.addAll(object);
-				handle(handle);
+				handle(method);
 			}
 
 			@Override
 			public void onError(int code, String msg) {
-				handle(handle);
+				ProgressUtil.closeProgress();
+				toastMsg("error "+msg);
+				handle(method);
+				
 			}
 		});	
 		
@@ -130,48 +152,5 @@ public class CommodityFragment extends BaseFragment {
 		adapter.notifyDataSetChanged();	
 			
 	}
-	
-//	private void registerMyReceiver(){
-//		IntentFilter filter=new IntentFilter();
-//		filter.addAction(SystemConfig.INTENT_ADD_SHOPCART);
-//		receiver=new MyBroadCastReceiver();
-//		getActivity().registerReceiver(receiver, filter);
-//	}
-	
-//	private void unregisterMyReceiver(){
-//		if(receiver!=null){
-//			getActivity().unregisterReceiver(receiver);
-//		}
-//	}
-	
-//	class MyBroadCastReceiver extends BroadcastReceiver{
-//
-//		@Override
-//		public void onReceive(Context context, Intent intent) {
-//			List<ShopCartaBean> cartaBeans = null;
-//			try {
-//				cartaBeans = dbUtils.findAll(ShopCartaBean.class);
-//			} catch (DbException e) {
-//				e.printStackTrace();
-//			}
-//			if(cartaBeans==null||cartaBeans.size()==0){
-//				autoScrollTextView.setVisibility(View.GONE);
-//				return;
-//			}
-//			String cartsStr="";
-//			for(ShopCartaBean bean:cartaBeans){
-//				cartsStr=cartsStr+bean.getName();
-//			}
-//			autoScrollTextView.setVisibility(View.VISIBLE);
-//			autoScrollTextView.setText(cartsStr+"加入了购物车！");
-//		}
-//		
-//	}
-	
-//	@Override
-//	public void onDestroy() {
-//		super.onDestroy();
-//		unregisterMyReceiver();
-//	}
 	
 }
