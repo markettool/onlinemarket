@@ -76,7 +76,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 				} catch (DbException e) {
 					e.printStackTrace();
 				}
-				ShowToast(bean.getName()+" 已加入购物车");
+				ShowToast(bean.getName()+" 已加入购物车,可进入我的购物车查看");
 				Intent intent=new Intent(SystemConfig.INTENT_ADD_SHOPCART);
 				mContext.sendBroadcast(intent);
 			}

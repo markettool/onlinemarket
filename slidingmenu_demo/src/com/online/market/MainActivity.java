@@ -19,6 +19,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.online.market.R;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
+import com.online.market.popop.CategoryPopup;
 
 /**
  * @date 2014/11/14
@@ -36,8 +37,11 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private ImageView topButton;
 	private Fragment mContent;
 	private TextView topTextView;
+	private TextView tvRight;
+	private View headView;
 	
 	private LeftFragment leftFragment;
+	private CategoryPopup pop;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +51,14 @@ public class MainActivity extends SlidingFragmentActivity implements
 		
 		Bmob.initialize(getApplicationContext(),APPID);
 
+		headView=findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);
 		topTextView = (TextView) findViewById(R.id.topTv);
+		
+		tvRight=(TextView) findViewById(R.id.tv_right);
+		tvRight.setOnClickListener(this);
+		tvRight.setText("分类");
 		
 		initSlidingMenu(savedInstanceState);
 		
@@ -66,7 +75,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 			 public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
 			     // TODO Auto-generated method stub
 			     //根据updateStatus来判断更新是否成功
-				 Log.e("majie","updateStatus "+ updateStatus);
+				 Log.d("majie","updateStatus "+ updateStatus);
 			 }
 			});
 	}
@@ -136,23 +145,22 @@ public class MainActivity extends SlidingFragmentActivity implements
 		case R.id.topButton:
 			toggle();
 			break;
-		default:
+		case R.id.tv_right:
+			if(pop==null){
+				pop=new CategoryPopup(this);
+				pop.setOnClickListener(new CategoryPopup.OnClickListener() {
+					
+					@Override
+					public void onClick(String str) {
+						CommodityFragment cf=(CommodityFragment) mContent;
+						cf.reinit();
+						cf.queryCommoditys(CommodityFragment.FINISH_REFRESHING,"category", str);
+					}
+				});
+			}
+			
+			pop.showAsDropDown(headView);
 			break;
 		}
 	}
-	
-//	@Override
-//	public void onDestroy() {
-//		super.onDestroy();
-//		String dir=FileUtils.getSDCardRoot()+getPackageName()+File.separator+"opera"+File.separator;
-//	    FileUtils.delete(dir);
-//	}
-	
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if(keyCode==KeyEvent.KEYCODE_BACK){
-//			finish();
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
 }

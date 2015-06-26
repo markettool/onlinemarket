@@ -46,7 +46,7 @@ public class CommodityFragment extends BaseFragment {
 		setAdapter();
 		setListeners();
 		ProgressUtil.showProgress(getActivity(), "");
-		queryCommoditys(FINISH_REFRESHING,null);
+		queryCommoditys(FINISH_REFRESHING,null,null);
 		return view;
 	}
 	
@@ -57,7 +57,7 @@ public class CommodityFragment extends BaseFragment {
 			@Override
 			public void onRefresh() {
 				reinit();
-				queryCommoditys(FINISH_REFRESHING,null);
+				queryCommoditys(FINISH_REFRESHING,null,null);
 			}
 			
 			@Override
@@ -73,9 +73,9 @@ public class CommodityFragment extends BaseFragment {
 				reinit();
 				ProgressUtil.showProgress(getActivity(), "");
 				if(TextUtils.isEmpty(s)){
-					queryCommoditys(FINISH_REFRESHING, null);
+					queryCommoditys(FINISH_REFRESHING, null,null);
 				}else{
-					queryCommoditys(FINISH_REFRESHING, s.toString());
+					queryCommoditys(FINISH_REFRESHING,"name", s.toString());
 				}
 			}
 			
@@ -93,16 +93,16 @@ public class CommodityFragment extends BaseFragment {
 		
 	}
 	
-	private void reinit(){
+	public void reinit(){
 		commodityBeans.clear();
 		skip=0;
 		
 	}
 	
-	private void queryCommoditys(final int method,String commodityName){
+	public void queryCommoditys(final int method,String value,String key){
 		BmobQuery<CommodityBean> query	 = new BmobQuery<CommodityBean>();
-		if(commodityName!=null){
-			query.addWhereContains("name", commodityName);
+		if(key!=null){
+			query.addWhereContains(value, key);
 
 		}
 		query.order("-sold");
@@ -116,6 +116,9 @@ public class CommodityFragment extends BaseFragment {
 				oldSize=commodityBeans.size();
 				skip+=object.size();
 				commodityBeans.addAll(object);
+				if(commodityBeans.size()==0){
+					toastMsg("暂无相关商品");
+				}
 				handle(method);
 			}
 
