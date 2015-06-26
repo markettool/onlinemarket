@@ -105,7 +105,7 @@ public class CommodityFragment extends BaseFragment {
 			query.addWhereContains("name", commodityName);
 
 		}
-		query.order("sold");
+		query.order("-sold");
 		query.setLimit(10);
 		query.setSkip(skip);
 		query.findObjects(getActivity(), new FindListener<CommodityBean>() {

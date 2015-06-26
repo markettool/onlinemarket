@@ -73,6 +73,7 @@ public class MyOrderActivity extends BaseActivity {
 		ProgressUtil.showProgress(this, "");
 		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
 		query.addWhereEqualTo("username", user.getUsername());
+		query.order("status");
 //		query.setLimit(10);
 		query.findObjects(this, new FindListener<OrderBean>() {
 

@@ -1,20 +1,23 @@
 package com.online.market;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
+import com.online.market.beans.CommodityBean;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
-
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 
 public class CheckoutActivity extends BaseActivity {
 	
@@ -117,6 +120,7 @@ public class CheckoutActivity extends BaseActivity {
 					@Override
 					public void onSuccess() {
 						toastMsg("submit success");
+						updateSold(carts);
 						try {
 							dbUtils.deleteAll(carts);
 						} catch (DbException e) {
@@ -135,6 +139,30 @@ public class CheckoutActivity extends BaseActivity {
 				});
 			}
 		});
+	}
+	
+	private void updateSold(List<ShopCartaBean> carts){
+		List<BmobObject > commodityBeans=new ArrayList<BmobObject>();
+		for(ShopCartaBean cart:carts){
+			CommodityBean cb=new CommodityBean();
+			cb.setObjectId(cart.getId());
+			cb.setSold(cart.getSold()+cart.getNumber());
+			cb.setPrice(cart.getPrice());
+			commodityBeans.add(cb);
+		}
+		new BmobObject().updateBatch(this, commodityBeans, new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				Log.d("majie", "success");
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				Log.d("majie", "fail");
+			}
+		});
+		
 	}
 
 }

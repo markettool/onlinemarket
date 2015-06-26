@@ -68,6 +68,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 				p.setPrice(bean.getPrice());
 				p.setId(bean.getObjectId());
 				p.setName(bean.getName());
+				p.setSold(bean.getSold());
 				p.setPic(bean.getPics().getFileUrl(mContext));
 				p.setNumber(1);
 				try {

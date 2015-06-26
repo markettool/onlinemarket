@@ -9,6 +9,7 @@ public class ShopCartaBean {
 	private float price;
 	private int number;
 	private String pic;
+	private int sold;
 
 	public String getName() {
 		return name;
@@ -48,6 +49,14 @@ public class ShopCartaBean {
 
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+
+	public int getSold() {
+		return sold;
+	}
+
+	public void setSold(int sold) {
+		this.sold = sold;
 	}
 
 }
