@@ -42,7 +42,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/base_edit_input"
                     android:hint="建议用手机号注册"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:padding="5dp" />
             </LinearLayout>
 

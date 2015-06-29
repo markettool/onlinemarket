@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -78,7 +77,9 @@ public class MyDataActivity extends BaseActivity {
 			rgSex.check(R.id.female);
 		}
 		BmobFile avatar=user.getAvatar();
-		avatar.loadImageThumbnail(this, userimg, 100, 100);
+		if(avatar!=null){
+			avatar.loadImageThumbnail(this, userimg, 100, 100);
+		}
 
 	}
 
@@ -189,6 +190,7 @@ public class MyDataActivity extends BaseActivity {
  
 				toastMsg("更新成功");
 				ProgressUtil.closeProgress();
+				finish();
 			}
 			
 			@Override
