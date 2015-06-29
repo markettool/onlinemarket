@@ -38,9 +38,9 @@ public class CommodityFragment extends BaseFragment {
 	private ClearEditText cet;
 	private CommodityAdapter adapter;
 	private int skip;
+	private String category;
 	private List<CommodityBean> commodityBeans=new ArrayList<CommodityBean>();
 	private int oldSize=0;
-	private TextView lastView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,8 +76,10 @@ public class CommodityFragment extends BaseFragment {
 				reinit();
 				ProgressUtil.showProgress(getActivity(), "");
 				if(text.equals("所有")){
+					category=null;
 					queryCommoditys(FINISH_REFRESHING, null, null);
 				}else{
+					category=text;
 					queryCommoditys(FINISH_REFRESHING, "category", text);
 				}
 			}
@@ -93,7 +95,12 @@ public class CommodityFragment extends BaseFragment {
 			
 			@Override
 			public void onLoadMore() {
-				
+			
+				if(category==null){
+					queryCommoditys(FINISH_LOADING, null, null);
+				}else{
+					queryCommoditys(FINISH_LOADING, "category", category);
+				}
 			}
 		});
 		
