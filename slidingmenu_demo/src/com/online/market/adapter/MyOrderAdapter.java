@@ -51,10 +51,14 @@ public class MyOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
-        if(bean.getStatus()==OrderBean.STATUS_UNDELIVED){
-        	tvOrderStatus.setText("配送状态： 配送中...");
-        }else{
-        	tvOrderStatus.setText("配送状态： 已结束");
+        if(bean.getStatus()==OrderBean.STATUS_PAYED){
+        	tvOrderStatus.setText("付款失败");
+        }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){
+        	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice());
+        }else if(bean.getStatus()==OrderBean.STATUS_PAYED){
+        	tvOrderStatus.setText("在线已支付");
+        }else if(bean.getStatus()==OrderBean.STAUTS_DELIVED){
+        	tvOrderStatus.setText("订单已完成");
         }
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){

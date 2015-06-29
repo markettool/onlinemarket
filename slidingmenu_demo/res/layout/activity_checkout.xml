@@ -3,8 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    <Spinner android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_edit_input"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:id="@+id/pay_method"/>
 
     <EditText
+        android:layout_below="@+id/pay_method"
         android:background="@drawable/base_edit_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

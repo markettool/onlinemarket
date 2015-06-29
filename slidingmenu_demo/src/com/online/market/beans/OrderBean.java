@@ -5,8 +5,14 @@ import java.util.List;
 import cn.bmob.v3.BmobObject;
 
 public class OrderBean extends BmobObject {
-	public static final int STATUS_UNDELIVED=0;
-	public static final int STAUTS_DELIVED=1;
+	/**付款失败*/
+	public static final int STATUS_PAYFAILED=0;
+	/**已付款*/
+	public static final int STATUS_PAYED=1;
+	/**货到付款*/
+	public static final int STATUS_CASHONDELIVEY=2;
+	/**已送达，订单结束*/
+	public static final int STAUTS_DELIVED=3;
 
 	/**
 	 * 

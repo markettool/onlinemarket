@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -21,10 +23,12 @@ import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
 
 public class CheckoutActivity extends BaseActivity {
+	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
 	
 	private EditText etReceiver;
 	private EditText etAddress;
 	private EditText etPhoneNum;
+	private Spinner payMethodSpinner;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +45,11 @@ public class CheckoutActivity extends BaseActivity {
 		etReceiver=(EditText) findViewById(R.id.name);
 		etAddress=(EditText) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
+		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
+		
+		ArrayAdapter< String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+		payMethodSpinner.setAdapter(adapter);
 		
 		ReceiveAddress ra=getReceiveAddress();
 		if(ra!=null){
