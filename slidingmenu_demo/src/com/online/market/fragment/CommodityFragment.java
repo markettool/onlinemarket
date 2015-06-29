@@ -74,12 +74,11 @@ public class CommodityFragment extends BaseFragment {
 				TextView tv=(TextView) view;
 				String text=tv.getText().toString();
 				reinit();
+				ProgressUtil.showProgress(getActivity(), "");
 				if(text.equals("所有")){
 					queryCommoditys(FINISH_REFRESHING, null, null);
-
 				}else{
 					queryCommoditys(FINISH_REFRESHING, "category", text);
-
 				}
 			}
 		});
