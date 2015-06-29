@@ -16,6 +16,7 @@ import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.beans.CommodityBean;
 import com.online.market.beans.OrderBean;
+import com.online.market.beans.ReceiveAddress;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
 
@@ -24,7 +25,6 @@ public class CheckoutActivity extends BaseActivity {
 	private EditText etReceiver;
 	private EditText etAddress;
 	private EditText etPhoneNum;
-//	private Button btSubmit;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +42,12 @@ public class CheckoutActivity extends BaseActivity {
 		etAddress=(EditText) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		
-		if(user!=null){
-			etReceiver.setHint(user.getNickname());
-			etPhoneNum.setHint(user.getUsername());
+		ReceiveAddress ra=getReceiveAddress();
+		if(ra!=null){
+			etReceiver.setText(ra.getName());
+			etAddress.setText(ra.getAddress());
+			etPhoneNum.setText(ra.getPhonenum());
 		}
-//		btSubmit=(Button) findViewById(R.id.submit);
-
 	}
 
 	@Override
@@ -95,6 +95,8 @@ public class CheckoutActivity extends BaseActivity {
 				if(TextUtils.isEmpty(phonenum)){
 					phonenum=etPhoneNum.getHint().toString();
 				}
+				saveReceiveAddress(receiver, address, phonenum);
+
 				OrderBean bean=new OrderBean();
 				bean.setReceiver(receiver);
 				bean.setUsername(user.getUsername());
@@ -119,7 +121,7 @@ public class CheckoutActivity extends BaseActivity {
 					
 					@Override
 					public void onSuccess() {
-						toastMsg("submit success");
+						toastMsg("您的订单已经提交成功，半小时将送达");
 						updateSold(carts);
 						try {
 							dbUtils.deleteAll(carts);
@@ -132,13 +134,45 @@ public class CheckoutActivity extends BaseActivity {
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						toastMsg("submit fail");
+						toastMsg("提交失败");
 						ProgressUtil.closeProgress();
 
 					}
 				});
 			}
 		});
+	}
+	
+	/**保存收货地址*/
+	private void saveReceiveAddress(String name,String address,String phonenum){
+		ReceiveAddress add=getReceiveAddress();
+		if(add!=null&&add.getAddress().equals(address)&&add.getName().equals(name)&&add.getPhonenum().equals(phonenum)){
+			//existed,dont save
+			return;
+		}
+		ReceiveAddress ra=new ReceiveAddress();
+		ra.setName(name);
+		ra.setAddress(address);
+		ra.setPhonenum(phonenum);
+		try {
+			dbUtils.save(ra);
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private ReceiveAddress getReceiveAddress(){
+		try {
+			List<ReceiveAddress> addresses=dbUtils.findAll(Selector.from(ReceiveAddress.class));
+	        if(addresses!=null&&addresses.size()!=0){
+	        	return addresses.get(0);
+	        }
+			return null;
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private void updateSold(List<ShopCartaBean> carts){
