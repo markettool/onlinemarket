@@ -64,6 +64,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/base_edit_input"
                     android:padding="5dp"
+                    android:hint="必填"
                     android:password="true" />
             </LinearLayout>
         </LinearLayout>
@@ -119,16 +120,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="真实姓名:" />
+            android:text="昵称:" />
 
         <EditText
-            android:id="@+id/realname"
+            android:id="@+id/nickname"
+            android:hint="必填"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/base_edit_input"
-            android:hint="真实姓名用于配送"
             android:padding="5dp" />
-    </LinearLayout>
+    </LinearLayout> 
 
 </RelativeLayout>

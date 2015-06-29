@@ -18,6 +18,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 import com.online.market.LoginActivity;
 import com.online.market.MainActivity;
+import com.online.market.MyDataActivity;
 import com.online.market.MyOrderActivity;
 import com.online.market.MyShopCartActivity;
 import com.online.market.R;
@@ -82,7 +83,7 @@ public class LeftFragment extends Fragment implements OnClickListener{
 	
 	private void refresh(){
 		if(myUser!=null){
-			 username.setText(myUser.getRealname());
+			 username.setText(myUser.getNickname());
 			 if(myUser.getAvatar()!=null){
 					BmobFile avatar=myUser.getAvatar();
 					avatar.loadImageThumbnail(getActivity(), userimg, 100, 100);
@@ -112,7 +113,7 @@ public class LeftFragment extends Fragment implements OnClickListener{
 			if(myUser==null){
 				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
 			}else{
-//				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
+				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
 			}
 			break;
 		default:

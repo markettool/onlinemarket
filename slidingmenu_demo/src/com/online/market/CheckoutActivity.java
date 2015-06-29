@@ -43,7 +43,7 @@ public class CheckoutActivity extends BaseActivity {
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		
 		if(user!=null){
-			etReceiver.setHint(user.getRealname());
+			etReceiver.setHint(user.getNickname());
 			etPhoneNum.setHint(user.getUsername());
 		}
 //		btSubmit=(Button) findViewById(R.id.submit);

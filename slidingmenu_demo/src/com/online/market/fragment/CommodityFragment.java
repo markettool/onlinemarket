@@ -3,6 +3,7 @@ package com.online.market.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,11 +11,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.lidroid.xutils.bitmap.PauseOnScrollListener;
 import com.online.market.R;
+import com.online.market.adapter.CategoryAdapter;
 import com.online.market.adapter.CommodityAdapter;
 import com.online.market.beans.CommodityBean;
 import com.online.market.fragment.base.BaseFragment;
@@ -28,30 +34,56 @@ public class CommodityFragment extends BaseFragment {
 	public static final int FINISH_LOADING=1;
 	
 	private XListView xlv;
+	private ListView categoryLv;
 	private ClearEditText cet;
 	private CommodityAdapter adapter;
 	private int skip;
 	private List<CommodityBean> commodityBeans=new ArrayList<CommodityBean>();
 	private int oldSize=0;
+	private TextView lastView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.frag_commodity, null);
+		categoryLv=(ListView) view.findViewById(R.id.lv_category);
 		xlv=(XListView) view.findViewById(R.id.xlv);
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
 		cet=(ClearEditText)view.findViewById(R.id.et_msg_search);
 		
 		setAdapter();
+		setCategoryAdapter();
 		setListeners();
 		ProgressUtil.showProgress(getActivity(), "");
 		queryCommoditys(FINISH_REFRESHING,null,null);
 		return view;
 	}
 	
+	private void setCategoryAdapter(){
+		CategoryAdapter adapter=new CategoryAdapter(getActivity());
+		categoryLv.setAdapter(adapter);
+	}
+	
 	private void setListeners(){
-		
+		categoryLv.setOnItemClickListener(new OnItemClickListener() {
+
+			@SuppressLint("ResourceAsColor") @Override
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
+					long arg3) {
+				TextView tv=(TextView) view;
+				String text=tv.getText().toString();
+				reinit();
+				if(text.equals("所有")){
+					queryCommoditys(FINISH_REFRESHING, null, null);
+
+				}else{
+					queryCommoditys(FINISH_REFRESHING, "category", text);
+
+				}
+			}
+		});
+	
 		xlv.setXListViewListener(new IXListViewListener() {
 			
 			@Override
@@ -93,17 +125,16 @@ public class CommodityFragment extends BaseFragment {
 		
 	}
 	
-	public void reinit(){
+	private void reinit(){
 		commodityBeans.clear();
 		skip=0;
 		
 	}
 	
-	public void queryCommoditys(final int method,String value,String key){
+	private void queryCommoditys(final int method,String value,String key){
 		BmobQuery<CommodityBean> query	 = new BmobQuery<CommodityBean>();
 		if(key!=null){
 			query.addWhereContains(value, key);
-
 		}
 		query.order("-sold");
 		query.setLimit(10);
@@ -125,7 +156,7 @@ public class CommodityFragment extends BaseFragment {
 			@Override
 			public void onError(int code, String msg) {
 				ProgressUtil.closeProgress();
-				toastMsg("error "+msg);
+				toastMsg(msg);
 				handle(method);
 				
 			}

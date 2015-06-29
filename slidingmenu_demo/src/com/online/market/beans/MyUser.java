@@ -8,9 +8,10 @@ public class MyUser extends BmobUser {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String realname;
+	private String nickname;
 	private Boolean gender;
 	private BmobFile avatar;
+	private int age;
 	
 	public BmobFile getAvatar() {
 		return avatar;
@@ -24,11 +25,17 @@ public class MyUser extends BmobUser {
 	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
-	public String getRealname() {
-		return realname;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setNickname(String realname) {
+		this.nickname = realname;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
 	}
 	
 }

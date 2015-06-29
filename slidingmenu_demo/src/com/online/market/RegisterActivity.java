@@ -25,7 +25,7 @@ import com.online.market.utils.ProgressUtil;
 
 public class RegisterActivity extends BaseActivity {
 	int PICK_REQUEST_CODE = 0;
-	private EditText etUsername, etUserpsw, etRealname;
+	private EditText etUsername, etUserpsw, eNickname;
 	private RadioGroup group;
 	private boolean gender = true;
 	private ImageView userimg;
@@ -87,7 +87,7 @@ public class RegisterActivity extends BaseActivity {
 		
 		etUsername = (EditText) findViewById(R.id.username);
 		etUserpsw = (EditText) findViewById(R.id.userpsw);
-		etRealname = (EditText) findViewById(R.id.realname);
+		eNickname = (EditText) findViewById(R.id.nickname);
 		userimg = (ImageView) findViewById(R.id.userimg);
 		group = (RadioGroup) findViewById(R.id.sex);
 		
@@ -117,7 +117,7 @@ public class RegisterActivity extends BaseActivity {
 
 				String name = etUsername.getText().toString();
 				String psw = etUserpsw.getText().toString();
-				String realName = etRealname.getText().toString();
+				String realName = eNickname.getText().toString();
 				if (name.equals("") || psw.equals("") || realName.equals("")
 						) {
 					toastMsg("请填写基本资料");
@@ -172,7 +172,7 @@ public class RegisterActivity extends BaseActivity {
 		final MyUser myUser = new MyUser();
 		myUser.setUsername(name);
 		myUser.setPassword(psw);
-		myUser.setRealname(realname);
+		myUser.setNickname(realname);
 		myUser.setGender(gender);
 		myUser.setAvatar(file);
 		myUser.signUp(this, new SaveListener() {

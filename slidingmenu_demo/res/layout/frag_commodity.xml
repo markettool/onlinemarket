@@ -3,58 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!--
-    <RelativeLayout
-        android:id="@+id/adcontainer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
-    </RelativeLayout>
-    -->
-
-
-    
-       <!-- <com.online.market.view.AutoScrollTextView 
-       android:layout_width="fill_parent" 
-       android:id="@+id/autoscroll_tv" 
-       android:textSize="16sp" 
-       android:layout_height="wrap_content" 
-       android:paddingTop="8dp"
-       android:paddingBottom="8dp"
-       android:visibility="gone"
-       />
-     -->
-
-    <!-- <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/autoscroll_tv"
-        android:visibility="gone"
-        android:background="@drawable/biz_pc_account_line" /> -->
-    
     <com.online.market.view.ClearEditText
-            android:id="@+id/et_msg_search"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/base_edit_input"
-            android:drawableLeft="@drawable/icon_msg_search"
-            android:drawablePadding="10dp"
-            android:hint="搜索商品"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:singleLine="true" />
-    
+        android:id="@+id/et_msg_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/base_edit_input"
+        android:drawableLeft="@drawable/icon_msg_search"
+        android:drawablePadding="10dp"
+        android:hint="搜索商品"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true" />
 
-    <com.online.market.view.xlist.XListView
-        android:id="@+id/xlv"
-        android:layout_below="@+id/et_msg_search"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/et_msg_search" >
+        
+        <ListView
+            android:id="@+id/lv_category"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3.5"
+             />
+        
+        <TextView android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+
+        <com.online.market.view.xlist.XListView
+            android:id="@+id/xlv"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+             />
+    </LinearLayout>
 
 </RelativeLayout>

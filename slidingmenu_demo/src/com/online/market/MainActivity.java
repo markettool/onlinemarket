@@ -60,6 +60,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		tvRight=(TextView) findViewById(R.id.tv_right);
 		tvRight.setOnClickListener(this);
 		tvRight.setText("分类");
+		tvRight.setVisibility(View.GONE);
 		
 		initSlidingMenu(savedInstanceState);
 		
@@ -146,23 +147,23 @@ public class MainActivity extends SlidingFragmentActivity implements
 		case R.id.topButton:
 			toggle();
 			break;
-		case R.id.tv_right:
-			if(pop==null){
-				pop=new CategoryPopup(this);
-				pop.setOnClickListener(new CategoryPopup.OnClickListener() {
-					
-					@Override
-					public void onClick(String str) {
-						CommodityFragment cf=(CommodityFragment) mContent;
-						cf.reinit();
-						ProgressUtil.showProgress(MainActivity.this, "");
-						cf.queryCommoditys(CommodityFragment.FINISH_REFRESHING,"category", str);
-					}
-				});
-			}
-			
-			pop.showAsDropDown(headView);
-			break;
+//		case R.id.tv_right:
+//			if(pop==null){
+//				pop=new CategoryPopup(this);
+//				pop.setOnClickListener(new CategoryPopup.OnClickListener() {
+//					
+//					@Override
+//					public void onClick(String str) {
+//						CommodityFragment cf=(CommodityFragment) mContent;
+//						cf.reinit();
+//						ProgressUtil.showProgress(MainActivity.this, "");
+//						cf.queryCommoditys(CommodityFragment.FINISH_REFRESHING,"category", str);
+//					}
+//				});
+//			}
+//			
+//			pop.showAsDropDown(headView);
+//			break;
 		}
 	}
 }
