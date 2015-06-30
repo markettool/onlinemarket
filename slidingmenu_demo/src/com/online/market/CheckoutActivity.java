@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,6 +16,8 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import com.bmob.pay.tool.BmobPay;
+import com.bmob.pay.tool.PayListener;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.beans.CommodityBean;
@@ -23,12 +27,19 @@ import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
 
 public class CheckoutActivity extends BaseActivity {
+	public static final int PAYMETHOD_ALIPAY=0;
+	public static final int PAYMETHOD_WEIXINPAY=1;
+	public static final int PAYMETHOD_CASH=2;
+	
 	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
+	private int paymethod;
 	
 	private EditText etReceiver;
 	private EditText etAddress;
 	private EditText etPhoneNum;
 	private Spinner payMethodSpinner;
+	
+	private List<ShopCartaBean> shopcarts=null;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +52,16 @@ public class CheckoutActivity extends BaseActivity {
 
 	@Override
 	protected void initView() {
+		mBtnTitleMiddle.setVisibility(View.VISIBLE);
+		mBtnTitleMiddle.setText("结算页");
+		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
+		
+		mBtnTitleRight.setText("确定");
+		mBtnTitleRight.setVisibility(View.VISIBLE);
+		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
+		
+		mImgLeft.setVisibility(View.VISIBLE);
+		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 
 		etReceiver=(EditText) findViewById(R.id.name);
 		etAddress=(EditText) findViewById(R.id.address);
@@ -66,27 +87,23 @@ public class CheckoutActivity extends BaseActivity {
 			finish();
 			return;
 		}
-		mBtnTitleMiddle.setVisibility(View.VISIBLE);
-		mBtnTitleMiddle.setText("结算页");
-		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
-		mImgLeft.setVisibility(View.VISIBLE);
-		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
-		mImgLeft.setOnClickListener(new OnClickListener() {
+		try {
+			shopcarts=dbUtils.findAll(Selector.from(ShopCartaBean.class));
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void setListeners() {
+        mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				finish();
 			}
 		});
-		
-		mBtnTitleRight.setText("确定");
-		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
-	}
-
-	@Override
-	protected void setListeners() {
 		mBtnTitleRight.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -104,50 +121,115 @@ public class CheckoutActivity extends BaseActivity {
 				if(TextUtils.isEmpty(phonenum)){
 					phonenum=etPhoneNum.getHint().toString();
 				}
-				saveReceiveAddress(receiver, address, phonenum);
 
-				OrderBean bean=new OrderBean();
-				bean.setReceiver(receiver);
-				bean.setUsername(user.getUsername());
-				bean.setAddress(address);
-				bean.setPhonenum(phonenum);
-				List<ShopCartaBean> shopcarts=null;
+				String detail="";
+				double price=0;
+				if(shopcarts!=null){
+					for(ShopCartaBean cart:shopcarts){
+						detail+=cart.getName()+"  ";
+						price+=cart.getPrice();
+					}
+				}
+				
+				ProgressUtil.showProgress(CheckoutActivity.this, "");
+				saveReceiveAddress(receiver, address, phonenum);
+				if(paymethod==PAYMETHOD_CASH){
+                    submitOrder(receiver, address, phonenum);
+				}else if(paymethod==PAYMETHOD_ALIPAY){
+					payByAlipay(price, detail);
+				}else if(paymethod==PAYMETHOD_WEIXINPAY){
+					payByWeixin(price, detail);
+				}
+
+			}
+		});
+		
+		payMethodSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				paymethod=arg2;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onStop();
+		ProgressUtil.closeProgress();
+	}
+	
+	/**alipay*/
+	private void payByAlipay(double fund,String detail){
+		new BmobPay(this).pay(fund, detail, payListener);
+	}
+	
+	private void payByWeixin(double fund,String detail){
+		new BmobPay(this).payByWX(fund, detail, payListener);
+	}
+	
+	private PayListener payListener=new PayListener() {
+		
+		@Override
+		public void unknow() {
+			
+		}
+		
+		@Override
+		public void succeed() {
+			
+		}
+		
+		@Override
+		public void orderId(String arg0) {
+			
+		}
+		
+		@Override
+		public void fail(int arg0, String arg1) {
+			
+		}
+	};
+	
+	private void submitOrder(String receiver,String address,String phonenum){
+		OrderBean bean=new OrderBean();
+		bean.setReceiver(receiver);
+		bean.setUsername(user.getUsername());
+		bean.setAddress(address);
+		bean.setPhonenum(phonenum);
+		bean.setShopcarts(shopcarts);
+	    float price=0;
+	    for(ShopCartaBean p:shopcarts){
+	    	price+=p.getPrice();
+	    }
+	    bean.setPrice(price);    
+		final 	List< ShopCartaBean> carts=shopcarts;
+		bean.save(CheckoutActivity.this, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				toastMsg("您的订单已经提交成功，半小时将送达");
+				updateSold(carts);
 				try {
-					shopcarts=dbUtils.findAll(Selector.from(ShopCartaBean.class));
-				    bean.setShopcarts(shopcarts);
-				    float price=0;
-				    for(ShopCartaBean p:shopcarts){
-				    	price+=p.getPrice();
-				    }
-				    bean.setPrice(price);
+					dbUtils.deleteAll(carts);
 				} catch (DbException e) {
 					e.printStackTrace();
 				}
-				ProgressUtil.showProgress(getApplicationContext(), "");
-				final 	List< ShopCartaBean> carts=shopcarts;
+				finish();
+				ProgressUtil.closeProgress();
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				toastMsg("提交失败");
+				ProgressUtil.closeProgress();
 
-				bean.save(CheckoutActivity.this, new SaveListener() {
-					
-					@Override
-					public void onSuccess() {
-						toastMsg("您的订单已经提交成功，半小时将送达");
-						updateSold(carts);
-						try {
-							dbUtils.deleteAll(carts);
-						} catch (DbException e) {
-							e.printStackTrace();
-						}
-						finish();
-						ProgressUtil.closeProgress();
-					}
-					
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						toastMsg("提交失败");
-						ProgressUtil.closeProgress();
-
-					}
-				});
 			}
 		});
 	}
@@ -171,6 +253,7 @@ public class CheckoutActivity extends BaseActivity {
 		
 	}
 	
+	/**得到保存在数据库的收货地址*/
 	private ReceiveAddress getReceiveAddress(){
 		try {
 			List<ReceiveAddress> addresses=dbUtils.findAll(Selector.from(ReceiveAddress.class));

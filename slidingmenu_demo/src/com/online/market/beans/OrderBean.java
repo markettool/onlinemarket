@@ -7,12 +7,14 @@ import cn.bmob.v3.BmobObject;
 public class OrderBean extends BmobObject {
 	/**付款失败*/
 	public static final int STATUS_PAYFAILED=0;
-	/**已付款*/
-	public static final int STATUS_PAYED=1;
+	/**支付宝已付款*/
+	public static final int STATUS_ALIPAY_PAYED=1;
+	/**微信已付款*/
+	public static final int STATUS_WEIXIN_PAYED=2;
 	/**货到付款*/
-	public static final int STATUS_CASHONDELIVEY=2;
+	public static final int STATUS_CASHONDELIVEY=3;
 	/**已送达，订单结束*/
-	public static final int STAUTS_DELIVED=3;
+	public static final int STAUTS_DELIVED=4;
 
 	/**
 	 * 
