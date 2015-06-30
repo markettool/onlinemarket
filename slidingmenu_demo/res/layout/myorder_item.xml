@@ -11,6 +11,7 @@
             android:id="@+id/orderdetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:layout_margin="0dp"
             android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             android:textColor="@color/ble_blue" />
@@ -39,17 +40,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:text="手机号:15811490155" 
-            android:layout_below="@+id/orderaddress"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/orderdetail"
             android:layout_marginTop="10dp"/>
      
      <TextView
             android:id="@+id/orderstatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
+            android:layout_marginRight="10dp"
             android:text="配送中..." 
+            android:layout_alignParentRight="true"
             android:textColor="@color/orange"
-            android:layout_below="@+id/orderphonenum"
+            android:layout_below="@+id/orderaddress"
             android:layout_marginTop="10dp"/>
-
+     
 </RelativeLayout>

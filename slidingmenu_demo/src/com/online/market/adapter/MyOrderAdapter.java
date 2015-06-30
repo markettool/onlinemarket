@@ -50,15 +50,29 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
-        tvOrderPhonenum.setText(bean.getPhonenum());
-        if(bean.getStatus()==OrderBean.STATUS_PAYED){
+        tvOrderPhonenum.setText("联系方式： "+bean.getPhonenum());
+        if(bean.getStatus()==OrderBean.STATUS_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
         }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){
         	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice());
         }else if(bean.getStatus()==OrderBean.STATUS_PAYED){
         	tvOrderStatus.setText("在线已支付");
         }else if(bean.getStatus()==OrderBean.STAUTS_DELIVED){
+        	//when status is delived,set all gray
         	tvOrderStatus.setText("订单已完成");
+        	tvOrderDetail.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	tvOrderName.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        }
+        //when status is not delived,set default
+        if(bean.getStatus()!=OrderBean.STAUTS_DELIVED){
+        	tvOrderDetail.setTextColor(mContext.getResources().getColor(R.color.ble_blue));
+        	tvOrderName.setTextColor(mContext.getResources().getColor(R.color.black));
+        	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.black));
+        	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.black));
+        	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.orange));
         }
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
