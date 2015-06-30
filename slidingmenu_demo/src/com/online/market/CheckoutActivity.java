@@ -126,10 +126,16 @@ public class CheckoutActivity extends BaseActivity {
 				double price=0;
 				if(shopcarts!=null){
 					for(ShopCartaBean cart:shopcarts){
-						detail+=cart.getName()+"  ";
-						price+=cart.getPrice();
+						if(cart.getNumber()!=0){
+							
+							detail=detail+cart.getName()+" and ";
+							price+=(cart.getPrice()*cart.getNumber());
+						}
+						
 					}
 				}
+				int index=detail.lastIndexOf(" and ");
+				detail=detail.substring(0, index);
 				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveAddress(receiver, address, phonenum);

@@ -13,6 +13,7 @@ import cn.bmob.v3.BmobUser;
 public class SettingActivity extends BaseActivity {
 
 	private TextView tvAbout;
+	private TextView tvFeedback;
 	private Button btLogout;
 
 	@Override
@@ -27,6 +28,7 @@ public class SettingActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		tvAbout = (TextView) findViewById(R.id.tvAbout);
+		tvFeedback=(TextView) findViewById(R.id.feedback);
 		btLogout = (Button) findViewById(R.id.logout);
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
@@ -34,13 +36,7 @@ public class SettingActivity extends BaseActivity {
 
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
-		mImgLeft.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
+		
 	}
 
 	@Override
@@ -54,6 +50,22 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				startActivity(AboutActivity.class);
+			}
+		});
+		
+		mImgLeft.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
+		
+		tvFeedback.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				startActivity(FeedbackActivity.class);
 			}
 		});
 

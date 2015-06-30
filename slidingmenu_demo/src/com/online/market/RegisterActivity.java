@@ -167,12 +167,12 @@ public class RegisterActivity extends BaseActivity {
 	/**
 	 * 注册用户
 	 */
-	private void signUp(final String name,String psw,final String realname,final boolean gender,BmobFile file) {
+	private void signUp(final String username,String psw,final String nickname,final boolean gender,BmobFile file) {
 		ProgressUtil.showProgress(this, "");
 		final MyUser myUser = new MyUser();
-		myUser.setUsername(name);
+		myUser.setUsername(username);
 		myUser.setPassword(psw);
-		myUser.setNickname(realname);
+		myUser.setNickname(nickname);
 		myUser.setGender(gender);
 		myUser.setAvatar(file);
 		myUser.signUp(this, new SaveListener() {
