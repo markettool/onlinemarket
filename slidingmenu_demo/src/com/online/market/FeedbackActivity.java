@@ -44,11 +44,24 @@ public class FeedbackActivity extends BaseActivity{
 
 	@Override
 	protected void initData() {
+		if(user==null){
+			startActivity(LoginActivity.class);
+			finish();
+			return;
+		}
 		
 	}
 
 	@Override
 	protected void setListeners() {
+		
+		mBtnTitleLeft.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
 		mBtnTitleRight.setOnClickListener(new OnClickListener() {
 			
 			@Override
