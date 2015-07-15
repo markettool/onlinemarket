@@ -3,6 +3,7 @@ package com.online.market.adapter;
 import java.util.List;
 
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
@@ -64,6 +66,17 @@ public class CommodityAdapter extends MyBaseAdapter {
 			
 			@Override
 			public void onClick(View view) {
+				
+				try {
+					ShopCartaBean p=dbUtils.findFirst(Selector.from(ShopCartaBean.class).where("id","=",bean.getObjectId()));
+					if(p!=null){
+						ShowToast("购物车已有该物品");
+						return;
+					}
+				} catch (DbException e1) {
+					e1.printStackTrace();
+				}
+
 				ShopCartaBean p=new ShopCartaBean();
 				p.setPrice(bean.getPrice());
 				p.setId(bean.getObjectId());

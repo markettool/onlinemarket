@@ -55,7 +55,7 @@ public class FeedbackActivity extends BaseActivity{
 	@Override
 	protected void setListeners() {
 		
-		mBtnTitleLeft.setOnClickListener(new OnClickListener() {
+		mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
