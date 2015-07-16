@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
 import com.lidroid.xutils.db.sqlite.Selector;
@@ -85,13 +84,23 @@ public class MyShopCartActivity extends BaseActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
+				final int pos=arg2-1;
                 DialogUtil.dialog(MyShopCartActivity.this, "确认删除该商品吗？", "确认", new DialogInterface.OnClickListener() {
 					
 					@Override
-					public void onClick(DialogInterface dialog, int position) {
-						cartaBeans.remove(position);
+					public void onClick(DialogInterface dialog, int arg2) {
+						try {
+							dbUtils.delete(cartaBeans.get(pos));
+						} catch (DbException e) {
+							e.printStackTrace();
+						}
+						cartaBeans.remove(pos);
+						
 						adapter.notifyDataSetChanged();
 						dialog.dismiss();
+						if(cartaBeans.size()==0){
+							tvNoOrder.setVisibility(View.VISIBLE);
+						}
 					}
 				}, "取消", new DialogInterface.OnClickListener() {
 					

@@ -1,18 +1,17 @@
 package com.online.market.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
 
 public class CategoryAdapter extends MyBaseAdapter {
 	
 	private String [] categorys={"所有","吃的","喝的","床上用品","用的","其他"};
-	private TextView lastView;
+//	private TextView lastView;
 
 	public CategoryAdapter(Context context) {
 		super(context);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.lidroid.xutils.bitmap.PauseOnScrollListener;
+import com.online.market.CommodityDetailActivity;
 import com.online.market.R;
 import com.online.market.adapter.CategoryAdapter;
 import com.online.market.adapter.CommodityAdapter;
@@ -41,6 +43,8 @@ public class CommodityFragment extends BaseFragment {
 	private String category;
 	private List<CommodityBean> commodityBeans=new ArrayList<CommodityBean>();
 	private int oldSize=0;
+	
+	private TextView lastTv;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +86,11 @@ public class CommodityFragment extends BaseFragment {
 					category=text;
 					queryCommoditys(FINISH_REFRESHING, "category", text);
 				}
+				if(lastTv!=null){
+					lastTv.setTextColor(R.color.text_gray);
+				}
+				tv.setTextColor(R.color.ble_blue);
+				lastTv=tv;
 			}
 		});
 	
@@ -101,6 +110,17 @@ public class CommodityFragment extends BaseFragment {
 				}else{
 					queryCommoditys(FINISH_LOADING, "category", category);
 				}
+			}
+		});
+		
+		xlv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent intent=new Intent(getActivity(), CommodityDetailActivity.class);
+				intent.putExtra("commodity", commodityBeans.get(arg2-1));
+				startActivity(intent);
 			}
 		});
 		

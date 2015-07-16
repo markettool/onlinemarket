@@ -84,6 +84,10 @@
             android:name="com.online.market.FeedbackActivity"
             android:screenOrientation="portrait" >
         </activity>
+         <activity
+            android:name="com.online.market.CommodityDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         
         <!-- bmob pay sdk activity begin ,please put below code into application tag -->
   <activity
