@@ -75,7 +75,7 @@ public class CommodityFragment extends BaseFragment {
 			@SuppressLint("ResourceAsColor") @Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
-				TextView tv=(TextView) view;
+				TextView tv= (TextView) view.findViewById(R.id.tv_category);
 				String text=tv.getText().toString();
 				reinit();
 				ProgressUtil.showProgress(getActivity(), "");
@@ -89,7 +89,7 @@ public class CommodityFragment extends BaseFragment {
 				if(lastTv!=null){
 					lastTv.setTextColor(R.color.text_gray);
 				}
-				tv.setTextColor(R.color.ble_blue);
+				tv.setTextColor(0xffFF7F00);
 				lastTv=tv;
 			}
 		});

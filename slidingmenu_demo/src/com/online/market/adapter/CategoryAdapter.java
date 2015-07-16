@@ -34,9 +34,10 @@ public class CategoryAdapter extends MyBaseAdapter {
 
 	@Override
 	public View getView(int arg0, View convertView, ViewGroup arg2) {
-		TextView tv=(TextView) mInflater.inflate(R.layout.category_item, null);
+		View view= mInflater.inflate(R.layout.category_item, null);
+		TextView tv=(TextView) view.findViewById(R.id.tv_category);
 		tv.setText(categorys[arg0]);
-		return tv;
+		return view;
 	}
 
 }
