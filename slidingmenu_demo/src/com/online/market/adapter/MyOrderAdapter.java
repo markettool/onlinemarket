@@ -54,7 +54,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
         if(bean.getStatus()==OrderBean.STATUS_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
         }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){
-        	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice());
+        	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice()+" 元");
         }else if(bean.getStatus()==OrderBean.STATUS_ALIPAY_PAYED){
         	tvOrderStatus.setText("在线已支付");
         }else if(bean.getStatus()==OrderBean.STAUTS_DELIVED){

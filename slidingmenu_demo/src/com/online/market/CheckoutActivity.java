@@ -210,6 +210,9 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setAddress(address);
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
+		if(paymethod==PAYMETHOD_CASH){
+			bean.setStatus(OrderBean.STATUS_CASHONDELIVEY);
+		}
 	    float price=0;
 	    for(ShopCartaBean p:shopcarts){
 	    	price+=p.getPrice();
@@ -286,12 +289,12 @@ public class CheckoutActivity extends BaseActivity {
 			
 			@Override
 			public void onSuccess() {
-				Log.d("majie", "success");
+//				Log.d("majie", "success");
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				Log.d("majie", "fail");
+//				Log.d("majie", "fail");
 			}
 		});
 		

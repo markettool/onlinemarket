@@ -87,7 +87,7 @@ public class CommodityFragment extends BaseFragment {
 					queryCommoditys(FINISH_REFRESHING, "category", text);
 				}
 				if(lastTv!=null){
-					lastTv.setTextColor(R.color.text_gray);
+					lastTv.setTextColor(0xff999999);
 				}
 				tv.setTextColor(0xffFF7F00);
 				lastTv=tv;

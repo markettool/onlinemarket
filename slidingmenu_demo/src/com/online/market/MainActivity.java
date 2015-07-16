@@ -77,7 +77,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 			 public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
 			     // TODO Auto-generated method stub
 			     //根据updateStatus来判断更新是否成功
-				 Log.d("majie","updateStatus "+ updateStatus);
+//				 Log.d("majie","updateStatus "+ updateStatus);
 			 }
 			});
 	}
@@ -94,7 +94,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 
 		if (mContent == null) {
 			mContent = new CommodityFragment();
-			switchContent(mContent, "商品");
+			switchContent(mContent, "超市");
 		}
 
 		// 设置左侧滑动菜单
