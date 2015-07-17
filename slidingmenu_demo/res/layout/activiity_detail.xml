@@ -71,6 +71,7 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/base_edit_input"
                     android:gravity="center"
+                    android:inputType="number"
                     android:text="1" />
 
                 <ImageView

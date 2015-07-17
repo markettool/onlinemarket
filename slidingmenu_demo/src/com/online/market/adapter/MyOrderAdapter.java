@@ -12,6 +12,7 @@ import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
+import com.online.market.utils.DateUtil;
 
 public class MyOrderAdapter extends MyBaseAdapter {
 	private List<OrderBean > orderBeans;
@@ -46,11 +47,13 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderAddress=ViewHolder.get(convertView, R.id.orderaddress);
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderStatus=ViewHolder.get(convertView, R.id.orderstatus);
+		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText("联系方式： "+bean.getPhonenum());
+        tvOrderdeliveTime.setText("预计送达时间： "+ DateUtil.getDate(bean.getUpdatedAt()));
         if(bean.getStatus()==OrderBean.STATUS_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
         }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){

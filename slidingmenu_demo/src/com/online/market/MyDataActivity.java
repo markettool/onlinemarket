@@ -78,9 +78,10 @@ public class MyDataActivity extends BaseActivity {
 		}
 		BmobFile avatar=user.getAvatar();
 		if(avatar!=null){
-			avatar.loadImageThumbnail(this, userimg, 100, 100);
+			avatar.loadImageThumbnail(this, userimg, 25, 25);
 		}
 
+//		bitmapUtils.display(userimg, avatar.getFileUrl(this), config);
 	}
 
 	@Override
@@ -195,7 +196,7 @@ public class MyDataActivity extends BaseActivity {
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				toastMsg("更新fail");
+				toastMsg(arg1);
 				ProgressUtil.closeProgress();
 				
 			}
