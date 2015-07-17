@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -32,14 +31,19 @@ public class CheckoutActivity extends BaseActivity {
 	public static final int PAYMETHOD_CASH=2;
 	
 	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
+	private String [] addresses={"海淀","昌平","太原","五台"};
 	private int paymethod;
 	
 	private EditText etReceiver;
-	private EditText etAddress;
+	private Spinner addressSpinner;
 	private EditText etPhoneNum;
 	private Spinner payMethodSpinner;
 	
 	private List<ShopCartaBean> shopcarts=null;
+	
+	private String receiver;
+	private String address;
+	private String phonenum;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,18 +68,22 @@ public class CheckoutActivity extends BaseActivity {
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 
 		etReceiver=(EditText) findViewById(R.id.name);
-		etAddress=(EditText) findViewById(R.id.address);
+		addressSpinner=(Spinner) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
 		
-		ArrayAdapter< String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
-		payMethodSpinner.setAdapter(adapter);
+		ArrayAdapter< String> paymethodAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
+		paymethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+		payMethodSpinner.setAdapter(paymethodAdapter);
+		
+		ArrayAdapter< String> addressAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, addresses);
+		addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+		addressSpinner.setAdapter(addressAdapter);
 		
 		ReceiveAddress ra=getReceiveAddress();
 		if(ra!=null){
 			etReceiver.setText(ra.getName());
-			etAddress.setText(ra.getAddress());
+//			addressSpinner.setText(ra.getAddress());
 			etPhoneNum.setText(ra.getPhonenum());
 		}
 	}
@@ -108,16 +116,15 @@ public class CheckoutActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				String receiver=etReceiver.getText().toString();
+				receiver=etReceiver.getText().toString();
 				if(TextUtils.isEmpty(receiver)){
 					receiver=etReceiver.getHint().toString();
 				}
-				String address=etAddress.getText().toString();
 				if(TextUtils.isEmpty(address)){
 					toastMsg("address is null");
 					return;
 				}
-				String phonenum=etPhoneNum.getText().toString();
+				phonenum=etPhoneNum.getText().toString();
 				if(TextUtils.isEmpty(phonenum)){
 					phonenum=etPhoneNum.getHint().toString();
 				}
@@ -140,7 +147,7 @@ public class CheckoutActivity extends BaseActivity {
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveAddress(receiver, address, phonenum);
 				if(paymethod==PAYMETHOD_CASH){
-                    submitOrder(receiver, address, phonenum);
+                    submitOrder(OrderBean.STATUS_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
 					payByAlipay(price, detail);
 				}else if(paymethod==PAYMETHOD_WEIXINPAY){
@@ -156,6 +163,20 @@ public class CheckoutActivity extends BaseActivity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				paymethod=arg2;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+		
+		addressSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				address=addresses[arg2];
 			}
 
 			@Override
@@ -184,12 +205,16 @@ public class CheckoutActivity extends BaseActivity {
 		
 		@Override
 		public void unknow() {
-			
+			toastMsg("未知错误");
 		}
 		
 		@Override
 		public void succeed() {
-			
+			if(paymethod==PAYMETHOD_ALIPAY){
+				submitOrder(OrderBean.STATUS_ALIPAY_PAYED);
+			}else if(paymethod==PAYMETHOD_WEIXINPAY){
+				submitOrder(OrderBean.STATUS_WEIXIN_PAYED);
+			}
 		}
 		
 		@Override
@@ -199,20 +224,18 @@ public class CheckoutActivity extends BaseActivity {
 		
 		@Override
 		public void fail(int arg0, String arg1) {
-			
+			toastMsg("付款失败");
 		}
 	};
 	
-	private void submitOrder(String receiver,String address,String phonenum){
+	private void submitOrder(int status){
 		OrderBean bean=new OrderBean();
 		bean.setReceiver(receiver);
 		bean.setUsername(user.getUsername());
 		bean.setAddress(address);
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
-		if(paymethod==PAYMETHOD_CASH){
-			bean.setStatus(OrderBean.STATUS_CASHONDELIVEY);
-		}
+		bean.setStatus(status);
 	    float price=0;
 	    for(ShopCartaBean p:shopcarts){
 	    	price+=p.getPrice();
