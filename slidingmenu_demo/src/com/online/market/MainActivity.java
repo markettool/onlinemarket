@@ -3,7 +3,6 @@ package com.online.market;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -16,11 +15,9 @@ import cn.bmob.v3.update.UpdateResponse;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.online.market.R;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
 import com.online.market.popop.CategoryPopup;
-import com.online.market.utils.ProgressUtil;
 
 /**
  * @date 2014/11/14
