@@ -53,7 +53,12 @@ public class MyOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText("联系方式： "+bean.getPhonenum());
-        tvOrderdeliveTime.setText("预计送达时间： "+ DateUtil.getDate(bean.getCreatedAt()));
+        String time=DateUtil.getDate(bean.getCreatedAt());
+        if(time!=null){
+            tvOrderdeliveTime.setText("预计在"+ DateUtil.getDate(bean.getCreatedAt())+" 之内送达");
+        }else{
+            tvOrderdeliveTime.setText("订单已超时");
+        }
         if(bean.getStatus()==OrderBean.STATUS_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
         }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){
