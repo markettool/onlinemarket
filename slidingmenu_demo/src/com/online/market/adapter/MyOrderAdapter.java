@@ -59,13 +59,14 @@ public class MyOrderAdapter extends MyBaseAdapter {
         }else{
             tvOrderdeliveTime.setText("订单已超时");
         }
-        if(bean.getStatus()==OrderBean.STATUS_PAYFAILED){
+        if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
-        }else if(bean.getStatus()==OrderBean.STATUS_CASHONDELIVEY){
+        }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
         	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice()+" 元");
-        }else if(bean.getStatus()==OrderBean.STATUS_ALIPAY_PAYED){
+        }else {
         	tvOrderStatus.setText("在线已支付");
-        }else if(bean.getStatus()==OrderBean.STAUTS_DELIVED){
+        }
+        if(bean.getState()==OrderBean.STATE_DELIVED){
         	//when status is delived,set all gray
         	tvOrderStatus.setText("订单已完成");
         	tvOrderDetail.setTextColor(mContext.getResources().getColor(R.color.text_gray));
@@ -73,9 +74,9 @@ public class MyOrderAdapter extends MyBaseAdapter {
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.text_gray));
-        }
+        }else
         //when status is not delived,set default
-        if(bean.getStatus()!=OrderBean.STAUTS_DELIVED){
+        {
         	tvOrderDetail.setTextColor(mContext.getResources().getColor(R.color.ble_blue));
         	tvOrderName.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.black));

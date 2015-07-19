@@ -147,7 +147,7 @@ public class CheckoutActivity extends BaseActivity {
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveAddress(receiver, address, phonenum);
 				if(paymethod==PAYMETHOD_CASH){
-                    submitOrder(OrderBean.STATUS_CASHONDELIVEY);
+                    submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
 					payByAlipay(price, detail);
 				}else if(paymethod==PAYMETHOD_WEIXINPAY){
@@ -211,9 +211,9 @@ public class CheckoutActivity extends BaseActivity {
 		@Override
 		public void succeed() {
 			if(paymethod==PAYMETHOD_ALIPAY){
-				submitOrder(OrderBean.STATUS_ALIPAY_PAYED);
+				submitOrder(OrderBean.PAYMETHOD_ALIPAY_PAYED);
 			}else if(paymethod==PAYMETHOD_WEIXINPAY){
-				submitOrder(OrderBean.STATUS_WEIXIN_PAYED);
+				submitOrder(OrderBean.PAYMETHOD_WEIXIN_PAYED);
 			}
 		}
 		
@@ -235,7 +235,7 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setAddress(address);
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
-		bean.setStatus(status);
+		bean.setPayMethod(status);
 	    float price=0;
 	    for(ShopCartaBean p:shopcarts){
 	    	price+=p.getPrice();
