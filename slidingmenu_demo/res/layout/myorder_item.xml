@@ -66,4 +66,12 @@
             android:layout_below="@+id/orderstatus"
             android:layout_marginTop="10dp"/>
      
+     <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_call"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="3dp"
+        android:id="@+id/iv_call"/>
+     
 </RelativeLayout>

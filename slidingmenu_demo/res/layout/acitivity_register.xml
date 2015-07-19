@@ -70,48 +70,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RadioGroup
-        android:id="@+id/sex"
+    <LinearLayout
+        android:id="@+id/ll_nick"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="男：" />
-
-        <RadioButton
-            android:id="@+id/male"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="女：" />
-
-        <RadioButton
-            android:id="@+id/female"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/age"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sex"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
@@ -123,13 +86,38 @@
             android:text="昵称:" />
 
         <EditText
-            android:id="@+id/nickname"
+            android:id="@+id/et_nickname"
             android:hint="必填"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/base_edit_input"
             android:padding="5dp" />
-    </LinearLayout> 
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_nick"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邮箱:" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:hint="用于密码找回"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/base_edit_input"
+            android:padding="5dp" />
+    </LinearLayout>
 
 </RelativeLayout>

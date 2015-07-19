@@ -3,8 +3,12 @@ package com.online.market.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.online.market.R;
@@ -48,17 +52,14 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderStatus=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
+		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText("联系方式： "+bean.getPhonenum());
         String time=DateUtil.getDate(bean.getCreatedAt());
-        if(time!=null){
-            tvOrderdeliveTime.setText("预计在"+ DateUtil.getDate(bean.getCreatedAt())+" 之内送达");
-        }else{
-            tvOrderdeliveTime.setText("订单已超时");
-        }
+        tvOrderdeliveTime.setText(time);
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderStatus.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
@@ -83,6 +84,14 @@ public class MyOrderAdapter extends MyBaseAdapter {
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.orange));
         }
+        ivCall.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+bean.getPhonenum()));  
+                mContext.startActivity(intent); 
+			}
+		});
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
         	detail+=p.getName()+" X "+p.getNumber()+"\n";

@@ -43,74 +43,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/base_edit_input" />
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/rg_sex"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/userimg"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="男：" />
-
-        <RadioButton
-            android:id="@+id/male"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="女：" />
-
-        <RadioButton
-            android:id="@+id/female"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/age"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rg_sex"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/userimg" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="年龄:" />
-
-        <EditText
-            android:id="@+id/userage"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-                                android:padding="5dp"
-            android:background="@drawable/base_edit_input"
-            android:hint="选填"
-            android:inputType="number" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -74,7 +74,7 @@ public class MyOrderActivity extends BaseActivity {
 		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
 		query.addWhereEqualTo("username", user.getUsername());
 		query.order("-updatedAt");
-//		query.setLimit(10);
+		query.setLimit(10);
 		query.findObjects(this, new FindListener<OrderBean>() {
 
 			@Override

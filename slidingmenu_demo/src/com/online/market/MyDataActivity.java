@@ -12,15 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.online.market.beans.MyUser;
@@ -31,10 +28,8 @@ import com.online.market.utils.ProgressUtil;
 public class MyDataActivity extends BaseActivity {
 	public int PICK_REQUEST_CODE = 0;
 	
-	private EditText  etUserage, eNickname;
-	private RadioGroup rgSex;
+	private EditText eNickname;
 	private ImageView userimg;
-	private boolean gender=true;
 	private String avatarPath;
 	
 	@Override
@@ -49,8 +44,6 @@ public class MyDataActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		eNickname = (EditText) findViewById(R.id.username);
-		etUserage = (EditText) findViewById(R.id.userage);
-		rgSex=(RadioGroup) findViewById(R.id.rg_sex);
 		userimg = (ImageView) findViewById(R.id.userimg);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
@@ -74,25 +67,17 @@ public class MyDataActivity extends BaseActivity {
 			return;
 		}
 		eNickname.setText(user.getNickname());
-		etUserage.setText(""+user.getAge());
-		if(user.getGender()){
-			rgSex.check(R.id.male);
-		}
-		else{
-			rgSex.check(R.id.female);
-		}
 		BmobFile avatar=user.getAvatar();
 		if(avatar!=null){
 //			avatar.loadImageThumbnail(this, userimg, 25, 25);
 			downloadPic(avatar);
 		}
 
-//		bitmapUtils.display(userimg, avatar.getFileUrl(this), config);
 	}
 	
 	private void downloadPic(BmobFile avatar){
 		HttpUtils http=new HttpUtils();
-		final String path=dir+"avatar.png";
+		final String path=dir+user.getUsername()+".png";
 		if(FileUtils.isFileExist(path)){
 			userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
             return;
@@ -119,12 +104,10 @@ public class MyDataActivity extends BaseActivity {
 			public void onClick(View v) {
 
 				String nickname = eNickname.getText().toString();
-				String ageS = etUserage.getText().toString();
-				int age=new Integer(ageS);
 				if(avatarPath==null){
-					signUp(nickname,  age, gender, null);
+					update(nickname, null);
 				}else{
-					uploadAvatarFile(nickname, age, gender,new File(avatarPath));
+					uploadAvatarFile(nickname, new File(avatarPath));
 				}
 				
 			}
@@ -146,21 +129,6 @@ public class MyDataActivity extends BaseActivity {
 			}
 		});
 		  
-        rgSex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-
-				switch (arg1) {
-				case R.id.male:
-					gender=true;
-					break;
-				case R.id.female:
-					gender=false;
-					break;
-				}
-			}
-		});
 	}
 	
 	private void getFileFromSD() {
@@ -203,13 +171,11 @@ public class MyDataActivity extends BaseActivity {
 		}
 	}
 	
-	private void signUp(final String nickname,final int age,final boolean gender,BmobFile file) {
+	private void update(final String nickname,BmobFile file) {
 		ProgressUtil.showProgress(this, "");
 		final MyUser myUser = new MyUser();
 		myUser.setNickname(nickname);
 		myUser.setObjectId(user.getObjectId());
-		myUser.setGender(gender);
-		myUser.setAge(age);
 		myUser.setAvatar(file);
 		myUser.update(this, new UpdateListener() {
 			
@@ -231,7 +197,7 @@ public class MyDataActivity extends BaseActivity {
 		
 	}
 	
-	private void uploadAvatarFile(final String nickname,final int  age,final boolean gender,File file) {
+	private void uploadAvatarFile(final String nickname,File file) {
 		final BmobFile bmobFile = new BmobFile(file);
 		
 		bmobFile.uploadblock(this, new UploadFileListener() {
@@ -239,7 +205,7 @@ public class MyDataActivity extends BaseActivity {
 			@Override
 			public void onSuccess() {
 //				Log.i("majie", "名称--"+bmobFile.getFileUrl(MyDataActivity.this)+"，文件名="+bmobFile.getFilename());
-				signUp(nickname, age, gender, bmobFile);
+				update(nickname,bmobFile);
 			}
 
 			@Override

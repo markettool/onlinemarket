@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -24,10 +23,8 @@ import com.online.market.utils.FileUtils;
 import com.online.market.utils.ProgressUtil;
 
 public class RegisterActivity extends BaseActivity {
-	int PICK_REQUEST_CODE = 0;
-	private EditText etUsername, etUserpsw, eNickname;
-	private RadioGroup group;
-	private boolean gender = true;
+	public int PICK_REQUEST_CODE = 0;
+	private EditText etUsername, etUserpsw, etNickname,etEmail;
 	private ImageView userimg;
 	private String avatarPath;
 	
@@ -87,9 +84,9 @@ public class RegisterActivity extends BaseActivity {
 		
 		etUsername = (EditText) findViewById(R.id.username);
 		etUserpsw = (EditText) findViewById(R.id.userpsw);
-		eNickname = (EditText) findViewById(R.id.nickname);
+		etNickname = (EditText) findViewById(R.id.et_nickname);
+		etEmail =(EditText) findViewById(R.id.et_email);
 		userimg = (ImageView) findViewById(R.id.userimg);
-		group = (RadioGroup) findViewById(R.id.sex);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("用户注册");
@@ -115,35 +112,21 @@ public class RegisterActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				String name = etUsername.getText().toString();
-				String psw = etUserpsw.getText().toString();
-				String realName = eNickname.getText().toString();
-				if (name.equals("") || psw.equals("") || realName.equals("")
+				String username = etUsername.getText().toString();
+				String userpsw = etUserpsw.getText().toString();
+				String nickName = etNickname.getText().toString();
+				String email=etEmail.getText().toString();
+				if (username.equals("") || userpsw.equals("") || nickName.equals("")
 						) {
 					toastMsg("请填写基本资料");
 					return;
 				}
 				if(avatarPath==null){
-					signUp(name, psw, realName, gender, null);
+					signUp(username, userpsw, nickName, email, null);
 				}else{
-					uploadAvatarFile(name, psw, realName, gender,new File(avatarPath));
+					uploadAvatarFile(username, userpsw, nickName,email,new File(avatarPath));
 				}
 				
-			}
-		});
-
-		
-		group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.male) {
-					gender = true;
-//					Toast.makeText(getApplicationContext(), "男", 2000).show();
-				} else {
-					gender = false;
-				}
-
 			}
 		});
 
@@ -167,13 +150,13 @@ public class RegisterActivity extends BaseActivity {
 	/**
 	 * 注册用户
 	 */
-	private void signUp(final String username,String psw,final String nickname,final boolean gender,BmobFile file) {
+	private void signUp(final String username,String psw,final String nickname,String email,BmobFile file) {
 		ProgressUtil.showProgress(this, "");
 		final MyUser myUser = new MyUser();
 		myUser.setUsername(username);
 		myUser.setPassword(psw);
 		myUser.setNickname(nickname);
-		myUser.setGender(gender);
+		myUser.setEmail(email);
 		myUser.setAvatar(file);
 		myUser.signUp(this, new SaveListener() {
 
@@ -195,15 +178,15 @@ public class RegisterActivity extends BaseActivity {
 		
 	}
 	
-	private void uploadAvatarFile(final String name,final String psw,final String  realname,final boolean gender,File file) {
+	private void uploadAvatarFile(final String username,final String psw,final String  nickname,final String email,File file) {
 		final BmobFile bmobFile = new BmobFile(file);
 		
 		bmobFile.uploadblock(this, new UploadFileListener() {
 
 			@Override
 			public void onSuccess() {
-				Log.i("majie", "名称--"+bmobFile.getFileUrl(RegisterActivity.this)+"，文件名="+bmobFile.getFilename());
-				signUp(name, psw, realname, gender,bmobFile);
+//				Log.i("majie", "名称--"+bmobFile.getFileUrl(RegisterActivity.this)+"，文件名="+bmobFile.getFilename());
+				signUp(username, psw, nickname,email, bmobFile);
 			}
 
 			@Override
