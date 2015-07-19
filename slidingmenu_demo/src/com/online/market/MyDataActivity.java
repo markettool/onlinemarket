@@ -18,13 +18,18 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.HttpHandler;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.online.market.beans.MyUser;
 import com.online.market.utils.BitmapUtil;
 import com.online.market.utils.FileUtils;
 import com.online.market.utils.ProgressUtil;
 
 public class MyDataActivity extends BaseActivity {
-	int PICK_REQUEST_CODE = 0;
+	public int PICK_REQUEST_CODE = 0;
 	
 	private EditText  etUserage, eNickname;
 	private RadioGroup rgSex;
@@ -78,10 +83,32 @@ public class MyDataActivity extends BaseActivity {
 		}
 		BmobFile avatar=user.getAvatar();
 		if(avatar!=null){
-			avatar.loadImageThumbnail(this, userimg, 25, 25);
+//			avatar.loadImageThumbnail(this, userimg, 25, 25);
+			downloadPic(avatar);
 		}
 
 //		bitmapUtils.display(userimg, avatar.getFileUrl(this), config);
+	}
+	
+	private void downloadPic(BmobFile avatar){
+		HttpUtils http=new HttpUtils();
+		final String path=dir+"avatar.png";
+		if(FileUtils.isFileExist(path)){
+			userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+            return;
+		}
+		http.download(avatar.getFileUrl(this), path, new RequestCallBack<File>() {
+			
+			@Override
+			public void onSuccess(ResponseInfo<File> arg0) {
+				userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+			}
+			
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				
+			}
+		});
 	}
 
 	@Override

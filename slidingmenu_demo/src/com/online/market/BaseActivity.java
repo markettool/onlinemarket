@@ -1,6 +1,8 @@
 package com.online.market;
 
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import cn.bmob.v3.BmobUser;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -22,6 +23,7 @@ import com.online.market.R;
 import com.online.market.beans.MyUser;
 import com.online.market.utils.ActivityControl;
 import com.online.market.utils.BitmapHelp;
+import com.online.market.utils.FileUtils;
 
 /**
  * base activity
@@ -37,6 +39,7 @@ public abstract class BaseActivity extends Activity {
 	protected ImageView mImgRight;
 	protected BitmapUtils bitmapUtils;
 	protected MyUser user;
+	protected String dir;
 	protected BitmapDisplayConfig config;
 	protected DbUtils dbUtils;
 	protected LayoutInflater mInflater;
@@ -60,6 +63,8 @@ public abstract class BaseActivity extends Activity {
 		config=BitmapHelp.getDisplayConfig(this, 50, 50);
 		dbUtils=DbUtils.create(this);
 		user=BmobUser.getCurrentUser(this, MyUser.class);
+		dir=FileUtils.getSDCardRoot()+getPackageName()+File.separator;
+		FileUtils.mkdirs(dir);
 		ActivityControl.getInstance().addActivity(this);
 	}
 

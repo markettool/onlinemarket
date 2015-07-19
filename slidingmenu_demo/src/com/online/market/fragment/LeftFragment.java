@@ -16,6 +16,10 @@ import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.online.market.LoginActivity;
 import com.online.market.MainActivity;
 import com.online.market.MyDataActivity;
@@ -24,13 +28,15 @@ import com.online.market.MyShopCartActivity;
 import com.online.market.R;
 import com.online.market.SettingActivity;
 import com.online.market.beans.MyUser;
+import com.online.market.fragment.base.BaseFragment;
+import com.online.market.utils.BitmapUtil;
 import com.online.market.utils.FileUtils;
 /**
  * @date 2014/11/14
  * @author wuwenjie
  * @description 侧边栏菜单
  */
-public class LeftFragment extends Fragment implements OnClickListener{
+public class LeftFragment extends BaseFragment implements OnClickListener{
 	private View myshopcart;
 	private View myorder;
 	private View settings;
@@ -85,14 +91,35 @@ public class LeftFragment extends Fragment implements OnClickListener{
 		if(myUser!=null){
 			 username.setText(myUser.getNickname());
 			 if(myUser.getAvatar()!=null){
-					BmobFile avatar=myUser.getAvatar();
-					avatar.loadImageThumbnail(getActivity(), userimg, 100, 100);
+				 downloadPic(myUser.getAvatar());
 			 }
 		}
 		else{
 			username.setText("未登录");
 		}
 	}
+	
+	private void downloadPic(BmobFile avatar){
+		HttpUtils http=new HttpUtils();
+		final String path=dir+"avatar.png";
+		if(FileUtils.isFileExist(path)){
+			userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+            return;
+		}
+		http.download(avatar.getFileUrl(getActivity()), path, new RequestCallBack<File>() {
+			
+			@Override
+			public void onSuccess(ResponseInfo<File> arg0) {
+				userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+			}
+			
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				
+			}
+		});
+	}
+
 	
 	@Override
 	public void onClick(View v) {
