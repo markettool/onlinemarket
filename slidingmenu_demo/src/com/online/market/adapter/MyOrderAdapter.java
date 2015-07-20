@@ -53,6 +53,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderStatus=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
 		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
+		ivCall.setVisibility(View.GONE);
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());

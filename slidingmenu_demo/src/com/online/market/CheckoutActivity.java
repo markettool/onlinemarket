@@ -83,7 +83,6 @@ public class CheckoutActivity extends BaseActivity {
 		ReceiveAddress ra=getReceiveAddress();
 		if(ra!=null){
 			etReceiver.setText(ra.getName());
-//			addressSpinner.setText(ra.getAddress());
 			etPhoneNum.setText(ra.getPhonenum());
 		}
 	}
@@ -233,6 +232,8 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setReceiver(receiver);
 		bean.setUsername(user.getUsername());
 		bean.setAddress(address);
+		bean.setDispatcher("untreated");
+		bean.setPacker("untreated");
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
 		bean.setPayMethod(paymethod);
