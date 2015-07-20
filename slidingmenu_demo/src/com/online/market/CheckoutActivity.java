@@ -228,14 +228,14 @@ public class CheckoutActivity extends BaseActivity {
 		}
 	};
 	
-	private void submitOrder(int status){
+	private void submitOrder(int paymethod){
 		OrderBean bean=new OrderBean();
 		bean.setReceiver(receiver);
 		bean.setUsername(user.getUsername());
 		bean.setAddress(address);
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
-		bean.setPayMethod(status);
+		bean.setPayMethod(paymethod);
 	    float price=0;
 	    for(ShopCartaBean p:shopcarts){
 	    	price+=p.getPrice();
