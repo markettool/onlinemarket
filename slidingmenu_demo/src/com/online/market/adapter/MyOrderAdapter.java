@@ -50,7 +50,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderName=ViewHolder.get(convertView, R.id.ordername);
 		TextView tvOrderAddress=ViewHolder.get(convertView, R.id.orderaddress);
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
-		TextView tvOrderStatus=ViewHolder.get(convertView, R.id.orderstatus);
+		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
 		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
 		ivCall.setVisibility(View.GONE);
@@ -62,20 +62,20 @@ public class MyOrderAdapter extends MyBaseAdapter {
         String time=DateUtil.getDate(bean.getCreatedAt());
         tvOrderdeliveTime.setText(time);
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
-        	tvOrderStatus.setText("付款失败");
+        	tvOrderPaymethod.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
-        	tvOrderStatus.setText("货到付款：需支付 "+bean.getPrice()+" 元");
+        	tvOrderPaymethod.setText("货到付款：需支付 "+bean.getPrice()+" 元");
         }else {
-        	tvOrderStatus.setText("在线已支付");
+        	tvOrderPaymethod.setText("在线已支付");
         }
         if(bean.getState()==OrderBean.STATE_DELIVED){
         	//when status is delived,set all gray
-        	tvOrderStatus.setText("订单已完成");
+        	tvOrderPaymethod.setText("订单已完成");
         	tvOrderDetail.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderName.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.text_gray));
-        	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         }else
         //when status is not delived,set default
         {
@@ -83,7 +83,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
         	tvOrderName.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.black));
-        	tvOrderStatus.setTextColor(mContext.getResources().getColor(R.color.orange));
+        	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.orange));
         }
         ivCall.setOnClickListener(new OnClickListener() {
 			
