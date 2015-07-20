@@ -30,8 +30,13 @@ public class BaseFragment extends Fragment {
 		dbUtils=DbUtils.create(getActivity());
 		dir=FileUtils.getSDCardRoot()+getActivity().getPackageName()+File.separator;
 		FileUtils.mkdirs(dir);
-		user=BmobUser.getCurrentUser(getActivity(), MyUser.class);
 
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		user=BmobUser.getCurrentUser(getActivity(), MyUser.class);
 	}
 	
 	/** toast **/

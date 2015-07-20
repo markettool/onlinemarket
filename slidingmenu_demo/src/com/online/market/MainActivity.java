@@ -17,7 +17,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
-import com.online.market.popop.CategoryPopup;
+import com.testin.agent.TestinAgent;
 
 /**
  * @date 2014/11/14
@@ -36,11 +36,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private Fragment mContent;
 	private TextView topTextView;
 	private TextView tvRight;
-	private View headView;
-	
 	private LeftFragment leftFragment;
-	private CategoryPopup pop;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE); // 无标题
@@ -48,8 +45,9 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),APPID);
+		TestinAgent.init(this, "4d08fb30db343ad7d7c4ed724728597a", "android");
 
-		headView=findViewById(R.id.head);
+		findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);
 		topTextView = (TextView) findViewById(R.id.topTv);

@@ -44,8 +44,6 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	private TextView username;
 	private ImageView userimg;
 	
-	private MyUser myUser;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,15 +81,14 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	@Override
 	public void onResume() {
 		super.onResume();
-		myUser = BmobUser.getCurrentUser(getActivity(),MyUser.class);
 		refresh();
 	};
 	
 	private void refresh(){
-		if(myUser!=null){
-			 username.setText(myUser.getNickname());
-			 if(myUser.getAvatar()!=null){
-				 downloadPic(myUser.getAvatar());
+		if(user!=null){
+			 username.setText(user.getNickname());
+			 if(user.getAvatar()!=null){
+				 downloadPic(user.getAvatar());
 			 }
 		}
 		else{
@@ -137,7 +134,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 			break;
 		case R.id.my_data:
 		case R.id.avatar_pic:
-			if(myUser==null){
+			if(user==null){
 				getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
 			}else{
 				getActivity().startActivity(new Intent(getActivity(), MyDataActivity.class));
