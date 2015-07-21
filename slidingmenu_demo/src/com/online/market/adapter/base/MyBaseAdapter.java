@@ -57,40 +57,14 @@ public abstract class MyBaseAdapter extends BaseAdapter {
 	public void ShowLog(String msg) {
 		BmobLog.i(msg);
 	}
-	
-//	protected void push(User targetUser ,String json){
-//		String installationId = targetUser.getInstallId();
-//		BmobPushManager bmobPush = new BmobPushManager(mContext);
-//		BmobQuery<BmobInstallation> query = BmobInstallation.getQuery();
-//		query.addWhereEqualTo("installationId", installationId);
-//		bmobPush.setQuery(query);
-//		bmobPush.pushMessage(json);		
-//	}
-	
-//	protected void queryUserByName(String searchName,final String msg){
-//		BmobQuery<User> query = new BmobQuery<User>();
-//		
-//		query.addWhereEqualTo("username", searchName);
-//		query.findObjects(mContext, new FindListener<User>() {
-//
-//			@Override
-//			public void onSuccess(List<User> object) {
-//
-//				if(object.size()!=0){
-//					action(object.get(0), msg);
-//				}
-//			}
-//
-//			@Override
-//			public void onError(int code, String msg) {
-//			}
-//		});
-//	}
-	
-//	/**��ѯ���û��ĺ��������д������*/
-//	public void action(User user,String msg){
-//		
-//	}
-	
 
+	/** toast **/
+	protected void toastMsg(int msgId) {
+		toastMsg(mContext.getString(msgId));
+	}
+	
+	/** toast **/
+	public void toastMsg(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+	}
 }

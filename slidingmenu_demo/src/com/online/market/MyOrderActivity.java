@@ -72,45 +72,7 @@ public class MyOrderActivity extends BaseActivity {
 
 	@Override
 	protected void setListeners() {
-		xlv.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				final int pos=arg2-1;
-				DialogUtil.dialog(MyOrderActivity.this, "你确认取消订单吗？", "确认", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int arg1) {
-						OrderBean bean=orders.get(pos);
-						ProgressUtil.showProgress(MyOrderActivity.this, "");
-						bean.delete(MyOrderActivity.this, new DeleteListener() {
-							
-							@Override
-							public void onSuccess() {
-								ProgressUtil.closeProgress();
-								orders.remove(pos);
-								adapter.notifyDataSetChanged();
-							}
-							
-							@Override
-							public void onFailure(int arg0, String arg1) {
-								ProgressUtil.closeProgress();
-								toastMsg(arg1);
-							}
-						});
-						dialog.dismiss();
-					}
-				}, "取消",new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int arg1) {
-						dialog.dismiss();
-					}
-				});
-				return false;
-			}
-		});
+		
 	}
 	
 	private void queryOrders(){
