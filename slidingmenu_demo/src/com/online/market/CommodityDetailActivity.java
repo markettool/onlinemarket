@@ -1,5 +1,7 @@
 package com.online.market;
 
+import java.text.DecimalFormat;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -76,8 +78,11 @@ public class CommodityDetailActivity extends BaseActivity {
 		bitmapUtils.display(ivPic, bean.getPics().getFileUrl(this),config);
 		
 		tvName.setText(bean.getName());
-		tvPrice.setText("售价： "+bean.getPrice()+" 元");
-		tvOriginPrice.setText("原价： "+(int)(bean.getPrice()*1.2f)+" 元");
+		float price=bean.getPrice();
+		DecimalFormat   df=new DecimalFormat("#.#");   
+		String originPrice=df.format(price*1.2f);
+		tvPrice.setText("售价： "+price+" 元");
+		tvOriginPrice.setText("原价： "+originPrice+" 元");
 		
 		mBtnTitleMiddle.setText(bean.getName());
 	}

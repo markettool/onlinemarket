@@ -3,15 +3,20 @@ package com.online.market;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 
 import com.online.market.adapter.MyOrderAdapter;
 import com.online.market.beans.OrderBean;
+import com.online.market.utils.DialogUtil;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.view.xlist.XListView;
 
@@ -20,6 +25,7 @@ public class MyOrderActivity extends BaseActivity {
 	private XListView xlv;
 	private List<OrderBean> orders=new ArrayList<OrderBean>();
 	private TextView tvNoOrder;
+	private MyOrderAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +72,45 @@ public class MyOrderActivity extends BaseActivity {
 
 	@Override
 	protected void setListeners() {
-		
+		xlv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				final int pos=arg2-1;
+				DialogUtil.dialog(MyOrderActivity.this, "你确认取消订单吗？", "确认", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						OrderBean bean=orders.get(pos);
+						ProgressUtil.showProgress(MyOrderActivity.this, "");
+						bean.delete(MyOrderActivity.this, new DeleteListener() {
+							
+							@Override
+							public void onSuccess() {
+								ProgressUtil.closeProgress();
+								orders.remove(pos);
+								adapter.notifyDataSetChanged();
+							}
+							
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								ProgressUtil.closeProgress();
+								toastMsg(arg1);
+							}
+						});
+						dialog.dismiss();
+					}
+				}, "取消",new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+					}
+				});
+				return false;
+			}
+		});
 	}
 	
 	private void queryOrders(){
@@ -88,7 +132,7 @@ public class MyOrderActivity extends BaseActivity {
 			@Override
 			public void onError(int code, String msg) {
 				ProgressUtil.closeProgress();
-				toastMsg("net fail");
+				toastMsg(msg);
 			}
 		});	
 		
@@ -98,7 +142,7 @@ public class MyOrderActivity extends BaseActivity {
 		if(orders.size()==0){
 			tvNoOrder.setVisibility(View.VISIBLE);
 		}
-		MyOrderAdapter adapter=new MyOrderAdapter(this, orders);
+		adapter=new MyOrderAdapter(this, orders);
 		xlv.setAdapter(adapter);
 	}
 

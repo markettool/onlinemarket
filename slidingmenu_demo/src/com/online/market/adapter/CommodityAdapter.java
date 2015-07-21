@@ -2,10 +2,7 @@ package com.online.market.adapter;
 
 import java.util.List;
 
-
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
-import com.online.market.config.SystemConfig;
 
 public class CommodityAdapter extends MyBaseAdapter {
 

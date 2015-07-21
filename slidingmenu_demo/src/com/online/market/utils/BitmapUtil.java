@@ -33,7 +33,7 @@ public class BitmapUtil {
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, options);
         if (bitmap == null)
         {
-        	Log.e("majie", "bitmap为空");
+//        	Log.e("majie", "bitmap为空");
 //        	return null;
         }
         float realWidth = options.outWidth;
@@ -49,9 +49,9 @@ public class BitmapUtil {
         options.inJustDecodeBounds = false;
         // 注意这次要把options.inJustDecodeBounds 设为 false,这次图片是要读取出来的。&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         bitmap = BitmapFactory.decodeFile(srcPath, options);
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-        Log.e("majie", "缩略图高度：" + h + "宽度:" + w);
+//        int w = bitmap.getWidth();
+//        int h = bitmap.getHeight();
+//        Log.e("majie", "缩略图高度：" + h + "宽度:" + w);
         return bitmap;
     }
 	
