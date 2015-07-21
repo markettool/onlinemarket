@@ -3,6 +3,7 @@ package com.online.market.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -10,13 +11,17 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.v3.listener.DeleteListener;
 
+import com.online.market.MyOrderActivity;
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.DateUtil;
+import com.online.market.utils.DialogUtil;
+import com.online.market.utils.ProgressUtil;
 
 public class MyOrderAdapter extends MyBaseAdapter {
 	private List<OrderBean > orderBeans;
@@ -52,8 +57,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
-		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
-		ivCall.setVisibility(View.GONE);
+		ImageView ivMenu=ViewHolder.get(convertView, R.id.iv_menu);
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
@@ -85,12 +89,43 @@ public class MyOrderAdapter extends MyBaseAdapter {
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.orange));
         }
-        ivCall.setOnClickListener(new OnClickListener() {
+		final int pos=arg0;
+        ivMenu.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+bean.getPhonenum()));  
-                mContext.startActivity(intent); 
+			public void onClick(View view) {
+//				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+bean.getPhonenum()));  
+//                mContext.startActivity(intent); 
+                DialogUtil.dialog(mContext, "你确认取消订单吗？", "确认", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						OrderBean bean=orderBeans.get(pos);
+						ProgressUtil.showProgress(mContext, "");
+						bean.delete(mContext, new DeleteListener() {
+							
+							@Override
+							public void onSuccess() {
+								ProgressUtil.closeProgress();
+								orderBeans.remove(pos);
+								notifyDataSetChanged();
+							}
+							
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								ProgressUtil.closeProgress();
+								toastMsg(arg1);
+							}
+						});
+						dialog.dismiss();
+					}
+				}, "取消",new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+					}
+				});
 			}
 		});
         String detail="";
