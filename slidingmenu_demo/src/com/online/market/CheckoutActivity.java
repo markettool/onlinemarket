@@ -21,11 +21,15 @@ import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.beans.CommodityBean;
 import com.online.market.beans.OrderBean;
-import com.online.market.beans.ReceiveAddress;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
+import com.online.market.utils.SharedPrefUtil;
 
 public class CheckoutActivity extends BaseActivity {
+	public static final String ADDRESS="address";
+	public static final String RECEIVER="receiver";
+	public static final String PHONENUM="phonenum";
+	
 	public static final int PAYMETHOD_ALIPAY=0;
 	public static final int PAYMETHOD_WEIXINPAY=1;
 	public static final int PAYMETHOD_CASH=2;
@@ -45,10 +49,13 @@ public class CheckoutActivity extends BaseActivity {
 	private String address;
 	private String phonenum;
 	
+	private SharedPrefUtil su;
+	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_checkout);
 		
+		su=new SharedPrefUtil(this, "tiantianonline");
 		initView();
 		initData();
 		setListeners();
@@ -80,11 +87,12 @@ public class CheckoutActivity extends BaseActivity {
 		addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
 		addressSpinner.setAdapter(addressAdapter);
 		
-		ReceiveAddress ra=getReceiveAddress();
-		if(ra!=null){
-			etReceiver.setText(ra.getName());
-			etPhoneNum.setText(ra.getPhonenum());
-		}
+//		String address=su.getValueByKey(ADDRESS, "");
+		receiver=su.getValueByKey(RECEIVER, "");
+		phonenum=su.getValueByKey(PHONENUM, "");
+
+		etReceiver.setText(receiver);
+		etPhoneNum.setText(phonenum);
 	}
 
 	@Override
@@ -144,7 +152,7 @@ public class CheckoutActivity extends BaseActivity {
 				detail=detail.substring(0, index);
 				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
-				saveReceiveAddress(receiver, address, phonenum);
+				saveReceiveAddress();
 				if(paymethod==PAYMETHOD_CASH){
                     submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
@@ -268,36 +276,10 @@ public class CheckoutActivity extends BaseActivity {
 	}
 	
 	/**保存收货地址*/
-	private void saveReceiveAddress(String name,String address,String phonenum){
-		ReceiveAddress add=getReceiveAddress();
-		if(add!=null&&add.getAddress().equals(address)&&add.getName().equals(name)&&add.getPhonenum().equals(phonenum)){
-			//existed,dont save
-			return;
-		}
-		ReceiveAddress ra=new ReceiveAddress();
-		ra.setName(name);
-		ra.setAddress(address);
-		ra.setPhonenum(phonenum);
-		try {
-			dbUtils.save(ra);
-		} catch (DbException e) {
-			e.printStackTrace();
-		}
+	private void saveReceiveAddress(){
+		su.putValueByKey(PHONENUM, phonenum);
+		su.putValueByKey(RECEIVER, receiver);
 		
-	}
-	
-	/**得到保存在数据库的收货地址*/
-	private ReceiveAddress getReceiveAddress(){
-		try {
-			List<ReceiveAddress> addresses=dbUtils.findAll(Selector.from(ReceiveAddress.class));
-	        if(addresses!=null&&addresses.size()!=0){
-	        	return addresses.get(0);
-	        }
-			return null;
-		} catch (DbException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	private void updateSold(List<ShopCartaBean> carts){
