@@ -24,6 +24,7 @@ import com.online.market.beans.MyUser;
 import com.online.market.utils.ActivityControl;
 import com.online.market.utils.BitmapHelp;
 import com.online.market.utils.FileUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * base activity
@@ -127,6 +128,7 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		user=BmobUser.getCurrentUser(this, MyUser.class);
 	}
 	
@@ -205,4 +207,10 @@ public abstract class BaseActivity extends Activity {
 		}
 		startActivity(intent);
 	}
+	
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 }

@@ -17,7 +17,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
-import com.testin.agent.TestinAgent;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @date 2014/11/14
@@ -45,7 +45,6 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),APPID);
-		TestinAgent.init(this, "4d08fb30db343ad7d7c4ed724728597a", "android");
 
 		findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);
@@ -143,5 +142,15 @@ public class MainActivity extends SlidingFragmentActivity implements
 			toggle();
 			break;
 		}
+	}
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }
