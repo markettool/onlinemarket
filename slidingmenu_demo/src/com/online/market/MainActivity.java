@@ -18,6 +18,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  * @date 2014/11/14
@@ -62,18 +63,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 	}
 	
 	private void updateVersion(){
-//		BmobUpdateAgent.initAppVersion(this);
-		BmobUpdateAgent.update(this);
-		BmobUpdateAgent.setUpdateOnlyWifi(false);
-		 BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
-
-			 @Override
-			 public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-			     // TODO Auto-generated method stub
-			     //根据updateStatus来判断更新是否成功
-//				 Log.d("majie","updateStatus "+ updateStatus);
-			 }
-			});
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
+		UmengUpdateAgent.update(this);
 	}
 
 	/**

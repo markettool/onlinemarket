@@ -32,7 +32,7 @@ public class AboutActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-		BmobUpdateAgent.update(this);
+//		BmobUpdateAgent.update(this);
 	}
 
 	@Override
