@@ -9,9 +9,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.listener.BmobUpdateListener;
-import cn.bmob.v3.update.BmobUpdateAgent;
-import cn.bmob.v3.update.UpdateResponse;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -64,7 +61,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 	
 	private void updateVersion(){
 		UmengUpdateAgent.setUpdateOnlyWifi(false);
-		UmengUpdateAgent.update(this);
+		UmengUpdateAgent.forceUpdate(this);;
 	}
 
 	/**
