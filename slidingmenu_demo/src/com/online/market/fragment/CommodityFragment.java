@@ -40,6 +40,7 @@ public class CommodityFragment extends BaseFragment {
 	private ClearEditText cet;
 	private CommodityAdapter adapter;
 	private int skip;
+	/**类别*/
 	private String category;
 	private List<CommodityBean> commodityBeans=new ArrayList<CommodityBean>();
 	private int oldSize=0;
@@ -99,7 +100,11 @@ public class CommodityFragment extends BaseFragment {
 			@Override
 			public void onRefresh() {
 				reinit();
-				queryCommoditys(FINISH_REFRESHING,null,null);
+				if(category==null){
+					queryCommoditys(FINISH_REFRESHING, null, null);
+				}else{
+					queryCommoditys(FINISH_REFRESHING, "category", category);
+				}
 			}
 			
 			@Override
@@ -131,7 +136,11 @@ public class CommodityFragment extends BaseFragment {
 				reinit();
 				ProgressUtil.showProgress(getActivity(), "");
 				if(TextUtils.isEmpty(s)){
-					queryCommoditys(FINISH_REFRESHING, null,null);
+					if(category==null){
+						queryCommoditys(FINISH_REFRESHING, null, null);
+					}else{
+						queryCommoditys(FINISH_REFRESHING, "category", category);
+					}
 				}else{
 					queryCommoditys(FINISH_REFRESHING,"name", s.toString());
 				}
