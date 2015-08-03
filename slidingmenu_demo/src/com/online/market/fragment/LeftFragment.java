@@ -33,21 +33,17 @@ import com.online.market.utils.BitmapUtil;
 import com.online.market.utils.FileUtils;
 /**
  * @date 2014/11/14
- * @author wuwenjie
+ * @author majie
  * @description 侧边栏菜单
  */
 public class LeftFragment extends BaseFragment implements OnClickListener{
 	private View myshopcart;
 	private View myorder;
 	private View settings;
+	private View tvShare;
 	private RelativeLayout myData;
 	private TextView username;
 	private ImageView userimg;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -62,13 +58,15 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		downloadUserPic();
 		return view;
 	}
-	
-	
+		
 	public void findViews(View view) {
 		myshopcart = view.findViewById(R.id.tvToday);
 		myorder = view.findViewById(R.id.tvLastlist);
 		settings = view.findViewById(R.id.tvMySettings);
+		tvShare= view.findViewById(R.id.tvShare);
+		
 		myData=(RelativeLayout) view.findViewById(R.id.my_data);
+		
 		username=(TextView) view.findViewById(R.id.user_name);
 		userimg=(ImageView) view.findViewById(R.id.avatar_pic);
 		userimg.setOnClickListener(this);
@@ -76,6 +74,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		myorder.setOnClickListener(this);
 		settings.setOnClickListener(this);
 		myData.setOnClickListener(this);
+		tvShare.setOnClickListener(this);
 	}
 	
 	@Override
@@ -132,6 +131,10 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		case R.id.tvMySettings: // 设置
 			getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
 			break;
+			
+		case R.id.tvShare:
+			onClickShare();
+			break;
 		case R.id.my_data:
 		case R.id.avatar_pic:
 			if(user==null){
@@ -178,9 +181,9 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		  
         Intent intent=new Intent(Intent.ACTION_SEND);   
         intent.setType("text/plain");   
-        intent.putExtra(Intent.EXTRA_SUBJECT, "乱弹");   
-        intent.putExtra(Intent.EXTRA_TEXT, "发表乱弹既可赚钱，速速下载!\n" +
-        		"http://markettool-app.stor.sinaapp.com/opera.apk\n"+"请将链接复制到浏览器进行下载。");    
+        intent.putExtra(Intent.EXTRA_SUBJECT, "天天在线");   
+        intent.putExtra(Intent.EXTRA_TEXT, "天天在线，您掌上的超市!" +
+        		"");    
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
         startActivity(Intent.createChooser(intent, getActivity().getTitle()));   
   

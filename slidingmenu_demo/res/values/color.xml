@@ -56,53 +56,10 @@
     <color name="cor_1e83e6">#1e83e6</color>
     <color name="cor_49a1ec">#49a1ec</color>
     <color name="cor_82b46e">#82b46e</color>
-    
-    <!-- 6.2.5 -->
-    <color name="cor_dddddd">#dddddd</color>
-    <color name="cor_f3f3f3">#f3f3f3</color>
-    <color name="cor_5a5a5a">#5a5a5a</color>
-    <color name="cor_cbcbcb">#cbcbcb</color>
-    <color name="cor_585885">#585885</color>
-    <color name="cor_f5f5f5">#f5f5f5</color>
-    
-    <!-- 6.3 -->
-    <color name="cor_0c4da2">#0C4DA2</color>
-    <color name="cor_90a3ca">#90a3ca</color>
-    <color name="cor_585858">#585858</color>
-    <color name="cor_cccccc">#cccccc</color>
-    <color name="cor_70000000">#70000000</color>
-    <color name="cor_90000000">#90000000</color>
-    
-    
-    <!-- cc 选择上下车地点   搜索 -->
-    <color name="cor_search_address_tv_888888">#888888</color>
 
     <!-- BLE color -->
-    <color name="red_yidao">#ec4949</color>
-    <color name="red_deep">#cf4141</color>
-    <color name="gray_text">#222222</color>
-     <color name="gray_yidao">#f0f0f0</color>
-     <color name="grayer_yidao">#e0dfdf</color>
-     <color name="gray_deep">#888888</color>
-    <color name="black_overlay">#66000000</color>
     <color name="ble_blue">#023cfa</color>
-    <!-- bus calendar -->
 
-    <color name="canlendar_text_color">#323232</color>
-    <color name="calendar_active_month_bg">#fff5f7f9</color>
-    <color name="calendar_bg">#ffffffff</color>
-    <color name="calendar_divider">#ffbababa</color>
-    <color name="calendar_inactive_month_bg">#ffd7d9db</color>
-    <color name="calendar_selected_day_bg">#ff379bff</color>
-    <color name="calendar_highlighted_day_bg">#ccffcc</color>
-    <color name="calendar_selected_range_bg">#ff96caff</color>
-    <color name="calendar_text_inactive">#40778088</color>
-    <color name="calendar_text_active">#ff778088</color>
-    <color name="calendar_text_selected">#ffffffff</color>
-    <color name="calendar_text_unselectable">#7f778088</color>
-    
     <color name="orange">#FF6100</color>
-    <color name="bus_tag_default">#91c278</color>
-    
      <color name="cor_fda658">#fda658</color>
 </resources>

@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import cn.bmob.v3.datatype.BmobFile;
@@ -27,6 +28,7 @@ public class RegisterActivity extends BaseActivity {
 	private EditText etUsername, etUserpsw, etNickname,etEmail;
 	private ImageView userimg;
 	private String avatarPath;
+	private Button btSubmit;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class RegisterActivity extends BaseActivity {
 		etNickname = (EditText) findViewById(R.id.et_nickname);
 		etEmail =(EditText) findViewById(R.id.et_email);
 		userimg = (ImageView) findViewById(R.id.userimg);
+		btSubmit=(Button) findViewById(R.id.bt_submit);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("用户注册");
@@ -95,9 +98,9 @@ public class RegisterActivity extends BaseActivity {
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
-		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setText("提交");
-		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
+//		mBtnTitleRight.setVisibility(View.VISIBLE);
+//		mBtnTitleRight.setText("提交");
+//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 		
 	}
 
@@ -107,7 +110,7 @@ public class RegisterActivity extends BaseActivity {
 	}
 	
 	protected void setListeners(){
-		mBtnTitleRight.setOnClickListener(new OnClickListener() {
+		btSubmit.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

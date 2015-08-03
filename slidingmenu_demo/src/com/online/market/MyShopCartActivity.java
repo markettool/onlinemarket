@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.lidroid.xutils.db.sqlite.Selector;
@@ -21,6 +22,8 @@ public class MyShopCartActivity extends BaseActivity {
 	
 	private XListView xlv;
 	private TextView tvNoOrder;
+	
+	private Button btSumbit;
 	private MyShopCartAdapter adapter;
 	private List<ShopCartaBean> cartaBeans;
 	
@@ -42,17 +45,12 @@ public class MyShopCartActivity extends BaseActivity {
 		
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
-		mImgLeft.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
 		
-		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setText("结算");
-		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
+		btSumbit=(Button) findViewById(R.id.bt_submit);
+		
+//		mBtnTitleRight.setVisibility(View.VISIBLE);
+//		mBtnTitleRight.setText("结算");
+//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 		
 		xlv=(XListView) findViewById(R.id.xlv);
 		tvNoOrder=(TextView) findViewById(R.id.no_order);
@@ -65,7 +63,7 @@ public class MyShopCartActivity extends BaseActivity {
 			cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
 			if(cartaBeans==null||cartaBeans.size()==0){
 				tvNoOrder.setVisibility(View.VISIBLE);
-				mBtnTitleRight.setVisibility(View.GONE);
+				btSumbit.setVisibility(View.GONE);
 				return;
 			}
 			adapter=new MyShopCartAdapter(this,cartaBeans);
@@ -113,11 +111,19 @@ public class MyShopCartActivity extends BaseActivity {
 			}
 		});
 		
-		mBtnTitleRight.setOnClickListener(new OnClickListener() {
+		btSumbit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				startActivity(CheckoutActivity.class);
+				finish();
+			}
+		});
+		
+        mImgLeft.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
 				finish();
 			}
 		});

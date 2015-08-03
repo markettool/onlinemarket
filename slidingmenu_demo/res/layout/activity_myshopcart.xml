@@ -5,31 +5,31 @@
     android:layout_height="match_parent" >
 
     <com.online.market.view.xlist.XListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/xlv"
-        />
-    
-    <Button android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkout"
-        android:text="结算"
-        android:visibility="gone"
+        android:layout_above="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_orange_corner_selector"
+        android:text="确定"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bt_red_corner_bg"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:textColor="@color/red"
-        android:layout_margin="16dp"/>
-    
-     <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textColor="@color/white" />
+
+    <TextView
         android:id="@+id/no_order"
-        android:text="购物车为空"
-                android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
-    
-    
+        android:text="购物车为空"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

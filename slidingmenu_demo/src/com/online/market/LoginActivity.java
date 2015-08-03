@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
     protected void setListeners(){
-    	mBtnTitleRight.setOnClickListener(new OnClickListener() {
+    	signin.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -43,8 +43,9 @@ public class LoginActivity extends BaseActivity {
 		});
 
 		register = (TextView) findViewById(R.id.register);
-		register.setText(Html.fromHtml("<u> 用户注册 </u>"));
-		register.setOnClickListener(new OnClickListener() {
+		register.setVisibility(View.GONE);
+//		register.setText(Html.fromHtml("<u> 用户注册 </u>"));
+		mBtnTitleRight.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -62,7 +63,7 @@ public class LoginActivity extends BaseActivity {
 		userpsw = (EditText) findViewById(R.id.userpsw);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
-		mBtnTitleMiddle.setText("用户登录");
+		mBtnTitleMiddle.setText("登录");
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
@@ -75,7 +76,7 @@ public class LoginActivity extends BaseActivity {
 			}
 		});
 		
-		mBtnTitleRight.setText("登陆");
+		mBtnTitleRight.setText("注册");
 		mBtnTitleRight.setVisibility(View.VISIBLE);
 		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 	}

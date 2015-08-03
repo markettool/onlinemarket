@@ -54,7 +54,7 @@ public class MyDataActivity extends BaseActivity {
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
 		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setText("确认");
+		mBtnTitleRight.setText("修改");
 		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 		
 	}

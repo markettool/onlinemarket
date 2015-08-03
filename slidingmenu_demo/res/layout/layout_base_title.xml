@@ -131,6 +131,6 @@
         android:id="@+id/title_split"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/cor_c8c8c8" /> 
+        android:background="#c8c8c8" /> 
 
 </LinearLayout>

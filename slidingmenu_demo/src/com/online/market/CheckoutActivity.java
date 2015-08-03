@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import cn.bmob.v3.BmobObject;
@@ -42,6 +43,7 @@ public class CheckoutActivity extends BaseActivity {
 	private Spinner addressSpinner;
 	private EditText etPhoneNum;
 	private Spinner payMethodSpinner;
+	private Button btSubmit;
 	
 	private List<ShopCartaBean> shopcarts=null;
 	
@@ -67,9 +69,9 @@ public class CheckoutActivity extends BaseActivity {
 		mBtnTitleMiddle.setText("结算页");
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
-		mBtnTitleRight.setText("确定");
-		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
+//		mBtnTitleRight.setText("确定");
+//		mBtnTitleRight.setVisibility(View.VISIBLE);
+//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
@@ -78,6 +80,7 @@ public class CheckoutActivity extends BaseActivity {
 		addressSpinner=(Spinner) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
+		btSubmit=(Button) findViewById(R.id.bt_submit);
 		
 		ArrayAdapter< String> paymethodAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
 		paymethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
@@ -87,7 +90,6 @@ public class CheckoutActivity extends BaseActivity {
 		addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
 		addressSpinner.setAdapter(addressAdapter);
 		
-//		String address=su.getValueByKey(ADDRESS, "");
 		receiver=su.getValueByKey(RECEIVER, "");
 		phonenum=su.getValueByKey(PHONENUM, "");
 
@@ -119,21 +121,23 @@ public class CheckoutActivity extends BaseActivity {
 				finish();
 			}
 		});
-		mBtnTitleRight.setOnClickListener(new OnClickListener() {
+		btSubmit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				receiver=etReceiver.getText().toString();
 				if(TextUtils.isEmpty(receiver)){
-					receiver=etReceiver.getHint().toString();
+					toastMsg("收货人姓名为空");
+					return;	
 				}
 				if(TextUtils.isEmpty(address)){
-					toastMsg("address is null");
+					toastMsg("收货地址为空");
 					return;
 				}
 				phonenum=etPhoneNum.getText().toString();
 				if(TextUtils.isEmpty(phonenum)){
-					phonenum=etPhoneNum.getHint().toString();
+					toastMsg("手机号为空");
+					return;	
 				}
 
 				String detail="";
