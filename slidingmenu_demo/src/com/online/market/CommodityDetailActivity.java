@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class CommodityDetailActivity extends BaseActivity {
 	private EditText tvShopcartNum;
 	private ImageView ivDelete;
 	private ImageView ivAdd;
+	private Button btSubmit;
 	private int number=1;
 	
 	@Override
@@ -47,23 +49,17 @@ public class CommodityDetailActivity extends BaseActivity {
 		tvShopcartNum=(EditText) findViewById(R.id.shopcart_num);
 		ivDelete=(ImageView) findViewById(R.id.iv_delete);
 		ivAdd=(ImageView) findViewById( R.id.iv_add);
+		btSubmit=(Button) findViewById(R.id.bt_submit);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
-		mImgLeft.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
 		
-		mBtnTitleRight.setVisibility(View.VISIBLE);
-		mBtnTitleRight.setText("加入");
-		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
+//		mBtnTitleRight.setVisibility(View.VISIBLE);
+//		mBtnTitleRight.setText("加入");
+//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 	}
 
 	@Override
@@ -89,6 +85,14 @@ public class CommodityDetailActivity extends BaseActivity {
 
 	@Override
 	protected void setListeners() {
+        mImgLeft.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
+		
         ivDelete.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -109,7 +113,7 @@ public class CommodityDetailActivity extends BaseActivity {
 			}
 		});
 		
-		mBtnTitleRight.setOnClickListener(new OnClickListener() {
+		btSubmit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
