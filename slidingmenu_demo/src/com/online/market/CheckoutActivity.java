@@ -27,9 +27,10 @@ import com.online.market.utils.ProgressUtil;
 import com.online.market.utils.SharedPrefUtil;
 
 public class CheckoutActivity extends BaseActivity {
-	public static final String ADDRESS="address";
+//	public static final String ADDRESS="address";
 	public static final String RECEIVER="receiver";
 	public static final String PHONENUM="phonenum";
+	public static final String ROOMNUM="roomnum";
 	
 	public static final int PAYMETHOD_ALIPAY=0;
 	public static final int PAYMETHOD_WEIXINPAY=1;
@@ -42,6 +43,7 @@ public class CheckoutActivity extends BaseActivity {
 	private EditText etReceiver;
 	private Spinner addressSpinner;
 	private EditText etPhoneNum;
+	private EditText etRoomNumber;
 	private Spinner payMethodSpinner;
 	private Button btSubmit;
 	
@@ -50,6 +52,7 @@ public class CheckoutActivity extends BaseActivity {
 	private String receiver;
 	private String address;
 	private String phonenum;
+	private String roomnum;
 	
 	private SharedPrefUtil su;
 	
@@ -79,6 +82,8 @@ public class CheckoutActivity extends BaseActivity {
 		etReceiver=(EditText) findViewById(R.id.name);
 		addressSpinner=(Spinner) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
+		etRoomNumber=(EditText) findViewById(R.id.et_roomnumber);
+
 		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
 		
@@ -92,9 +97,11 @@ public class CheckoutActivity extends BaseActivity {
 		
 		receiver=su.getValueByKey(RECEIVER, "");
 		phonenum=su.getValueByKey(PHONENUM, "");
+		roomnum=su.getValueByKey(ROOMNUM, "");
 
 		etReceiver.setText(receiver);
 		etPhoneNum.setText(phonenum);
+		etRoomNumber.setText(roomnum);
 	}
 
 	@Override
@@ -243,7 +250,7 @@ public class CheckoutActivity extends BaseActivity {
 		OrderBean bean=new OrderBean();
 		bean.setReceiver(receiver);
 		bean.setUsername(user.getUsername());
-		bean.setAddress(address);
+		bean.setAddress(address+" "+roomnum);
 		bean.setDispatcher("untreated");
 		bean.setPacker("untreated");
 		bean.setPhonenum(phonenum);
@@ -283,7 +290,7 @@ public class CheckoutActivity extends BaseActivity {
 	private void saveReceiveAddress(){
 		su.putValueByKey(PHONENUM, phonenum);
 		su.putValueByKey(RECEIVER, receiver);
-		
+		su.putValueByKey(ROOMNUM, roomnum);
 	}
 	
 	private void updateSold(List<ShopCartaBean> carts){
