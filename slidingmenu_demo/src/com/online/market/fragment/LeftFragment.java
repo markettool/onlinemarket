@@ -19,6 +19,7 @@ import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.online.market.CouponActivity;
 import com.online.market.LoginActivity;
 import com.online.market.MainActivity;
 import com.online.market.MyDataActivity;
@@ -45,6 +46,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	private View myorder;
 	private View settings;
 	private View tvShare;
+	private View tvCoupon;
 	private RelativeLayout myData;
 	private TextView username;
 	private ImageView userimg;
@@ -71,11 +73,12 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	}
 		
 	public void findViews(View view) {
-		myshopcart = view.findViewById(R.id.tvToday);
+		myshopcart = view.findViewById(R.id.tvMyShopCart);
 		myorder = view.findViewById(R.id.tvLastlist);
 		settings = view.findViewById(R.id.tvMySettings);
 		tvShare= view.findViewById(R.id.tvShare);
-		
+		tvCoupon= view.findViewById(R.id.tvCoupon);
+
 		myData=(RelativeLayout) view.findViewById(R.id.my_data);
 		
 		username=(TextView) view.findViewById(R.id.user_name);
@@ -86,6 +89,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		settings.setOnClickListener(this);
 		myData.setOnClickListener(this);
 		tvShare.setOnClickListener(this);
+		tvCoupon.setOnClickListener(this);
 	}
 	
 	@Override
@@ -133,7 +137,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 		Fragment newContent = null;
 		String title = null;
 		switch (v.getId()) {
-		case R.id.tvToday: // account
+		case R.id.tvMyShopCart: // account
 			getActivity().startActivity(new Intent(getActivity(), MyShopCartActivity.class));
 			break;
 		case R.id.tvLastlist:// myorder
@@ -145,6 +149,9 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 			
 		case R.id.tvShare:
 			onClickShare();
+			break;
+		case R.id.tvCoupon:
+			getActivity().startActivity(new Intent(getActivity(), CouponActivity.class));
 			break;
 		case R.id.my_data:
 		case R.id.avatar_pic:

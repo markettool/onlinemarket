@@ -23,28 +23,10 @@ import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapUtil;
 
-public class CommodityAdapter extends MyBaseAdapter {
+public class CommodityAdapter extends MyBaseAdapter<CommodityBean> {
 
-	private List<CommodityBean> beans;
-	
 	public CommodityAdapter(Context context, List<CommodityBean> beans) {
-		super(context);
-		this.beans = beans;
-	}
-
-	@Override
-	public int getCount() {
-		return beans.size();
-	}
-
-	@Override
-	public Object getItem(int arg0) {
-		return null;
-	}
-
-	@Override
-	public long getItemId(int arg0) {
-		return arg0;
+		super(context,beans);
 	}
 
 	@Override
@@ -58,7 +40,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 		TextView commodityPrice = ViewHolder.get(convertView,R.id.commodity_price);
 		ImageView ivAdd =ViewHolder.get(convertView, R.id.iv_add);
 
-		final CommodityBean bean=beans.get(arg0);
+		final CommodityBean bean=list.get(arg0);
 		commodityName.setText(bean.getName());
 		commoditySold.setText("已售  "+bean.getSold());
 		commodityPrice.setText(bean.getPrice()+ " 元");
@@ -86,7 +68,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 				try {
 					ShopCartaBean p=dbUtils.findFirst(Selector.from(ShopCartaBean.class).where("id","=",bean.getObjectId()));
 					if(p!=null){
-						ShowToast("购物车已有该物品");
+						toastMsg("购物车已有该物品");
 						return;
 					}
 				} catch (DbException e1) {
@@ -105,7 +87,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 				} catch (DbException e) {
 					e.printStackTrace();
 				}
-				ShowToast(bean.getName()+" 已加入购物车,可进入我的购物车查看");
+				toastMsg(bean.getName()+" 已加入购物车,可进入我的购物车查看");
 			}
 		});
 
