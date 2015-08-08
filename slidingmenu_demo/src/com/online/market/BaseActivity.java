@@ -4,12 +4,14 @@ package com.online.market;
 import java.io.File;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +21,6 @@ import cn.bmob.v3.BmobUser;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.online.market.R;
 import com.online.market.beans.MyUser;
 import com.online.market.utils.ActivityControl;
 import com.online.market.utils.BitmapHelp;
@@ -46,6 +47,8 @@ public abstract class BaseActivity extends Activity {
 	protected LayoutInflater mInflater;
 	protected static final int STYLE_TITLE_C8 = 0x22;
 	protected static final int STYLE_TITLE_DC = 0x23;
+	protected int screenWidth;
+	protected int screenHeight;
 	
 	private View titleView;
 	protected View titleSplitView;
@@ -67,6 +70,11 @@ public abstract class BaseActivity extends Activity {
 		dir=FileUtils.getSDCardRoot()+getPackageName()+File.separator;
 		FileUtils.mkdirs(dir);
 		ActivityControl.getInstance().addActivity(this);
+		
+		WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+		screenWidth= wm.getDefaultDisplay().getWidth();
+		screenHeight= wm.getDefaultDisplay().getHeight();
+ 
 	}
 
 	@Override

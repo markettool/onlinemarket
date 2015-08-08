@@ -2,6 +2,8 @@ package com.online.market;
 
 import java.text.DecimalFormat;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,10 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapHelp;
+import com.online.market.utils.BitmapUtil;
 
 public class CommodityDetailActivity extends BaseActivity {
 	
@@ -70,15 +76,28 @@ public class CommodityDetailActivity extends BaseActivity {
 			finish();
 			return;
 		}
-		config=BitmapHelp.getDisplayConfig(this, 150, 150);
-		bitmapUtils.display(ivPic, bean.getPics().getFileUrl(this),config);
+		config=BitmapHelp.getDisplayConfig(this, 350, 350);
+		bitmapUtils.display(ivPic, bean.getPics().getFileUrl(this),config,new BitmapLoadCallBack<View>() {
+
+			@Override
+			public void onLoadCompleted(View arg0, String arg1, Bitmap bitmap,
+					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
+				bitmap=BitmapUtil.getDetailBitmap(bitmap, screenWidth, (int)(screenWidth*0.75f));
+				ivPic.setImageBitmap(bitmap);
+			}
+
+			@Override
+			public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
+				
+			}
+		});
 		
 		tvName.setText(bean.getName());
 		float price=bean.getPrice();
 		DecimalFormat   df=new DecimalFormat("#.#");   
 		String originPrice=df.format(price*1.2f);
-		tvPrice.setText("售价： "+price+" 元");
-		tvOriginPrice.setText("原价： "+originPrice+" 元");
+		tvPrice.setText("售价："+price+" 元");
+		tvOriginPrice.setText("原价："+originPrice+" 元");
 		
 		mBtnTitleMiddle.setText(bean.getName());
 	}

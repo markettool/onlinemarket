@@ -3,12 +3,17 @@ package com.online.market.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.R;
@@ -16,6 +21,7 @@ import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
+import com.online.market.utils.BitmapUtil;
 
 public class CommodityAdapter extends MyBaseAdapter {
 
@@ -46,7 +52,7 @@ public class CommodityAdapter extends MyBaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.commodity_item, null);
 		}
-		ImageView commodityPic =ViewHolder.get(convertView, R.id.commodity_pic);
+		final ImageView ivCommodityPic =ViewHolder.get(convertView, R.id.commodity_pic);
 		TextView commodityName =ViewHolder.get(convertView,R.id.commodity_name);
 		TextView commoditySold =ViewHolder.get(convertView,R.id.commodity_sold);
 		TextView commodityPrice = ViewHolder.get(convertView,R.id.commodity_price);
@@ -56,7 +62,21 @@ public class CommodityAdapter extends MyBaseAdapter {
 		commodityName.setText(bean.getName());
 		commoditySold.setText("已售  "+bean.getSold());
 		commodityPrice.setText(bean.getPrice()+ " 元");
-		bitmapUtils.display(commodityPic, bean.getPics().getFileUrl(mContext),config);
+		bitmapUtils.display(ivCommodityPic, bean.getPics().getFileUrl(mContext),config,new BitmapLoadCallBack<View>() {
+
+			@Override
+			public void onLoadCompleted(View arg0, String arg1, Bitmap bitmap,
+					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
+				int min=Math.min(bitmap.getWidth(), bitmap.getHeight());
+				bitmap=BitmapUtil.getCanvasBitmap(bitmap, min, min);
+				ivCommodityPic.setImageBitmap(bitmap);
+			}
+
+			@Override
+			public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
+				
+			}
+		});
 		
 		ivAdd.setOnClickListener(new OnClickListener() {
 			
