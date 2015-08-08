@@ -2,7 +2,6 @@ package com.online.market.fragment;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +30,11 @@ import com.online.market.beans.MyUser;
 import com.online.market.fragment.base.BaseFragment;
 import com.online.market.utils.BitmapUtil;
 import com.online.market.utils.FileUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 /**
  * @date 2014/11/14
  * @author majie
@@ -44,10 +48,17 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	private RelativeLayout myData;
 	private TextView username;
 	private ImageView userimg;
+	private UMSocialService mController;
 	
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		addWeixin();
+		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		// 设置分享内容
+		mController.setShareContent("天天在线，您的掌上超市。");
+		// 设置分享图片, 参数2为图片的url地址
+		mController.setShareMedia(new UMImage(getActivity(), R.drawable.ic_launcher));
 	}
 	
 	@Override
@@ -179,14 +190,29 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	
 	private void onClickShare() {  
 		  
-        Intent intent=new Intent(Intent.ACTION_SEND);   
-        intent.setType("text/plain");   
-        intent.putExtra(Intent.EXTRA_SUBJECT, "天天在线");   
-        intent.putExtra(Intent.EXTRA_TEXT, "天天在线，您掌上的超市!" +
-        		"");    
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
-        startActivity(Intent.createChooser(intent, getActivity().getTitle()));   
+//        Intent intent=new Intent(Intent.ACTION_SEND);   
+//        intent.setType("text/plain");   
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "天天在线");   
+//        intent.putExtra(Intent.EXTRA_TEXT, "天天在线，您掌上的超市!" +
+//        		"");    
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
+//        startActivity(Intent.createChooser(intent, getActivity().getTitle())); 
+		mController.getConfig().removePlatform( SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT);
+		mController.setAppWebSite("http://www.baidu.com");
+		mController.openShare(getActivity(), false);
   
     } 
+	
+	private void addWeixin(){
+		String appID = "wxb9c4998ba1292cfc";
+		String appSecret = "f35727b904728c95ba8f015c8274b08d";
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(getActivity(),appID,appSecret);
+		wxHandler.addToSocialSDK();
+		// 添加微信朋友圈
+		UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(),appID,appSecret);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+	}
 	
 }
