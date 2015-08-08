@@ -61,14 +61,11 @@
      
     <Button
         android:id="@+id/bt_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
         android:layout_below="@+id/phonenum"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/btn_orange_corner_selector"
-        android:textColor="@color/white"
+        style="@style/button"
         android:text="确定" />
 
 </RelativeLayout>
