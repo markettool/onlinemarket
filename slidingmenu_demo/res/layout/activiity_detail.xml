@@ -4,96 +4,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/commodity_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="16dp"
+        android:minHeight="150dp"
+        android:minWidth="150dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_below="@+id/commodity_pic"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_below="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/orange"
+        android:layout_marginLeft="16dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_origin_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/text_gray"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_origin_price"
+        android:gravity="center_vertical"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/commodity_pic"
-            android:layout_width="0dp"
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="150dp"
-            android:minWidth="150dp"
-            android:src="@drawable/image" />
+            android:src="@drawable/iv_delete" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/shopcart_num"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/base_edit_input"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="1" />
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/orange"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_origin_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/text_gray"
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/iv_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/iv_delete" />
-
-                <EditText
-                    android:id="@+id/shopcart_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/base_edit_input"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:text="1" />
-
-                <ImageView
-                    android:id="@+id/iv_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/iv_add" />
-            </LinearLayout>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/iv_add" />
     </LinearLayout>
-    
-     <Button
+
+    <Button
         android:id="@+id/bt_submit"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/btn_orange_corner_selector"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:text="加入购物车" />
+        android:text="加入购物车"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
