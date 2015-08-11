@@ -53,6 +53,7 @@ public class MyShopCartActivity extends BaseActivity {
 //		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 		
 		xlv=(XListView) findViewById(R.id.xlv);
+		xlv.setPullRefreshEnable(false);
 		tvNoOrder=(TextView) findViewById(R.id.no_order);
 
 	}

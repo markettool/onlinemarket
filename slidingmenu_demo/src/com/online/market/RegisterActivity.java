@@ -2,13 +2,14 @@ package com.online.market;
 
 import java.io.File;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -29,6 +30,8 @@ public class RegisterActivity extends BaseActivity {
 	private ImageView userimg;
 	private String avatarPath;
 	private Button btSubmit;
+	
+	private String DEVICE_ID;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +109,8 @@ public class RegisterActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-		
+		TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+		DEVICE_ID = tm.getDeviceId(); 
 	}
 	
 	protected void setListeners(){

@@ -10,6 +10,7 @@ public class MyUser extends BmobUser {
 	private static final long serialVersionUID = 1L;
 	private String nickname;
 	private BmobFile avatar;
+//	private String DEVICE_ID;
 	
 	public BmobFile getAvatar() {
 		return avatar;
@@ -23,5 +24,11 @@ public class MyUser extends BmobUser {
 	public void setNickname(String realname) {
 		this.nickname = realname;
 	}
+//	public String getDEVICE_ID() {
+//		return DEVICE_ID;
+//	}
+//	public void setDEVICE_ID(String dEVICE_ID) {
+//		DEVICE_ID = dEVICE_ID;
+//	}
 	
 }
