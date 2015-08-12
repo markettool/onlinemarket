@@ -66,7 +66,12 @@ public class CommodityFragment extends BaseFragment {
 	}
 	
 	private void setCategoryAdapter(){
-		CategoryAdapter adapter=new CategoryAdapter(getActivity());
+		String [] categorys={"所有","吃的","喝的","床上用品","用的","其他"};
+		List<String> list=new ArrayList<String>();
+		for(String str:categorys){
+			list.add(str);
+		}
+		CategoryAdapter adapter=new CategoryAdapter(getActivity(),list);
 		categoryLv.setAdapter(adapter);
 	}
 	

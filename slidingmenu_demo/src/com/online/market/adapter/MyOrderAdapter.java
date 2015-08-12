@@ -4,16 +4,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.listener.DeleteListener;
 
-import com.online.market.MyOrderActivity;
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
@@ -23,27 +20,10 @@ import com.online.market.utils.DateUtil;
 import com.online.market.utils.DialogUtil;
 import com.online.market.utils.ProgressUtil;
 
-public class MyOrderAdapter extends MyBaseAdapter {
-	private List<OrderBean > orderBeans;
+public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
 
 	public MyOrderAdapter(Context context,List<OrderBean > orderBeans) {
-		super(context);
-		this.orderBeans=orderBeans;
-	}
-
-	@Override
-	public int getCount() {
-		return orderBeans.size();
-	}
-
-	@Override
-	public Object getItem(int arg0) {
-		return null;
-	}
-
-	@Override
-	public long getItemId(int arg0) {
-		return arg0;
+		super(context,orderBeans);
 	}
 
 	@Override
@@ -59,7 +39,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
 		ImageView ivMenu=ViewHolder.get(convertView, R.id.iv_menu);
 		
-		final OrderBean bean=orderBeans.get(arg0);
+		final OrderBean bean=list.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText("联系方式： "+bean.getPhonenum());
@@ -100,14 +80,14 @@ public class MyOrderAdapter extends MyBaseAdapter {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
-						OrderBean bean=orderBeans.get(pos);
+//						OrderBean bean=orderBeans.get(pos);
 						ProgressUtil.showProgress(mContext, "");
 						bean.delete(mContext, new DeleteListener() {
 							
 							@Override
 							public void onSuccess() {
 								ProgressUtil.closeProgress();
-								orderBeans.remove(pos);
+								list.remove(pos);
 								notifyDataSetChanged();
 							}
 							

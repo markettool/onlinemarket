@@ -17,30 +17,10 @@ import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapHelp;
 
-public class MyShopCartAdapter extends MyBaseAdapter {
-	private List<ShopCartaBean> cartaBeans;
+public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 	
 	public MyShopCartAdapter(Context context,List<ShopCartaBean> cartaBeans){
-		super(context);
-		this.cartaBeans=cartaBeans;
-	}
-
-	@Override
-	public int getCount() {
-		if(cartaBeans==null){
-			return 0;
-		}
-		return cartaBeans.size();
-	}
-
-	@Override
-	public Object getItem(int arg0) {
-		return null;
-	}
-
-	@Override
-	public long getItemId(int arg0) {
-		return arg0;
+		super(context,cartaBeans);
 	}
 
 	@Override
@@ -56,11 +36,10 @@ public class MyShopCartAdapter extends MyBaseAdapter {
 		ImageView ivDelete=ViewHolder.get(convertView, R.id.iv_delete);
 		ImageView ivAdd=ViewHolder.get(convertView, R.id.iv_add);
 		
-		if(cartaBeans==null){
+		if(list==null||list.size()==0){
 			return convertView;
 		}
-//		final int position=arg0;
-		final ShopCartaBean bean=cartaBeans.get(arg0);
+		final ShopCartaBean bean=list.get(arg0);
 		tvShopcartName.setText(bean.getName());
 		tvShopcartPrice.setText(bean.getPrice()+" 元");
 		tvShopcartNum.setText(""+bean.getNumber());

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/common_entry_item_bg"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_promotion_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通用券"
+        android:textSize="18sp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="5dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.0dip"
+        android:layout_below="@+id/tv_promotion_type"
+        android:layout_marginTop="5dp"
+        android:id="@+id/line"
+        android:background="@drawable/biz_pc_account_line" />
+    
+    <TextView
+        android:id="@+id/tv_promotion_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/line"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/orange"
+        android:text="¥ 2元"
+        android:textSize="25sp"
+        android:layout_marginLeft="5dp"
+        />
+    <TextView
+        android:id="@+id/tv_promotion_issue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/tv_promotion_amount"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/text_gray"
+        android:text="使用条件："
+        android:layout_marginLeft="5dp"/>
+    <TextView
+        android:id="@+id/tv_promotion_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/tv_promotion_issue"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/text_gray"
+        android:text="1.可直接抵扣现金。\n2.最终解释权归天天在线所有。"
+        android:layout_marginLeft="10dp"/>
+    
+
+</RelativeLayout>
