@@ -21,8 +21,8 @@ public class MyUser extends BmobUser {
 	public String getNickname() {
 		return nickname;
 	}
-	public void setNickname(String realname) {
-		this.nickname = realname;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 //	public String getDEVICE_ID() {
 //		return DEVICE_ID;

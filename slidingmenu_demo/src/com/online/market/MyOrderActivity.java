@@ -3,20 +3,15 @@ package com.online.market;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 
 import com.online.market.adapter.MyOrderAdapter;
 import com.online.market.beans.OrderBean;
-import com.online.market.utils.DialogUtil;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.view.xlist.XListView;
 
@@ -59,20 +54,19 @@ public class MyOrderActivity extends BaseActivity {
 		
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
-		mImgLeft.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-		});
 		
 		queryOrders();
 	}
 
 	@Override
 	protected void setListeners() {
-		
+        mImgLeft.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
 	}
 	
 	private void queryOrders(){

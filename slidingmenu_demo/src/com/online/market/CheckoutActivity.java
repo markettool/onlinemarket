@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -20,7 +22,9 @@ import com.bmob.pay.tool.BmobPay;
 import com.bmob.pay.tool.PayListener;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
+import com.online.market.adapter.CheckCouponAdapter;
 import com.online.market.beans.CommodityBean;
+import com.online.market.beans.CouponBean;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.ProgressUtil;
@@ -41,11 +45,12 @@ public class CheckoutActivity extends BaseActivity {
 	private int paymethod;
 	
 	private EditText etReceiver;
-	private Spinner addressSpinner;
+	private Spinner spAddress;
 	private EditText etPhoneNum;
 	private EditText etRoomNumber;
 	private Spinner payMethodSpinner;
 	private Button btSubmit;
+	private Spinner spCoupon;
 	
 	private List<ShopCartaBean> shopcarts=null;
 	
@@ -53,8 +58,12 @@ public class CheckoutActivity extends BaseActivity {
 	private String address;
 	private String phonenum;
 	private String roomnum;
+	/**折扣*/
+	private int discountIndex;
 	
 	private SharedPrefUtil su;
+	
+	private List<CouponBean> coupons=new ArrayList<CouponBean>();
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,20 +81,17 @@ public class CheckoutActivity extends BaseActivity {
 		mBtnTitleMiddle.setText("结算页");
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
 		
-//		mBtnTitleRight.setText("确定");
-//		mBtnTitleRight.setVisibility(View.VISIBLE);
-//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
-		
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 
 		etReceiver=(EditText) findViewById(R.id.name);
-		addressSpinner=(Spinner) findViewById(R.id.address);
+		spAddress=(Spinner) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		etRoomNumber=(EditText) findViewById(R.id.et_roomnumber);
 
 		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
+		spCoupon=(Spinner) findViewById(R.id.sp_coupon);
 		
 		ArrayAdapter< String> paymethodAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
 		paymethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
@@ -93,7 +99,7 @@ public class CheckoutActivity extends BaseActivity {
 		
 		ArrayAdapter< String> addressAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, addresses);
 		addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
-		addressSpinner.setAdapter(addressAdapter);
+		spAddress.setAdapter(addressAdapter);
 		
 		receiver=su.getValueByKey(RECEIVER, "");
 		phonenum=su.getValueByKey(PHONENUM, "");
@@ -112,6 +118,7 @@ public class CheckoutActivity extends BaseActivity {
 			return;
 		}
 		
+		queryCoupons();
 		try {
 			shopcarts=dbUtils.findAll(Selector.from(ShopCartaBean.class));
 		} catch (DbException e) {
@@ -159,6 +166,11 @@ public class CheckoutActivity extends BaseActivity {
 						
 					}
 				}
+				CouponBean coupon=coupons.get(discountIndex);
+				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
+					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
+					return;
+				}
 				int index=detail.lastIndexOf(" and ");
 				detail=detail.substring(0, index);
 				
@@ -189,12 +201,26 @@ public class CheckoutActivity extends BaseActivity {
 			}
 		});
 		
-		addressSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		spAddress.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				address=addresses[arg2];
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+		
+		spCoupon.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				discountIndex=arg2;
 			}
 
 			@Override
@@ -306,14 +332,39 @@ public class CheckoutActivity extends BaseActivity {
 			
 			@Override
 			public void onSuccess() {
-//				Log.d("majie", "success");
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-//				Log.d("majie", "fail");
 			}
 		});
+		
+	}
+	
+	private void queryCoupons(){
+		ProgressUtil.showProgress(this, "");
+		BmobQuery<CouponBean> query	 = new BmobQuery<CouponBean>();
+		query.addWhereEqualTo("username", user.getUsername());
+		query.order("status");
+		query.setLimit(10);
+		query.findObjects(this, new FindListener<CouponBean>() {
+
+			@Override
+			public void onSuccess(List<CouponBean> object) {
+				ProgressUtil.closeProgress();
+				coupons.addAll(object);
+				
+				CheckCouponAdapter couponAdapter=new CheckCouponAdapter(CheckoutActivity.this, android.R.layout.simple_spinner_item, coupons);
+				couponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+				spCoupon.setAdapter(couponAdapter);
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				ProgressUtil.closeProgress();
+				toastMsg(msg);
+			}
+		});	
 		
 	}
 

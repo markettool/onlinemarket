@@ -28,8 +28,8 @@ import com.online.market.utils.ProgressUtil;
 public class MyDataActivity extends BaseActivity {
 	public int PICK_REQUEST_CODE = 0;
 	
-	private EditText eNickname;
-	private ImageView userimg;
+	private EditText etNickname;
+	private ImageView ivUserimg;
 	private String avatarPath;
 	
 	@Override
@@ -43,8 +43,8 @@ public class MyDataActivity extends BaseActivity {
 
 	@Override
 	protected void initView() {
-		eNickname = (EditText) findViewById(R.id.username);
-		userimg = (ImageView) findViewById(R.id.userimg);
+		etNickname = (EditText) findViewById(R.id.username);
+		ivUserimg = (ImageView) findViewById(R.id.userimg);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("我的资料");
@@ -66,10 +66,9 @@ public class MyDataActivity extends BaseActivity {
 			finish();
 			return;
 		}
-		eNickname.setText(user.getNickname());
+		etNickname.setText(user.getNickname());
 		BmobFile avatar=user.getAvatar();
 		if(avatar!=null){
-//			avatar.loadImageThumbnail(this, userimg, 25, 25);
 			downloadPic(avatar);
 		}
 
@@ -79,14 +78,14 @@ public class MyDataActivity extends BaseActivity {
 		HttpUtils http=new HttpUtils();
 		final String path=dir+user.getUsername()+".png";
 		if(FileUtils.isFileExist(path)){
-			userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+			ivUserimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
             return;
 		}
 		http.download(avatar.getFileUrl(this), path, new RequestCallBack<File>() {
 			
 			@Override
 			public void onSuccess(ResponseInfo<File> arg0) {
-				userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
+				ivUserimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
 			}
 			
 			@Override
@@ -103,7 +102,7 @@ public class MyDataActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				String nickname = eNickname.getText().toString();
+				String nickname = etNickname.getText().toString();
 				if(avatarPath==null){
 					update(nickname, null);
 				}else{
@@ -113,7 +112,7 @@ public class MyDataActivity extends BaseActivity {
 			}
 		});
 
-		userimg.setOnClickListener(new OnClickListener() {
+		ivUserimg.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -156,7 +155,7 @@ public class MyDataActivity extends BaseActivity {
 
 					if (path != null) {
 					    Bitmap b= BitmapUtil.getThumbilBitmap(path,200);
-					    userimg.setImageBitmap(b);
+					    ivUserimg.setImageBitmap(b);
 					    String dir=FileUtils.getSDCardRoot()+getPackageName()+File.separator;
 					    FileUtils.mkdirs(dir);
 					    avatarPath=dir+path.substring(path.lastIndexOf("/")+1);
@@ -171,10 +170,10 @@ public class MyDataActivity extends BaseActivity {
 		}
 	}
 	
-	private void update(final String nickname,BmobFile file) {
+	private void update(final String username,BmobFile file) {
 		ProgressUtil.showProgress(this, "");
 		final MyUser myUser = new MyUser();
-		myUser.setNickname(nickname);
+		myUser.setNickname(username);
 		myUser.setObjectId(user.getObjectId());
 		myUser.setAvatar(file);
 		myUser.update(this, new UpdateListener() {
@@ -204,7 +203,6 @@ public class MyDataActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-//				Log.i("majie", "名称--"+bmobFile.getFileUrl(MyDataActivity.this)+"，文件名="+bmobFile.getFilename());
 				update(nickname,bmobFile);
 			}
 
@@ -214,7 +212,6 @@ public class MyDataActivity extends BaseActivity {
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-//				Log.i("majie", "-->uploadMovoieFile-->onFailure:" + arg0+",msg = "+arg1);
 			}
 
 		});
