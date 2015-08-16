@@ -60,6 +60,7 @@ public class CheckoutActivity extends BaseActivity {
 	private String roomnum;
 	/**折扣*/
 	private int discountIndex;
+	private float price=0;
 	
 	private SharedPrefUtil su;
 	
@@ -155,7 +156,7 @@ public class CheckoutActivity extends BaseActivity {
 				}
 
 				String detail="";
-				double price=0;
+				
 				if(shopcarts!=null){
 					for(ShopCartaBean cart:shopcarts){
 						if(cart.getNumber()!=0){
@@ -170,7 +171,10 @@ public class CheckoutActivity extends BaseActivity {
 				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
 					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
 					return;
+				}else{
+					price=price-coupon.getAmount();
 				}
+				
 				int index=detail.lastIndexOf(" and ");
 				detail=detail.substring(0, index);
 				
@@ -179,9 +183,9 @@ public class CheckoutActivity extends BaseActivity {
 				if(paymethod==PAYMETHOD_CASH){
                     submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
-					payByAlipay(price, detail);
+					payByAlipay(detail);
 				}else if(paymethod==PAYMETHOD_WEIXINPAY){
-					payByWeixin(price, detail);
+					payByWeixin(detail);
 				}
 
 			}
@@ -237,12 +241,12 @@ public class CheckoutActivity extends BaseActivity {
 	}
 	
 	/**alipay*/
-	private void payByAlipay(double fund,String detail){
-		new BmobPay(this).pay(fund, detail, payListener);
+	private void payByAlipay(String detail){
+		new BmobPay(this).pay(price, detail, payListener);
 	}
 	
-	private void payByWeixin(double fund,String detail){
-		new BmobPay(this).payByWX(fund, detail, payListener);
+	private void payByWeixin(String detail){
+		new BmobPay(this).payByWX(price, detail, payListener);
 	}
 	
 	private PayListener payListener=new PayListener() {
@@ -282,10 +286,6 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setPhonenum(phonenum);
 		bean.setShopcarts(shopcarts);
 		bean.setPayMethod(paymethod);
-	    float price=0;
-	    for(ShopCartaBean p:shopcarts){
-	    	price+=p.getPrice();
-	    }
 	    bean.setPrice(price);    
 		final 	List< ShopCartaBean> carts=shopcarts;
 		bean.save(CheckoutActivity.this, new SaveListener() {
@@ -345,7 +345,7 @@ public class CheckoutActivity extends BaseActivity {
 		ProgressUtil.showProgress(this, "");
 		BmobQuery<CouponBean> query	 = new BmobQuery<CouponBean>();
 		query.addWhereEqualTo("username", user.getUsername());
-		query.order("status");
+		query.addWhereEqualTo("status", CouponBean.COUPON_STATUS_UNCONSUMED);
 		query.setLimit(10);
 		query.findObjects(this, new FindListener<CouponBean>() {
 
