@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.online.market.R;
@@ -34,8 +33,10 @@ public class CheckCouponAdapter extends ArrayAdapter<CouponBean> {
 		CouponBean coupon=list.get(arg0);
 		if(coupon.getType()==CouponBean.COUPON_TYPE_COMMON){
 			tv.setText(list.get(arg0).getAmount()+"元 通用券");
-		}else{
+		}else if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE){
 			tv.setText(list.get(arg0).getAmount()+"元 折扣券");
+		}else {
+			tv.setText("不使用优惠券");
 		}
 		return convertView;
 	}

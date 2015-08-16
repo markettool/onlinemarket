@@ -58,7 +58,7 @@ public class InviteFriendActivity extends BaseActivity {
 		mController.setShareMedia(new UMImage(this, R.drawable.ic_launcher));
 
 		addWeixin();
-		tvCouponId.setText(user.getUsername().substring(3));
+		tvCouponId.setText(user.getInviteCode());
 	}
 
 	@Override
@@ -83,7 +83,6 @@ public class InviteFriendActivity extends BaseActivity {
 	private void onClickShare() {  
 		  
 		mController.getConfig().removePlatform( SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT);
-//		mController.getConfig().set;
 		mController.openShare(this, false);
   
     } 

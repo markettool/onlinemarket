@@ -42,6 +42,11 @@ public class CouponActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		if(user==null){
+			startActivity(LoginActivity.class);
+			finish();
+			return;
+		}
 		queryCoupons();
 	}
 	

@@ -14,6 +14,12 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:id="@+id/pay_method"/>
+    
+    <ImageView  android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/iv_down_arraw"
+    android:layout_alignRight="@+id/pay_method"
+    android:layout_alignBottom="@+id/pay_method"/>
 
     <EditText
         android:layout_below="@+id/pay_method"
@@ -33,6 +39,12 @@
         android:id="@+id/address"
         android:layout_below="@+id/name"
         />
+    
+    <ImageView  android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/iv_down_arraw"
+    android:layout_alignRight="@+id/address"
+    android:layout_alignBottom="@+id/address"/>
     
     <EditText 
         android:hint="房间号"
@@ -61,6 +73,11 @@
         android:id="@+id/sp_coupon"
         android:layout_below="@+id/phonenum"
         />
+     <ImageView  android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/iv_down_arraw"
+    android:layout_alignRight="@+id/sp_coupon"
+    android:layout_alignBottom="@+id/sp_coupon"/>
      
     <Button
         android:id="@+id/bt_submit"

@@ -118,10 +118,6 @@ public class RegisterActivity extends BaseActivity {
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
-//		mBtnTitleRight.setVisibility(View.VISIBLE);
-//		mBtnTitleRight.setText("验证");
-//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
-		
 	}
 
 	@Override
@@ -226,6 +222,7 @@ public class RegisterActivity extends BaseActivity {
 		myUser.setUsername(phonenum);
 		myUser.setNickname(nickname);
 		myUser.setPassword(userpsw);
+		myUser.setInviteCode(phonenum.substring(5));
 		if(file!=null){
 			myUser.setAvatar(file);
 		}
@@ -238,6 +235,7 @@ public class RegisterActivity extends BaseActivity {
  
 				toastMsg("登录成功");
 				ProgressUtil.closeProgress();
+				startActivity(InviteCodeActivity.class);
 				finish();
 			}
 			

@@ -3,10 +3,12 @@ package com.online.market.beans;
 import cn.bmob.v3.BmobObject;
 
 public class CouponBean extends BmobObject{
-	/**common coupon*/
+	/**通用券*/
 	public static  int COUPON_TYPE_COMMON=0;
-	/**onsale coupon*/
+	/**折扣券*/
 	public static int COUPON_TYPE_ONSALE=1;
+	/**不适用优惠券*/
+	public static int COUPON_TYPE_DONTUSE=2;
 	
 	/**未消费*/
 	public static  int COUPON_STATUS_UNCONSUMED=0;

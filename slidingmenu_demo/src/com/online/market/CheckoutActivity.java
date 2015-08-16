@@ -354,6 +354,11 @@ public class CheckoutActivity extends BaseActivity {
 				ProgressUtil.closeProgress();
 				coupons.addAll(object);
 				
+				CouponBean coupon=new CouponBean();
+				coupon.setAmount(0);
+				coupon.setType(CouponBean.COUPON_TYPE_DONTUSE);
+				coupons.add(0, coupon);
+				
 				CheckCouponAdapter couponAdapter=new CheckCouponAdapter(CheckoutActivity.this, android.R.layout.simple_spinner_item, coupons);
 				couponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
 				spCoupon.setAdapter(couponAdapter);

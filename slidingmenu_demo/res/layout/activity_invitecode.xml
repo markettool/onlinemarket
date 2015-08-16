@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView
+        android:id="@+id/tv_share_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="请输入邀请您的好友的推荐码，您第一次消费的时候，邀请您的好友将获得一张5元折扣券，没有可不填。"
+        android:textColor="@color/text_gray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="16sp" />
+    
+    <EditText
+        android:id="@+id/et_byinvitecode"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/tv_share_text"
+        android:inputType="number"
+        android:hint="请输入邀请码"
+        style="@style/edittext"
+        />
+    
+    <Button android:id="@+id/bt_submit"
+        style="@style/button"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/et_byinvitecode"
+        android:layout_marginTop="10dp"
+        android:text="提交"/>
+
+</RelativeLayout>

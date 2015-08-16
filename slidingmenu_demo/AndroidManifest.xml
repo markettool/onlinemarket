@@ -65,6 +65,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.online.market.InviteCodeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.online.market.AboutActivity"
             android:screenOrientation="portrait" >
         </activity>
