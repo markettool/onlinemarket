@@ -40,11 +40,9 @@
 
                 <EditText
                     android:id="@+id/username"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:layout_marginLeft="5dp"
-                    android:background="@drawable/base_edit_input" />
+                    style="@style/edittext"
+                     />
             </LinearLayout>
 
         </LinearLayout>

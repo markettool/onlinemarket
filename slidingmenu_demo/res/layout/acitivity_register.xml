@@ -36,14 +36,12 @@
                     android:text="账号:" />
 
                 <EditText
-                    android:id="@+id/username"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/et_phonenum"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/base_edit_input"
-                    android:hint="建议用手机号注册"
+                    android:hint="手机号"
                     android:inputType="phone"
-                    android:padding="5dp" />
+                    style="@style/edittext"
+                     />
             </LinearLayout>
 
             <LinearLayout
@@ -59,13 +57,10 @@
 
                 <EditText
                     android:id="@+id/userpsw"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/base_edit_input"
-                    android:padding="5dp"
                     android:hint="必填"
-                    android:password="true" />
+                    android:password="true" 
+                    style="@style/edittext"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -108,16 +103,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="邮箱:" />
+            android:text="验证码:" />
 
         <EditText
-            android:id="@+id/et_email"
-            android:hint="用于密码找回"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/et_code"
+            android:hint="请输入手机验证码"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/base_edit_input"
-            android:padding="5dp" />
+            style="@style/edittext"
+            android:inputType="number"
+            android:layout_weight="1"
+             />
+        
+        <Button android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/btn_orange_corner_selector"
+            android:layout_weight="2"
+            android:textColor="@color/white"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/btn_verify"
+            android:textSize="16sp"
+            android:text="验证"/>
     </LinearLayout>
     
     <Button

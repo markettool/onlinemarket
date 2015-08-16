@@ -17,12 +17,9 @@
 
     <EditText
         android:layout_below="@+id/pay_method"
-        android:background="@drawable/base_edit_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:hint="收货人姓名"
         android:layout_margin="5dp"
-        android:padding="5dp"
+        style="@style/edittext"
         android:id="@+id/name"
         />
     
@@ -37,31 +34,37 @@
         android:layout_below="@+id/name"
         />
     
-    <EditText android:background="@drawable/base_edit_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <EditText 
         android:hint="房间号"
+        style="@style/edittext"
         android:inputType="number"
         android:layout_margin="5dp"
-        android:padding="5dp"
         android:id="@+id/et_roomnumber"
         android:layout_below="@+id/address"/>
     
      <EditText
-        android:background="@drawable/base_edit_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:hint="手机号"
         android:inputType="number"
         android:layout_margin="5dp"
-        android:padding="5dp"
         android:id="@+id/phonenum"
+        style="@style/edittext"
         android:layout_below="@+id/et_roomnumber"
+        />
+     
+     <Spinner
+        android:background="@drawable/base_edit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:id="@+id/sp_coupon"
+        android:layout_below="@+id/phonenum"
         />
      
     <Button
         android:id="@+id/bt_submit"
-        android:layout_below="@+id/phonenum"
+        android:layout_below="@+id/sp_coupon"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="16dp"

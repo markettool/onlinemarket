@@ -23,12 +23,20 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
     
-       <style name="button" >
+    <style name="button" >
           <item name="android:layout_width">fill_parent</item>
           <item name="android:layout_height">38dp</item>
           <item name="android:textSize">16sp</item>
           <item name="android:textColor">@color/white</item>
-          <item name="android:background">@drawable/btn_orange_corner_selector</item>
+          <item name="android:background">@drawable/btn_blue_corner_selector</item>
+    </style>
+    
+    <style name="edittext" >
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_width">fill_parent</item>
+          <item name="android:layout_height">38dp</item>
+          <item name="android:textSize">16sp</item>
+          <item name="android:background">@drawable/base_edit_input</item>  
     </style>
 
 </resources>
