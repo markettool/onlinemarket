@@ -53,7 +53,7 @@ public class InviteFriendActivity extends BaseActivity {
 		
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		// 设置分享内容
-		mController.setShareContent("请使用我的推荐码"+user.getUsername().substring(3)+"。\n天天在线，您的掌上超市。");
+		mController.setShareContent("请使用我的推荐码"+user.getInviteCode()+"。\n天天在线，您的掌上超市。");
 		// 设置分享图片, 参数2为图片的url地址
 		mController.setShareMedia(new UMImage(this, R.drawable.ic_launcher));
 

@@ -2,8 +2,6 @@ package com.online.market.beans;
 
 import java.util.List;
 
-import com.online.market.utils.DateUtil;
-
 import cn.bmob.v3.BmobObject;
 
 public class OrderBean extends BmobObject {
