@@ -3,7 +3,11 @@ package com.online.market;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -27,6 +31,7 @@ import com.online.market.beans.CommodityBean;
 import com.online.market.beans.CouponBean;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
+import com.online.market.dialog.InstallWxDialog;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.utils.SharedPrefUtil;
 
@@ -61,6 +66,7 @@ public class CheckoutActivity extends BaseActivity {
 	/**折扣*/
 	private int discountIndex;
 	private float price=0;
+	private String detail="";
 	
 	private SharedPrefUtil su;
 	
@@ -125,6 +131,18 @@ public class CheckoutActivity extends BaseActivity {
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
+		if(shopcarts!=null){
+			for(ShopCartaBean cart:shopcarts){
+				if(cart.getNumber()!=0){
+					detail=detail+cart.getName()+" and ";
+					price+=(cart.getPrice()*cart.getNumber());
+				}
+				
+			}
+		}
+		
+		int index=detail.lastIndexOf(" and ");
+		detail=detail.substring(0, index);
 	}
 
 	@Override
@@ -155,18 +173,6 @@ public class CheckoutActivity extends BaseActivity {
 					return;	
 				}
 
-				String detail="";
-				
-				if(shopcarts!=null){
-					for(ShopCartaBean cart:shopcarts){
-						if(cart.getNumber()!=0){
-							
-							detail=detail+cart.getName()+" and ";
-							price+=(cart.getPrice()*cart.getNumber());
-						}
-						
-					}
-				}
 				CouponBean coupon=coupons.get(discountIndex);
 				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
 					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
@@ -175,11 +181,9 @@ public class CheckoutActivity extends BaseActivity {
 					price=price-coupon.getAmount();
 				}
 				
-				int index=detail.lastIndexOf(" and ");
-				detail=detail.substring(0, index);
-				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveAddress();
+				
 				if(paymethod==PAYMETHOD_CASH){
                     submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
@@ -246,6 +250,11 @@ public class CheckoutActivity extends BaseActivity {
 	}
 	
 	private void payByWeixin(String detail){
+		boolean isInstalled=isInstalled(CheckoutActivity.this, "com.bmob.app.sport");
+		if(!isInstalled){
+			InstallWxDialog.show(CheckoutActivity.this);
+			return;
+		}
 		new BmobPay(this).payByWX(price, detail, payListener);
 	}
 	
@@ -272,6 +281,7 @@ public class CheckoutActivity extends BaseActivity {
 		
 		@Override
 		public void fail(int arg0, String arg1) {
+			ProgressUtil.closeProgress();
 			toastMsg("付款失败");
 		}
 	};
@@ -372,5 +382,19 @@ public class CheckoutActivity extends BaseActivity {
 		});	
 		
 	}
+	
+	private boolean isInstalled( Context context, String packageName )
+    {
+        final PackageManager packageManager = context.getPackageManager();
+        // 获取所有已安装程序的包信息
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        for ( int i = 0; i < pinfo.size(); i++ )
+        {
+            if(pinfo.get(i).packageName.equalsIgnoreCase(packageName)){
+            	return true;
+            }
+        }
+        return false;
+    }
 
 }

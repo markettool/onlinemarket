@@ -92,12 +92,12 @@ public class InviteFriendActivity extends BaseActivity {
 		String appSecret = "f35727b904728c95ba8f015c8274b08d";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
-		wxHandler.setTargetUrl("http://www.baidu.com");
+		wxHandler.setTargetUrl("http://onlinemarket.sinaapp.com/");
 		wxHandler.addToSocialSDK();
 		// 添加微信朋友圈
 		UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
 		wxCircleHandler.setToCircle(true);
-		wxCircleHandler.setTargetUrl("http://www.baidu.com");
+		wxCircleHandler.setTargetUrl("http://onlinemarket.sinaapp.com/");
 		wxCircleHandler.addToSocialSDK();
 	}
 
