@@ -22,6 +22,8 @@ public class MyOrderActivity extends BaseActivity {
 	private TextView tvNoOrder;
 	private MyOrderAdapter adapter;
 	
+//	private BmobPushManager<MyUser> bmobPush;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class MyOrderActivity extends BaseActivity {
 			finish();
 			return;
 		}
-
+		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("我的订单");
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
