@@ -8,7 +8,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -42,6 +44,12 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),APPID);
+	      //开启debug服务后，可知晓push服务是否正常启动和运行
+	      		BmobPush.setDebugMode(true);
+	      		//
+	      		BmobPush.startWork(this, APPID);	
+	      		
+	    		BmobInstallation.getCurrentInstallation(this).save();
 
 		findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);
