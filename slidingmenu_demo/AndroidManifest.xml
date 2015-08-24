@@ -17,21 +17,12 @@
     <!-- 获取WiFi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
-     <!-- Push SDK权限 start -->
-    <permission
-        android:name="cn.bmob.permission.push"
-        android:protectionLevel="normal" >
-    </permission>
-    <uses-permission android:name="cn.bmob.permission.push" /> <!-- 添加自定义的权限 -->
-    <!-- Push SDK权限 end -->
-    
      <!-- 允许网络连接以及网络状态改变 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -113,35 +104,6 @@
             android:name="com.online.market.CommodityDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-         <!-- bmob push start -->
-        <service
-            android:name="cn.bmob.push.lib.service.PushService"
-            android:exported="true"
-            android:label="PushService"
-            android:permission="cn.bmob.permission.push"
-            android:process="cn.bmob.push" >
-            <intent-filter>
-                <action android:name="cn.bmob.push.lib.service.PushService" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name="cn.bmob.push.PushReceiver" >
-            <intent-filter android:priority="2147483647" > <!-- 优先级加最高 -->
-                <!-- 系统启动完成后会调用 -->
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <!-- 解锁完成后会调用 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 监听网络连通性 -->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".receiver.MyMessageReceiver" >
-            <intent-filter>
-                <action android:name="cn.bmob.push.action.MESSAGE" />
-            </intent-filter>
-        </receiver>
-        <!-- bmob push end -->
 
         <!-- bmob pay sdk activity begin ,please put below code into application tag -->
         <activity
@@ -177,24 +139,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        
-        <activity
-            android:name="com.tencent.tauth.AuthActivity" 
-            android:noHistory="true" 
-            android:launchMode="singleTask" >
-            <intent-filter>
-               <action android:name="android.intent.action.VIEW" />
-               <category android:name="android.intent.category.DEFAULT" />
-               <category android:name="android.intent.category.BROWSABLE" />
-               <data android:scheme="tencent222222" />
-           </intent-filter>
 
-        </activity>
-
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden|screenSize" 
-        />
     </application>
 
 </manifest>
