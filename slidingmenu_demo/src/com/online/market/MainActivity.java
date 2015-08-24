@@ -21,7 +21,7 @@ import com.umeng.update.UmengUpdateAgent;
 
 /**
  * @date 2014/11/14
- * @author wuwenjie
+ * @author majie
  * @description 主界面
  */
 public class MainActivity extends SlidingFragmentActivity implements
@@ -44,12 +44,6 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),APPID);
-	      //开启debug服务后，可知晓push服务是否正常启动和运行
-	      		BmobPush.setDebugMode(true);
-	      		//
-	      		BmobPush.startWork(this, APPID);	
-	      		
-	    		BmobInstallation.getCurrentInstallation(this).save();
 
 		findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);

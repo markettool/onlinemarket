@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:text="分享您的推荐码，当你的朋友在使用您的推荐码完成第一次消费，您将获得5元折扣券"
+        android:text="分享您的推荐码，当你的朋友在使用您的推荐码完成第一次消费，您将获得2元通用券。"
         android:textColor="@color/text_gray"
         android:gravity="center"
         android:layout_marginLeft="32dp"
