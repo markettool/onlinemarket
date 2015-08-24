@@ -176,6 +176,7 @@ public class CommodityFragment extends BaseFragment {
 		if(key!=null){
 			query.addWhereContains(value, key);
 		}
+		query.addWhereEqualTo("status", CommodityBean.STATUS_NORMAL);
 		query.order("-sold");
 		query.setLimit(10);
 		query.setSkip(skip);
