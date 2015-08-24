@@ -5,17 +5,10 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 /**
- * 暂时用户配置信息
- * @author wanghaoyuew
+ * @author majie
  *
  */
 public class SharedPrefUtil {
-
-	public static final String PREFERENCE_NAME_CONFIG_APP = "config_app_preference";
-	public static final String PREFERENCE_NAME_CONFIG = "config_preference";
-	public static final String PREFERENCE_NAME_PRICE_ALL = "price_all_preference";
-	public static final String PREFERENCE_COUPON_REGION = "coupon_region_preference";
-	public static final String PREFERENCE_BUS_CITY = "bus_city_preference";
 
 	private SharedPreferences mPreferences;
 	
@@ -31,8 +24,16 @@ public class SharedPrefUtil {
 		return mPreferences.getString(key, defaultValue);
 	}
 	
+	public int getIntByKey(String key, int defaultValue){
+		return mPreferences.getInt(key, defaultValue);
+	}
+	
 	public synchronized void putValueByKey(String key, String value){
 		mPreferences.edit().putString(key, value).commit();
+	}
+	
+	public synchronized void putIntByKey(String key, int value){
+		mPreferences.edit().putInt(key, value).commit();
 	}
 
 	public void clear(){

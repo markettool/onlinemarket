@@ -3,6 +3,8 @@ package com.online.market.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -10,12 +12,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.R;
 import com.online.market.adapter.base.MyBaseAdapter;
 import com.online.market.adapter.base.ViewHolder;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapHelp;
+import com.online.market.utils.BitmapUtil;
 
 public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 	
@@ -29,7 +35,7 @@ public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 			convertView=mInflater.inflate(R.layout.myshopcart_item, null);
 			
 		}
-		ImageView ivShopcartPic=ViewHolder.get(convertView, R.id.shopcart_pic);
+		final ImageView ivShopcartPic=ViewHolder.get(convertView, R.id.shopcart_pic);
 		TextView tvShopcartName=ViewHolder.get(convertView, R.id.shopcart_name);
 		TextView tvShopcartPrice=ViewHolder.get(convertView, R.id.shopcart_price);
 		EditText tvShopcartNum=ViewHolder.get(convertView, R.id.shopcart_num);
@@ -44,7 +50,21 @@ public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 		tvShopcartPrice.setText(bean.getPrice()+" 元");
 		tvShopcartNum.setText(""+bean.getNumber());
 
-		bitmapUtils.display(ivShopcartPic, bean.getPic(),BitmapHelp.getDisplayConfig(mContext, 50, 50));
+		bitmapUtils.display(ivShopcartPic, bean.getPic(),BitmapHelp.getDisplayConfig(mContext, 50, 50),new BitmapLoadCallBack<View>() {
+
+			@Override
+			public void onLoadCompleted(View arg0, String arg1, Bitmap bitmap,
+					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
+				int min=Math.min(bitmap.getWidth(), bitmap.getHeight());
+				bitmap=BitmapUtil.getCanvasBitmap(bitmap, min, min);
+				ivShopcartPic.setImageBitmap(bitmap);
+			}
+
+			@Override
+			public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
+				
+			}
+		});
 
 		ivDelete.setOnClickListener(new OnClickListener() {
 			

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,7 +21,6 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-import com.bmob.pay.tool.BmobPay;
 import com.bmob.pay.tool.PayListener;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
@@ -32,11 +30,14 @@ import com.online.market.beans.CouponBean;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.dialog.InstallWxDialog;
+import com.online.market.pay.Payment;
+import com.online.market.utils.MobileUtil;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.utils.SharedPrefUtil;
 
 public class CheckoutActivity extends BaseActivity {
-//	public static final String ADDRESS="address";
+	public static final String PAYMETHOD="paymethod";
+	public static final String UNIT="unit";
 	public static final String RECEIVER="receiver";
 	public static final String PHONENUM="phonenum";
 	public static final String ROOMNUM="roomnum";
@@ -46,24 +47,26 @@ public class CheckoutActivity extends BaseActivity {
 	public static final int PAYMETHOD_CASH=2;
 	
 	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
-	private String [] addresses={"海淀","昌平","太原","五台"};
+	/**单元*/
+	private String [] units={"海淀","昌平","太原","五台"};
 	private int paymethod;
+	private int unit;
 	
 	private EditText etReceiver;
-	private Spinner spAddress;
+	private Spinner spUnit;
 	private EditText etPhoneNum;
 	private EditText etRoomNumber;
-	private Spinner payMethodSpinner;
+	private Spinner spPayMethod;
 	private Button btSubmit;
 	private Spinner spCoupon;
 	
 	private List<ShopCartaBean> shopcarts=null;
 	
-	private String receiver;
-	private String address;
-	private String phonenum;
-	private String roomnum;
-	/**折扣*/
+	private String receiverStr;
+	private String unitStr;
+	private String phonenumStr;
+	private String roomnumStr;
+	/**使用的折扣*/
 	private int discountIndex;
 	private float price=0;
 	private String detail="";
@@ -71,6 +74,8 @@ public class CheckoutActivity extends BaseActivity {
 	private SharedPrefUtil su;
 	
 	private List<CouponBean> coupons=new ArrayList<CouponBean>();
+	
+	private Payment payment;
 	
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,29 +97,37 @@ public class CheckoutActivity extends BaseActivity {
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 
 		etReceiver=(EditText) findViewById(R.id.name);
-		spAddress=(Spinner) findViewById(R.id.address);
+		spUnit=(Spinner) findViewById(R.id.address);
 		etPhoneNum=(EditText) findViewById(R.id.phonenum);
 		etRoomNumber=(EditText) findViewById(R.id.et_roomnumber);
 
-		payMethodSpinner=(Spinner) findViewById(R.id.pay_method);
+		spPayMethod=(Spinner) findViewById(R.id.pay_method);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
 		spCoupon=(Spinner) findViewById(R.id.sp_coupon);
 		
 		ArrayAdapter< String> paymethodAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
 		paymethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
-		payMethodSpinner.setAdapter(paymethodAdapter);
+		spPayMethod.setAdapter(paymethodAdapter);
 		
-		ArrayAdapter< String> addressAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, addresses);
+		ArrayAdapter< String> addressAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, units);
 		addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
-		spAddress.setAdapter(addressAdapter);
+		spUnit.setAdapter(addressAdapter);
 		
-		receiver=su.getValueByKey(RECEIVER, "");
-		phonenum=su.getValueByKey(PHONENUM, "");
-		roomnum=su.getValueByKey(ROOMNUM, "");
+		getReceiverInfo();
 
-		etReceiver.setText(receiver);
-		etPhoneNum.setText(phonenum);
-		etRoomNumber.setText(roomnum);
+		etReceiver.setText(receiverStr);
+		etPhoneNum.setText(phonenumStr);
+		etRoomNumber.setText(roomnumStr);
+		spPayMethod.setSelection(paymethod);
+		spUnit.setSelection(unit);
+	}
+	
+	private void getReceiverInfo(){
+		paymethod=su.getIntByKey(PAYMETHOD, 0);
+		receiverStr=su.getValueByKey(RECEIVER, "");
+		phonenumStr=su.getValueByKey(PHONENUM, "");
+		roomnumStr=su.getValueByKey(ROOMNUM, "");
+		unit=su.getIntByKey(UNIT, 0);
 	}
 
 	@Override
@@ -124,6 +137,8 @@ public class CheckoutActivity extends BaseActivity {
 			finish();
 			return;
 		}
+		
+		payment=Payment.getPayment(this);
 		
 		queryCoupons();
 		try {
@@ -158,20 +173,25 @@ public class CheckoutActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				receiver=etReceiver.getText().toString();
-				if(TextUtils.isEmpty(receiver)){
+				receiverStr=etReceiver.getText().toString();
+				if(TextUtils.isEmpty(receiverStr)){
 					toastMsg("收货人姓名为空");
 					return;	
 				}
-				if(TextUtils.isEmpty(address)){
+				if(TextUtils.isEmpty(unitStr)){
 					toastMsg("收货地址为空");
 					return;
 				}
-				phonenum=etPhoneNum.getText().toString();
-				if(TextUtils.isEmpty(phonenum)){
+				phonenumStr=etPhoneNum.getText().toString();
+				if(TextUtils.isEmpty(phonenumStr)){
 					toastMsg("手机号为空");
 					return;	
 				}
+				if(!MobileUtil.isMobileNO(phonenumStr)){
+					toastMsg("手机号格式非法");
+					return;	
+				}
+				roomnumStr=etRoomNumber.getText().toString();
 
 				CouponBean coupon=coupons.get(discountIndex);
 				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
@@ -182,7 +202,7 @@ public class CheckoutActivity extends BaseActivity {
 				}
 				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
-				saveReceiveAddress();
+				saveReceiveInfo();
 				
 				if(paymethod==PAYMETHOD_CASH){
                     submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
@@ -195,7 +215,7 @@ public class CheckoutActivity extends BaseActivity {
 			}
 		});
 		
-		payMethodSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		spPayMethod.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -209,12 +229,13 @@ public class CheckoutActivity extends BaseActivity {
 			}
 		});
 		
-		spAddress.setOnItemSelectedListener(new OnItemSelectedListener() {
+		spUnit.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				address=addresses[arg2];
+				unit=arg2;
+				unitStr=units[arg2];
 			}
 
 			@Override
@@ -246,7 +267,7 @@ public class CheckoutActivity extends BaseActivity {
 	
 	/**alipay*/
 	private void payByAlipay(String detail){
-		new BmobPay(this).pay(price, detail, payListener);
+		payment.payByAlipay(price, detail, payListener);
 	}
 	
 	private void payByWeixin(String detail){
@@ -255,7 +276,7 @@ public class CheckoutActivity extends BaseActivity {
 			InstallWxDialog.show(CheckoutActivity.this);
 			return;
 		}
-		new BmobPay(this).payByWX(price, detail, payListener);
+		payment.payByWeixin(price, detail, payListener);
 	}
 	
 	private PayListener payListener=new PayListener() {
@@ -288,12 +309,12 @@ public class CheckoutActivity extends BaseActivity {
 	
 	private void submitOrder(int paymethod){
 		OrderBean bean=new OrderBean();
-		bean.setReceiver(receiver);
+		bean.setReceiver(receiverStr);
 		bean.setUsername(user.getUsername());
-		bean.setAddress(address+" "+roomnum);
+		bean.setAddress(unitStr+" "+roomnumStr);
 		bean.setDispatcher("untreated");
 		bean.setPacker("untreated");
-		bean.setPhonenum(phonenum);
+		bean.setPhonenum(phonenumStr);
 		bean.setShopcarts(shopcarts);
 		bean.setPayMethod(paymethod);
 	    bean.setPrice(price);    
@@ -323,10 +344,12 @@ public class CheckoutActivity extends BaseActivity {
 	}
 	
 	/**保存收货地址*/
-	private void saveReceiveAddress(){
-		su.putValueByKey(PHONENUM, phonenum);
-		su.putValueByKey(RECEIVER, receiver);
-		su.putValueByKey(ROOMNUM, roomnum);
+	private void saveReceiveInfo(){
+		su.putValueByKey(PHONENUM, phonenumStr);
+		su.putValueByKey(RECEIVER, receiverStr);
+		su.putValueByKey(ROOMNUM, roomnumStr);
+		su.putIntByKey(PAYMETHOD, paymethod);
+		su.putIntByKey(UNIT, unit);
 	}
 	
 	private void updateSold(List<ShopCartaBean> carts){
@@ -364,6 +387,7 @@ public class CheckoutActivity extends BaseActivity {
 				ProgressUtil.closeProgress();
 				coupons.addAll(object);
 				
+				//添加一个不使用优惠券
 				CouponBean coupon=new CouponBean();
 				coupon.setAmount(0);
 				coupon.setType(CouponBean.COUPON_TYPE_DONTUSE);
