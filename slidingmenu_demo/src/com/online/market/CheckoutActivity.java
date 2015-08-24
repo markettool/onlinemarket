@@ -204,6 +204,12 @@ public class CheckoutActivity extends BaseActivity {
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveInfo();
 				
+				if(price<0){
+					price=0;
+					submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
+					return;
+				}
+				
 				if(paymethod==PAYMETHOD_CASH){
                     submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 				}else if(paymethod==PAYMETHOD_ALIPAY){
