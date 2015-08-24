@@ -82,17 +82,14 @@ public class BitmapUtil {
      * @return
      */
     public static Bitmap getCanvasBitmap(Bitmap bm,int width,int height){
-//    	if(bm.getWidth()>width){
-//    		return bm;
-//    	}
-    	Bitmap bitmap=Bitmap.createBitmap(width, height, Config.ARGB_8888);
-    	Canvas canvas=new Canvas(bitmap);
-//    	int left=(width-bm.getWidth())/2;
-//    	int top=(height-bm.getHeight())/2;
-    	canvas.drawBitmap(bm, 0, 0, null);
-    	canvas.save(Canvas.ALL_SAVE_FLAG);
-    	canvas.restore();
-    	return bitmap;
+    	 int w=bm.getWidth();
+ 	    int h=bm.getHeight();
+ 	    if(w<width||h<height){
+ 	    	    Log.e("bitmaputils", "bitmap target size is not ");
+ 	    	    return bm;
+ 	    }
+ 	    Bitmap bitmap=Bitmap.createBitmap(bm, (w-width)/2, (h-height)/2, width, height);
+ 	    return bitmap;
     }
     
     public static Bitmap getBitmapFromRes(Context context,int resId){

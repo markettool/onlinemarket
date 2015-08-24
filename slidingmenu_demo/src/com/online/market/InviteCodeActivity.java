@@ -79,7 +79,6 @@ public class InviteCodeActivity extends BaseActivity {
 		myUser.setPassword(user.getPassword());
 		myUser.setInviteCode(user.getInviteCode());
 		myUser.setByInviteCode(byInviteCode);
-		myUser.setCousumed(user.isCousumed());
 		myUser.setObjectId(user.getObjectId());
 		myUser.update(this, new UpdateListener() {
 			

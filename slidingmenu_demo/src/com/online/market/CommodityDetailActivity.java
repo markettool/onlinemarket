@@ -63,9 +63,6 @@ public class CommodityDetailActivity extends BaseActivity {
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
-//		mBtnTitleRight.setVisibility(View.VISIBLE);
-//		mBtnTitleRight.setText("加入");
-//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
 	}
 
 	@Override
@@ -82,7 +79,7 @@ public class CommodityDetailActivity extends BaseActivity {
 			@Override
 			public void onLoadCompleted(View arg0, String arg1, Bitmap bitmap,
 					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
-				bitmap=BitmapUtil.getDetailBitmap(bitmap, screenWidth, (int)(screenWidth*0.75f));
+				bitmap=BitmapUtil.getDetailBitmap(bitmap, screenWidth,screenWidth);
 				ivPic.setImageBitmap(bitmap);
 			}
 

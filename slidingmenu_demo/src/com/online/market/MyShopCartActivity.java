@@ -48,10 +48,6 @@ public class MyShopCartActivity extends BaseActivity {
 		
 		btSumbit=(Button) findViewById(R.id.bt_submit);
 		
-//		mBtnTitleRight.setVisibility(View.VISIBLE);
-//		mBtnTitleRight.setText("结算");
-//		mBtnTitleRight.setTextColor(getResources().getColor(R.color.white));
-		
 		xlv=(XListView) findViewById(R.id.xlv);
 		xlv.setPullRefreshEnable(false);
 		tvNoOrder=(TextView) findViewById(R.id.no_order);

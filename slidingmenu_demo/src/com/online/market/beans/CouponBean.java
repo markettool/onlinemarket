@@ -25,6 +25,8 @@ public class CouponBean extends BmobObject{
 	private float limit; 
 	private int type;
 	private int status;
+	/**谁产生的*/
+	private String creator;
 	
 	public float getAmount() {
 		return amount;
@@ -55,6 +57,12 @@ public class CouponBean extends BmobObject{
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public String getCreator() {
+		return creator;
+	}
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 }
