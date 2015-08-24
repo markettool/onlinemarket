@@ -60,6 +60,7 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+        	ivMenu.setVisibility(View.GONE);
         }else
         //when status is not delived,set default
         {
