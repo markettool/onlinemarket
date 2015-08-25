@@ -102,7 +102,8 @@
         </activity>
         <activity
             android:name="com.online.market.CommodityDetailActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
         <!-- bmob pay sdk activity begin ,please put below code into application tag -->
