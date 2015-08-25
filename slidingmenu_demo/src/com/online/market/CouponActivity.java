@@ -11,6 +11,7 @@ import cn.bmob.v3.listener.FindListener;
 
 import com.online.market.adapter.CouponAdapter;
 import com.online.market.beans.CouponBean;
+import com.online.market.notify.MyNotify;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.view.xlist.XListView;
 
@@ -48,6 +49,7 @@ public class CouponActivity extends BaseActivity {
 			return;
 		}
 		queryCoupons();
+		MyNotify.couponNotify(this);
 	}
 	
 	private void queryCoupons(){

@@ -8,14 +8,13 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobInstallation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
+import com.online.market.notify.MyNotify;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -45,19 +44,15 @@ public class MainActivity extends SlidingFragmentActivity implements
 		
 		Bmob.initialize(getApplicationContext(),APPID);
 
-		findViewById(R.id.head);
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);
 		topTextView = (TextView) findViewById(R.id.topTv);
 		
-//		tvRight=(TextView) findViewById(R.id.tv_right);
-//		tvRight.setOnClickListener(this);
-//		tvRight.setText("分类");
-//		tvRight.setVisibility(View.GONE);
-		
 		initSlidingMenu(savedInstanceState);
 		
 		updateVersion();
+		
+		MyNotify.couponNotify(this);
 		
 	}
 	
