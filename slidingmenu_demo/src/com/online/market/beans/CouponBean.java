@@ -27,6 +27,8 @@ public class CouponBean extends BmobObject{
 	private int status;
 	/**谁产生的*/
 	private String creator;
+	/**是否查看过该*/
+	private int viewed;
 	
 	public float getAmount() {
 		return amount;
@@ -63,6 +65,12 @@ public class CouponBean extends BmobObject{
 	}
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+	public int getViewed() {
+		return viewed;
+	}
+	public void setViewed(int viewed) {
+		this.viewed = viewed;
 	}
 
 }

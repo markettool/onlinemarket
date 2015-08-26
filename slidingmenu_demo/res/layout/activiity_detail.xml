@@ -1,92 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:scrollbars="none" >
 
-    <ImageView
-        android:id="@+id/commodity_pic"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="150dp"
-        android:minWidth="150dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_below="@+id/commodity_pic"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp" />
-
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_below="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/orange"
-        android:layout_marginLeft="16dp"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tv_origin_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tv_name"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:textColor="@color/text_gray"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tv_origin_price"
-        android:gravity="center_vertical"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentRight="true"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/iv_delete"
+            android:id="@+id/commodity_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="150dp"
+            android:minWidth="150dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/iv_delete" />
+            android:layout_below="@+id/commodity_pic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/shopcart_num"
+        <TextView
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/base_edit_input"
-            android:gravity="center"
-            android:inputType="number"
-            android:text="1" />
+            android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/orange"
+            android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/iv_add"
+        <TextView
+            android:id="@+id/tv_origin_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/iv_add" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text_gray"
+            android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/bt_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/btn_blue_corner_selector"
-        android:text="加入购物车"
-        android:textColor="@color/white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_origin_price"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/ll_num"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/iv_delete" />
+
+            <EditText
+                android:id="@+id/shopcart_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/base_edit_input"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="1" />
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/iv_add" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/ll_num"
+            android:text="加入购物车"
+            style="@style/button"
+            />
+    </RelativeLayout>
+
+</ScrollView>

@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
@@ -48,6 +49,8 @@ public class CommodityDetailActivity extends BaseActivity {
 	protected void initView() {
 
 		ivPic=(ImageView) findViewById(R.id.commodity_pic);
+		ivPic.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth, screenWidth));
+		
 		tvName=(TextView) findViewById(R.id.tv_name);
 		tvPrice=(TextView) findViewById(R.id.tv_price);
 		tvOriginPrice=(TextView) findViewById(R.id.tv_origin_price);
