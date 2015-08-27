@@ -24,6 +24,7 @@ public class MyShopCartActivity extends BaseActivity {
 	private TextView tvNoOrder;
 	
 	private Button btSumbit;
+	private TextView tvTotalPrice;
 	private MyShopCartAdapter adapter;
 	private List<ShopCartaBean> cartaBeans;
 	
@@ -52,6 +53,7 @@ public class MyShopCartActivity extends BaseActivity {
 		xlv.setPullRefreshEnable(false);
 		tvNoOrder=(TextView) findViewById(R.id.no_order);
 
+		tvTotalPrice=(TextView) findViewById(R.id.tv_total_price);
 	}
 
 	@Override
@@ -68,6 +70,12 @@ public class MyShopCartActivity extends BaseActivity {
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
+		
+		float totalPrice=0;
+		for(ShopCartaBean bean:cartaBeans){
+			totalPrice+=bean.getPrice();
+		}
+		tvTotalPrice.setText(String.format(tvTotalPrice.getText().toString(), totalPrice));
 		
 	}
 	

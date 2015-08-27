@@ -6,20 +6,37 @@
 
     <com.online.market.view.xlist.XListView
         android:id="@+id/xlv"
-        android:layout_above="@+id/bt_submit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_layout" />
 
-    <Button
-        android:id="@+id/bt_submit"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="10dp"
-        android:text="确定"
-        android:layout_alignParentBottom="true"
-        style="@style/button"
-         />
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_selector"
+        android:layout_alignParentBottom="true" >
+        
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/bt_submit"
+            android:text="总计：￥%s"
+            android:textSize="18sp"
+            android:id="@+id/tv_total_price"
+            android:textColor="@color/text_gray"
+            android:layout_centerVertical="true"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:background="@drawable/btn_blue_corner_selector"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:text="确定" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/no_order"
