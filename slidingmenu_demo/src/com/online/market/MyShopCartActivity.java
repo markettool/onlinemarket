@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.adapter.MyShopCartAdapter;
+import com.online.market.adapter.MyShopCartAdapter.OnNotifyClickListener;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.DialogUtil;
+import com.online.market.view.BottomView;
 import com.online.market.view.xlist.XListView;
 
 public class MyShopCartActivity extends BaseActivity {
@@ -23,8 +24,7 @@ public class MyShopCartActivity extends BaseActivity {
 	private XListView xlv;
 	private TextView tvNoOrder;
 	
-	private Button btSumbit;
-	private TextView tvTotalPrice;
+	private BottomView bView;
 	private MyShopCartAdapter adapter;
 	private List<ShopCartaBean> cartaBeans;
 	
@@ -47,13 +47,12 @@ public class MyShopCartActivity extends BaseActivity {
 		mImgLeft.setVisibility(View.VISIBLE);
 		mImgLeft.setBackgroundResource(R.drawable.back_bg_selector);
 		
-		btSumbit=(Button) findViewById(R.id.bt_submit);
+		bView=(BottomView) findViewById(R.id.bottom_layout);
 		
 		xlv=(XListView) findViewById(R.id.xlv);
 		xlv.setPullRefreshEnable(false);
 		tvNoOrder=(TextView) findViewById(R.id.no_order);
 
-		tvTotalPrice=(TextView) findViewById(R.id.tv_total_price);
 	}
 
 	@Override
@@ -62,25 +61,40 @@ public class MyShopCartActivity extends BaseActivity {
 			cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
 			if(cartaBeans==null||cartaBeans.size()==0){
 				tvNoOrder.setVisibility(View.VISIBLE);
-				btSumbit.setVisibility(View.GONE);
+				bView.setVisibility(View.GONE);
 				return;
 			}
-			adapter=new MyShopCartAdapter(this,cartaBeans);
-			xlv.setAdapter(adapter);
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
+		adapter=new MyShopCartAdapter(this,cartaBeans);
+		xlv.setAdapter(adapter);
 		
+		updateTotalPrice();
+	}
+	
+	private void updateTotalPrice(){
 		float totalPrice=0;
 		for(ShopCartaBean bean:cartaBeans){
-			totalPrice+=bean.getPrice();
+			totalPrice+=(bean.getPrice()*bean.getNumber());
 		}
-		tvTotalPrice.setText(String.format(tvTotalPrice.getText().toString(), totalPrice));
-		
+        bView.setTotalPrice(totalPrice);	
 	}
 	
 	@Override
 	protected void setListeners() {
+		adapter.setOnNotifyClickListener(new OnNotifyClickListener() {
+			
+			@Override
+			public void n() {
+				try {
+					cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
+					updateTotalPrice();
+				} catch (DbException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		xlv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -116,7 +130,7 @@ public class MyShopCartActivity extends BaseActivity {
 			}
 		});
 		
-		btSumbit.setOnClickListener(new OnClickListener() {
+		bView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {

@@ -3,89 +3,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-    <Spinner android:layout_width="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/base_edit_input"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:id="@+id/pay_method"/>
-    
-    <ImageView  android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/iv_down_arraw"
-    android:layout_alignRight="@+id/pay_method"
-    android:layout_alignBottom="@+id/pay_method"/>
 
-    <EditText
-        android:layout_below="@+id/pay_method"
-        android:hint="收货人姓名"
-        android:layout_margin="5dp"
-        style="@style/edittext"
-        android:id="@+id/name"
-        />
-    
     <Spinner
-        android:background="@drawable/base_edit_input"
+        android:id="@+id/pay_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:paddingTop="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_edit_input"
         android:paddingBottom="8dp"
-        android:id="@+id/address"
-        android:layout_below="@+id/name"
-        />
-    
-    <ImageView  android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/iv_down_arraw"
-    android:layout_alignRight="@+id/address"
-    android:layout_alignBottom="@+id/address"/>
-    
-    <EditText 
-        android:hint="房间号"
+        android:paddingTop="8dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/pay_method"
+        android:layout_alignRight="@+id/pay_method"
+        android:src="@drawable/iv_down_arraw" />
+
+    <EditText
+        android:id="@+id/name"
         style="@style/edittext"
-        android:inputType="number"
+        android:layout_below="@+id/pay_method"
         android:layout_margin="5dp"
+        android:hint="收货人姓名" />
+
+    <Spinner
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_margin="5dp"
+        android:background="@drawable/base_edit_input"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/address"
+        android:layout_alignRight="@+id/address"
+        android:src="@drawable/iv_down_arraw" />
+
+    <EditText
         android:id="@+id/et_roomnumber"
-        android:layout_below="@+id/address"/>
-    
-     <EditText
-        android:hint="手机号"
-        android:inputType="number"
+        style="@style/edittext"
+        android:layout_below="@+id/address"
         android:layout_margin="5dp"
+        android:hint="房间号"
+        android:inputType="number" />
+
+    <EditText
         android:id="@+id/phonenum"
         style="@style/edittext"
         android:layout_below="@+id/et_roomnumber"
-        />
-     
-     <Spinner
-        android:background="@drawable/base_edit_input"
+        android:layout_margin="5dp"
+        android:hint="手机号"
+        android:inputType="number" />
+
+    <Spinner
+        android:id="@+id/sp_coupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:id="@+id/sp_coupon"
         android:layout_below="@+id/phonenum"
+        android:layout_margin="5dp"
+        android:background="@drawable/base_edit_input"
         />
-     <ImageView  android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/iv_down_arraw"
-    android:layout_alignRight="@+id/sp_coupon"
-    android:layout_alignBottom="@+id/sp_coupon"/>
-     
-    <Button
-        android:id="@+id/bt_submit"
-        android:layout_below="@+id/sp_coupon"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="16dp"
-        style="@style/button"
-        android:text="确定" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sp_coupon"
+        android:layout_alignRight="@+id/sp_coupon"
+        android:src="@drawable/iv_down_arraw" />
+    
+        <com.online.market.view.BottomView
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_white_selector"
+        android:layout_alignParentBottom="true" />
+
 
 </RelativeLayout>

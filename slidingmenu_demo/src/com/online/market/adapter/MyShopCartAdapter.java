@@ -25,6 +25,8 @@ import com.online.market.utils.BitmapUtil;
 
 public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 	
+	private OnNotifyClickListener l;
+	
 	public MyShopCartAdapter(Context context,List<ShopCartaBean> cartaBeans){
 		super(context,cartaBeans);
 	}
@@ -96,6 +98,20 @@ public class MyShopCartAdapter extends MyBaseAdapter<ShopCartaBean> {
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		l.n();
+	}
+	
+	public interface OnNotifyClickListener{
+		public void n();
+	}
+	
+	public void setOnNotifyClickListener(OnNotifyClickListener l){
+		this.l=l;
 	}
 	
 }

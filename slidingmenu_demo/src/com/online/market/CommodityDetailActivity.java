@@ -21,6 +21,7 @@ import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapHelp;
 import com.online.market.utils.BitmapUtil;
+import com.online.market.view.BottomView;
 
 public class CommodityDetailActivity extends BaseActivity {
 	
@@ -32,6 +33,7 @@ public class CommodityDetailActivity extends BaseActivity {
 	private EditText tvShopcartNum;
 	private ImageView ivDelete;
 	private ImageView ivAdd;
+	private TextView tvTotalPrice;
 	private Button btSubmit;
 	private int number=1;
 	
@@ -59,6 +61,7 @@ public class CommodityDetailActivity extends BaseActivity {
 		ivDelete=(ImageView) findViewById(R.id.iv_delete);
 		ivAdd=(ImageView) findViewById( R.id.iv_add);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
+		tvTotalPrice=(TextView) findViewById(R.id.tv_total_price);
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
@@ -100,6 +103,7 @@ public class CommodityDetailActivity extends BaseActivity {
 		tvOriginPrice.setText("原价："+originPrice+" 元");
 		
 		mBtnTitleMiddle.setText(bean.getName());
+		tvTotalPrice.setText("总计：￥"+price);
 	}
 
 	@Override
@@ -119,6 +123,7 @@ public class CommodityDetailActivity extends BaseActivity {
 				if(number>0){
 					number--;
 					tvShopcartNum.setText(""+number);
+					tvTotalPrice.setText("总计：￥"+(bean.getPrice()*number));
 				}
 			}
 		});
@@ -129,6 +134,7 @@ public class CommodityDetailActivity extends BaseActivity {
 
 				number++;
 				tvShopcartNum.setText(""+number);
+				tvTotalPrice.setText("总计：￥"+(bean.getPrice()*number));
 			}
 		});
 		

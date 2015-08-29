@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import cn.bmob.v3.BmobObject;
@@ -34,6 +33,7 @@ import com.online.market.pay.Payment;
 import com.online.market.utils.MobileUtil;
 import com.online.market.utils.ProgressUtil;
 import com.online.market.utils.SharedPrefUtil;
+import com.online.market.view.BottomView;
 
 public class CheckoutActivity extends BaseActivity {
 	public static final String PAYMETHOD="paymethod";
@@ -57,7 +57,8 @@ public class CheckoutActivity extends BaseActivity {
 	private EditText etPhoneNum;
 	private EditText etRoomNumber;
 	private Spinner spPayMethod;
-	private Button btSubmit;
+//	private Button btSubmit;
+	private BottomView bView;
 	private Spinner spCoupon;
 	
 	private List<ShopCartaBean> shopcarts=null;
@@ -102,7 +103,7 @@ public class CheckoutActivity extends BaseActivity {
 		etRoomNumber=(EditText) findViewById(R.id.et_roomnumber);
 
 		spPayMethod=(Spinner) findViewById(R.id.pay_method);
-		btSubmit=(Button) findViewById(R.id.bt_submit);
+		bView=(BottomView) findViewById(R.id.bottom_layout);
 		spCoupon=(Spinner) findViewById(R.id.sp_coupon);
 		
 		ArrayAdapter< String> paymethodAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymethods);
@@ -152,12 +153,13 @@ public class CheckoutActivity extends BaseActivity {
 					detail=detail+cart.getName()+" and ";
 					price+=(cart.getPrice()*cart.getNumber());
 				}
-				
 			}
 		}
 		
 		int index=detail.lastIndexOf(" and ");
 		detail=detail.substring(0, index);
+		bView.setTotalPrice(price);
+
 	}
 
 	@Override
@@ -169,7 +171,7 @@ public class CheckoutActivity extends BaseActivity {
 				finish();
 			}
 		});
-		btSubmit.setOnClickListener(new OnClickListener() {
+        bView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -193,13 +195,13 @@ public class CheckoutActivity extends BaseActivity {
 				}
 				roomnumStr=etRoomNumber.getText().toString();
 
-				CouponBean coupon=coupons.get(discountIndex);
-				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
-					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
-					return;
-				}else{
-					price=price-coupon.getAmount();
-				}
+//				CouponBean coupon=coupons.get(discountIndex);
+//				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
+//					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
+//					return;
+//				}else{
+//					price=price-coupon.getAmount();
+//				}
 				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveInfo();
@@ -256,6 +258,16 @@ public class CheckoutActivity extends BaseActivity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				discountIndex=arg2;
+				CouponBean coupon=coupons.get(discountIndex);
+				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
+					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
+					spCoupon.setSelection(0);
+					return;
+				}else{
+					price=price-coupon.getAmount();
+					bView.setTotalPrice(price);
+					
+				}
 			}
 
 			@Override

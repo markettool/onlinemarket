@@ -53,7 +53,7 @@ public class CommodityFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.frag_commodity, null);
 		categoryLv=(ListView) view.findViewById(R.id.lv_category);
 		xlv=(XListView) view.findViewById(R.id.xlv);
-		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
+		xlv.setPullLoadEnable(true);
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
 		cet=(ClearEditText)view.findViewById(R.id.et_msg_search);
 		
