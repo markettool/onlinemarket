@@ -2,9 +2,13 @@ package com.online.market;
 
 import java.text.DecimalFormat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.bmob.v3.AsyncCustomEndpoints;
+import cn.bmob.v3.listener.CloudCodeListener;
 
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
@@ -72,7 +78,6 @@ public class CommodityDetailActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-
 		bean=(CommodityBean) getIntent().getSerializableExtra("commodity");
 		if(bean==null){
 			finish();
@@ -103,6 +108,29 @@ public class CommodityDetailActivity extends BaseActivity {
 		
 		mBtnTitleMiddle.setText(bean.getName());
 		tvTotalPrice.setText("总计：￥"+price);
+		updateScan(bean.getObjectId());
+	}
+	
+	private void updateScan(String objectId){
+		JSONObject object=new JSONObject();
+		try {
+			object.put("objectId", objectId);
+			AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
+			//第一个参数是上下文对象，第二个参数是云端代码的方法名称，第三个参数是上传到云端代码的参数列表（JSONObject cloudCodeParams），第四个参数是回调类
+			ace.callEndpoint(CommodityDetailActivity.this, "updatesold", object, 
+			    new CloudCodeListener() {
+			            @Override
+			            public void onSuccess(Object object) {
+			            	Log.e("commodity detail", object.toString());
+			            }
+			            @Override
+			            public void onFailure(int code, String msg) {
+			               Log.e("detail", msg);
+			            }
+			        });
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
