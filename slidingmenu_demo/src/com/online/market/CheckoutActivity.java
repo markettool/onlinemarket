@@ -3,10 +3,15 @@ package com.online.market;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -14,17 +19,16 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.AsyncCustomEndpoints;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.CloudCodeListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 import com.bmob.pay.tool.PayListener;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.online.market.adapter.CheckCouponAdapter;
-import com.online.market.beans.CommodityBean;
 import com.online.market.beans.CouponBean;
 import com.online.market.beans.OrderBean;
 import com.online.market.beans.ShopCartaBean;
@@ -70,6 +74,7 @@ public class CheckoutActivity extends BaseActivity {
 	/**使用的折扣*/
 	private int discountIndex;
 	private float price=0;
+	private float finalPrice;
 	private String detail="";
 	
 	private SharedPrefUtil su;
@@ -158,7 +163,8 @@ public class CheckoutActivity extends BaseActivity {
 		
 		int index=detail.lastIndexOf(" and ");
 		detail=detail.substring(0, index);
-		bView.setTotalPrice(price);
+		finalPrice=price;
+		bView.setTotalPrice(finalPrice);
 
 	}
 
@@ -195,19 +201,11 @@ public class CheckoutActivity extends BaseActivity {
 				}
 				roomnumStr=etRoomNumber.getText().toString();
 
-//				CouponBean coupon=coupons.get(discountIndex);
-//				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
-//					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
-//					return;
-//				}else{
-//					price=price-coupon.getAmount();
-//				}
-				
 				ProgressUtil.showProgress(CheckoutActivity.this, "");
 				saveReceiveInfo();
 				
-				if(price<0){
-					price=0;
+				if(finalPrice<=0){
+					finalPrice=0;
 					submitOrder(OrderBean.PAYMETHOD_CASHONDELIVEY);
 					return;
 				}
@@ -262,11 +260,14 @@ public class CheckoutActivity extends BaseActivity {
 				if(coupon.getType()==CouponBean.COUPON_TYPE_ONSALE&&price<coupon.getLimit()){
 					toastMsg("您购买商品不足"+coupon.getLimit()+"元，不可以使用该折扣券");
 					spCoupon.setSelection(0);
+					discountIndex=0;
 					return;
 				}else{
-					price=price-coupon.getAmount();
-					bView.setTotalPrice(price);
-					
+					finalPrice=price-coupon.getAmount();
+					if(finalPrice<0){
+						finalPrice=0;
+					}
+					bView.setTotalPrice(finalPrice);
 				}
 			}
 
@@ -285,7 +286,7 @@ public class CheckoutActivity extends BaseActivity {
 	
 	/**alipay*/
 	private void payByAlipay(String detail){
-		payment.payByAlipay(price, detail, payListener);
+		payment.payByAlipay(finalPrice, detail, payListener);
 	}
 	
 	private void payByWeixin(String detail){
@@ -294,7 +295,7 @@ public class CheckoutActivity extends BaseActivity {
 			InstallWxDialog.show(CheckoutActivity.this);
 			return;
 		}
-		payment.payByWeixin(price, detail, payListener);
+		payment.payByWeixin(finalPrice, detail, payListener);
 	}
 	
 	private PayListener payListener=new PayListener() {
@@ -326,6 +327,7 @@ public class CheckoutActivity extends BaseActivity {
 	};
 	
 	private void submitOrder(int paymethod){
+		
 		OrderBean bean=new OrderBean();
 		bean.setReceiver(receiverStr);
 		bean.setUsername(user.getUsername());
@@ -335,14 +337,14 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setPhonenum(phonenumStr);
 		bean.setShopcarts(shopcarts);
 		bean.setPayMethod(paymethod);
-	    bean.setPrice(price);    
+	    bean.setPrice(finalPrice);    
 		final 	List< ShopCartaBean> carts=shopcarts;
 		bean.save(CheckoutActivity.this, new SaveListener() {
 			
 			@Override
 			public void onSuccess() {
 				toastMsg("您的订单已经提交成功，半小时将送达");
-				updateSold(carts);
+				updateSold();
 				try {
 					dbUtils.deleteAll(carts);
 				} catch (DbException e) {
@@ -370,25 +372,38 @@ public class CheckoutActivity extends BaseActivity {
 		su.putIntByKey(UNIT, unit);
 	}
 	
-	private void updateSold(List<ShopCartaBean> carts){
-		List<BmobObject > commodityBeans=new ArrayList<BmobObject>();
-		for(ShopCartaBean cart:carts){
-			CommodityBean cb=new CommodityBean();
-			cb.setObjectId(cart.getId());
-			cb.setSold(cart.getSold()+cart.getNumber());
-			cb.setPrice(cart.getPrice());
-			commodityBeans.add(cb);
+	private void updateSold(){
+		JSONObject object=new JSONObject();
+		try {
+			JSONArray carts=new JSONArray();
+			for(ShopCartaBean cart:shopcarts){
+				JSONObject o=new JSONObject();
+				o.put("id", cart.getId());
+				o.put("name", cart.getName());
+				o.put("number", cart.getNumber());
+				carts.put(o);
+			}
+			object.put("carts", carts);
+			object.put("couponId", coupons.get(discountIndex).getObjectId());
+//			String json=object.toString();
+//			Log.e("checkout", json);
+			JSONObject parms=new JSONObject();
+			parms.put("json", object);
+			AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
+			//第一个参数是上下文对象，第二个参数是云端代码的方法名称，第三个参数是上传到云端代码的参数列表（JSONObject cloudCodeParams），第四个参数是回调类
+			ace.callEndpoint(CheckoutActivity.this, "submitorders", parms, 
+			    new CloudCodeListener() {
+			            @Override
+			            public void onSuccess(Object object) {
+			            	Log.e("checkout", object.toString());
+			            }
+			            @Override
+			            public void onFailure(int code, String msg) {
+			            }
+			        });
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		new BmobObject().updateBatch(this, commodityBeans, new UpdateListener() {
-			
-			@Override
-			public void onSuccess() {
-			}
-			
-			@Override
-			public void onFailure(int arg0, String arg1) {
-			}
-		});
 		
 	}
 	

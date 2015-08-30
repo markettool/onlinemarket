@@ -53,7 +53,6 @@ public class CommodityFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.frag_commodity, null);
 		categoryLv=(ListView) view.findViewById(R.id.lv_category);
 		xlv=(XListView) view.findViewById(R.id.xlv);
-		xlv.setPullLoadEnable(true);
 		xlv.setOnScrollListener(new PauseOnScrollListener(BitmapHelp.getBitmapUtils(getActivity()), false, true));
 		cet=(ClearEditText)view.findViewById(R.id.et_msg_search);
 		
@@ -66,7 +65,7 @@ public class CommodityFragment extends BaseFragment {
 	}
 	
 	private void setCategoryAdapter(){
-		String [] categorys={"所有","吃的","喝的","床上用品","用的","其他"};
+		String [] categorys={"所有","休闲零食","饮料牛奶","泡面搭档","生活用品","日用文具","其他"};
 		List<String> list=new ArrayList<String>();
 		for(String str:categorys){
 			list.add(str);
@@ -172,6 +171,7 @@ public class CommodityFragment extends BaseFragment {
 	}
 	
 	private void queryCommoditys(final int method,String value,String key){
+		xlv.setPullLoadEnable(false);
 		BmobQuery<CommodityBean> query	 = new BmobQuery<CommodityBean>();
 		if(key!=null){
 			query.addWhereContains(value, key);
@@ -190,6 +190,8 @@ public class CommodityFragment extends BaseFragment {
 				commodityBeans.addAll(object);
 				if(commodityBeans.size()==0){
 					toastMsg("暂无相关商品");
+				}else{
+					xlv.setPullLoadEnable(true);
 				}
 				handle(method);
 			}

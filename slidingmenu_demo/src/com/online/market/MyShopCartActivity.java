@@ -83,18 +83,20 @@ public class MyShopCartActivity extends BaseActivity {
 	
 	@Override
 	protected void setListeners() {
-		adapter.setOnNotifyClickListener(new OnNotifyClickListener() {
-			
-			@Override
-			public void n() {
-				try {
-					cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
-					updateTotalPrice();
-				} catch (DbException e) {
-					e.printStackTrace();
+		if(adapter!=null){
+			adapter.setOnNotifyClickListener(new OnNotifyClickListener() {
+				
+				@Override
+				public void n() {
+					try {
+						cartaBeans = dbUtils.findAll(Selector.from(ShopCartaBean.class));
+						updateTotalPrice();
+					} catch (DbException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
+			});
+		}
 		
 		xlv.setOnItemLongClickListener(new OnItemLongClickListener() {
 

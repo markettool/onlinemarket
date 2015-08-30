@@ -21,7 +21,6 @@ import com.online.market.beans.CommodityBean;
 import com.online.market.beans.ShopCartaBean;
 import com.online.market.utils.BitmapHelp;
 import com.online.market.utils.BitmapUtil;
-import com.online.market.view.BottomView;
 
 public class CommodityDetailActivity extends BaseActivity {
 	
