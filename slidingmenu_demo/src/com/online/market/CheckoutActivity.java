@@ -385,10 +385,10 @@ public class CheckoutActivity extends BaseActivity {
 			}
 			object.put("carts", carts);
 			object.put("couponId", coupons.get(discountIndex).getObjectId());
-//			String json=object.toString();
-//			Log.e("checkout", json);
 			JSONObject parms=new JSONObject();
 			parms.put("json", object);
+			String json=parms.toString();
+			Log.e("checkout", json);
 			AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
 			//第一个参数是上下文对象，第二个参数是云端代码的方法名称，第三个参数是上传到云端代码的参数列表（JSONObject cloudCodeParams），第四个参数是回调类
 			ace.callEndpoint(CheckoutActivity.this, "submitorders", parms, 

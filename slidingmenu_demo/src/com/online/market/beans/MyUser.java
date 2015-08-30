@@ -19,10 +19,6 @@ public class MyUser extends BmobUser {
 	 * 我的邀请人的邀请码
 	 */
 	private String byInviteCode;
-	/***
-	 * 是否消费过
-	 */
-//	private boolean isCousumed=false;
 	
 	public String getInviteCode() {
 		return inviteCode;
@@ -53,12 +49,6 @@ public class MyUser extends BmobUser {
 //	}
 //	public void setDEVICE_ID(String dEVICE_ID) {
 //		DEVICE_ID = dEVICE_ID;
-//	}
-//	public boolean isCousumed() {
-//		return isCousumed;
-//	}
-//	public void setCousumed(boolean isCousumed) {
-//		this.isCousumed = isCousumed;
 //	}
 	
 }
