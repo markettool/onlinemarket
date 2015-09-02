@@ -33,7 +33,7 @@ public class BottomView extends LinearLayout {
 	}
 	
 	public void setTotalPrice(float totalPrice){
-		DecimalFormat   df=new DecimalFormat("#.#");   
+		DecimalFormat   df=new DecimalFormat("#.##");   
 		String totalPriceStr=df.format(totalPrice);
 		tvTotalPrice.setText("总计：￥"+totalPriceStr);
 	}
@@ -43,14 +43,5 @@ public class BottomView extends LinearLayout {
 	public void setOnClickListener(OnClickListener l) {
 		btSubmit.setOnClickListener(l);
 	}
-	
-//	@Override
-//	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//		int measuredWidth=MeasureSpec.getSize(widthMeasureSpec);
-//		int measuredHeight=MeasureSpec.getSize(heightMeasureSpec);
-//		Log.e("majie","height = "+measuredHeight);
-//		setMeasuredDimension(measuredWidth, measuredHeight);
-//	}
 
 }
