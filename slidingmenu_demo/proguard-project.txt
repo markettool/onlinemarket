@@ -60,6 +60,15 @@
 -keep class com.uuhelper.Application.** { *; }
 -keep class net.sourceforge.zbar.** { *; }
 -keep class com.google.android.gms.** { *; } 
+-keep class com.online.market.view.xlist.XListView
+-keep class com.online.market.view.xlist.XListViewFooter
+-keep class com.online.market.view.xlist.XListViewHeader
+
+-keep class com.online.market.view.AutoScrollTextView
+-keep class com.online.market.view.BottomView
+-keep class com.online.market.view.ClearEditText
+-keep class com.online.market.view.InterceptTouchReletiveLayout
+-keep class com.online.market.view.CircleImageView
 
 -keep class com.bank.pingan.model.** { *; }
 
