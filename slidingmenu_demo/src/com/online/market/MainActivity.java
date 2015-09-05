@@ -12,6 +12,7 @@ import cn.bmob.v3.Bmob;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.online.market.config.SystemConfig;
 import com.online.market.fragment.CommodityFragment;
 import com.online.market.fragment.LeftFragment;
 import com.online.market.notify.MyNotify;
@@ -26,11 +27,6 @@ import com.umeng.update.UmengUpdateAgent;
 public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
 	
-	/**
-	 * SDK初始化建议放在启动页
-	 */
-	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
-
 	private ImageView topButton;
 	private Fragment mContent;
 	private TextView topTextView;
@@ -42,7 +38,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Bmob.initialize(getApplicationContext(),APPID);
+		Bmob.initialize(getApplicationContext(),SystemConfig.applicationId);
 
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);

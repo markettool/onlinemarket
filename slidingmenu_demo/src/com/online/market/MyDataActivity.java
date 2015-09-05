@@ -76,7 +76,7 @@ public class MyDataActivity extends BaseActivity {
 	
 	private void downloadPic(BmobFile avatar){
 		HttpUtils http=new HttpUtils();
-		final String path=dir+user.getUsername()+".png";
+		final String path=dir+avatar.getFilename();
 		if(FileUtils.isFileExist(path)){
 			ivUserimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
             return;

@@ -96,7 +96,7 @@ public class LeftFragment extends BaseFragment implements OnClickListener{
 	
 	private void downloadPic(BmobFile avatar){
 		HttpUtils http=new HttpUtils();
-		final String path=dir+user.getUsername()+".png";
+		final String path=dir+avatar.getFilename();
 		if(FileUtils.isFileExist(path)){
 			userimg.setImageBitmap(BitmapUtil.getThumbilBitmap(path, 100));
             return;

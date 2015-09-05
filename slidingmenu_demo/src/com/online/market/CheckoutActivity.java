@@ -52,7 +52,7 @@ public class CheckoutActivity extends BaseActivity {
 	
 	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
 	/**单元*/
-	private String [] units={"海淀","昌平","太原","五台"};
+	private String [] units={"明德1","明德2","明德3","明德4","明德5","明德6","明德7","积美1","积美2","积美3"};
 	private int paymethod;
 	private int unit;
 	
