@@ -344,7 +344,7 @@ public class CheckoutActivity extends BaseActivity {
 			@Override
 			public void onSuccess() {
 				toastMsg("您的订单已经提交成功，半小时将送达");
-				updateCouponStatus();
+				updateSold();
 				try {
 					dbUtils.deleteAll(carts);
 				} catch (DbException e) {
@@ -372,7 +372,7 @@ public class CheckoutActivity extends BaseActivity {
 		su.putIntByKey(UNIT, unit);
 	}
 	
-	private void updateCouponStatus(){
+	private void updateSold(){
 		JSONObject object=new JSONObject();
 		try {
 			JSONArray carts=new JSONArray();
