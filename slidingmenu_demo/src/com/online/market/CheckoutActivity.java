@@ -46,11 +46,11 @@ public class CheckoutActivity extends BaseActivity {
 	public static final String PHONENUM="phonenum";
 	public static final String ROOMNUM="roomnum";
 	
-	public static final int PAYMETHOD_ALIPAY=0;
-	public static final int PAYMETHOD_WEIXINPAY=1;
-	public static final int PAYMETHOD_CASH=2;
+	public static final int PAYMETHOD_ALIPAY=1;
+	public static final int PAYMETHOD_WEIXINPAY=2;
+	public static final int PAYMETHOD_CASH=0;
 	
-	private String [] paymethods={"支付宝支付","微信支付","货到付款"};
+	private String [] paymethods={"货到付款","支付宝支付","微信支付"};
 	/**单元*/
 	private String [] units={"明德1","明德2","明德3","明德4","明德5","明德6","明德7","积美1","积美2","积美3"};
 	private int paymethod;

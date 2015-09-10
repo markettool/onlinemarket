@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -135,6 +136,16 @@ public class CommodityDetailActivity extends BaseActivity {
 
 	@Override
 	protected void setListeners() {
+		ivPic.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent i=new Intent(CommodityDetailActivity.this, TouchImageActivity.class);
+				i.putExtra("pic_url", bean.getPics().getFileUrl(CommodityDetailActivity.this));
+				startActivity(i);
+			}
+		});
+		
         mImgLeft.setOnClickListener(new OnClickListener() {
 			
 			@Override

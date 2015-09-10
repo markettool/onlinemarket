@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.lidroid.xutils.bitmap.core.AsyncDrawable;
 import com.online.market.R;
 
 public class CircleImageView extends ImageView {
@@ -182,6 +184,20 @@ public class CircleImageView extends ImageView {
 		if (drawable instanceof BitmapDrawable) {
 			return ((BitmapDrawable) drawable).getBitmap();
 		}
+//		else if(drawable instanceof AsyncDrawable){
+//		    Bitmap b = Bitmap 
+//		            .createBitmap( 
+//		            drawable.getIntrinsicWidth(), 
+//		            drawable.getIntrinsicHeight(), 
+//		            drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 
+//		            : Bitmap.Config.RGB_565); 
+//		            Canvas canvas1 = new Canvas(b); 
+//		            // canvas.setBitmap(bitmap); 
+//		            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), 
+//		            drawable.getIntrinsicHeight()); 
+//		            drawable.draw(canvas1); 
+//		            return b;
+//		      }
 
 		try {
 			Bitmap bitmap;
