@@ -49,5 +49,13 @@
         android:layout_marginRight="10dp"
         android:text="QQ一键登录"
         android:visibility="gone" />
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signin"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:id="@+id/tv_forget_psw"/>
 
 </RelativeLayout>

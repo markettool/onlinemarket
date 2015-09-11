@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_account" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号:" />
+
+        <EditText
+            android:id="@+id/et_phonenum"
+            style="@style/edittext"
+            android:layout_marginLeft="10dp"
+            android:hint="手机号"
+            android:inputType="phone" />
+    </LinearLayout>
+    
+     <LinearLayout
+        android:id="@+id/ll_sms"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_account"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="验证码:" />
+
+        <EditText
+            android:id="@+id/et_code"
+            style="@style/edittext"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:hint="请输入手机验证码"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btn_verify"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:background="@drawable/btn_orange_corner_selector"
+            android:text="验证"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_psw"
+        android:layout_below="@+id/ll_sms"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码:" />
+
+        <EditText
+            android:id="@+id/userpsw"
+            style="@style/edittext"
+            android:layout_marginLeft="10dp"
+            android:hint="必填"
+            android:password="true" />
+    </LinearLayout>
+   
+    <Button
+        android:id="@+id/bt_submit"
+        style="@style/button"
+        android:layout_below="@+id/ll_psw"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="确定" />
+
+</RelativeLayout>

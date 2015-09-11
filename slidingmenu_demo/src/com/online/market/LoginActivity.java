@@ -1,10 +1,12 @@
 package com.online.market;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.online.market.beans.MyUser;
@@ -14,6 +16,7 @@ import com.online.market.utils.ProgressUtil;
 public class LoginActivity extends BaseActivity {
 	private EditText etPhoneNum, etUserpsw;
 	private Button signin;
+	private TextView tvForgetPsw;
 //	private Button btQQlogin;
 	
 //	private Tencent mTencent;
@@ -32,7 +35,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
     protected void setListeners(){
-    	signin.setOnClickListener(new OnClickListener() {
+    	   signin.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -73,6 +76,14 @@ public class LoginActivity extends BaseActivity {
 				finish();
 			}
 		});
+        
+        tvForgetPsw.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+			}
+		});
     }
     
 //    private void qqlogin(){
@@ -90,6 +101,9 @@ public class LoginActivity extends BaseActivity {
 		etPhoneNum = (EditText) findViewById(R.id.et_phonenum);
 		etUserpsw = (EditText) findViewById(R.id.userpsw);
 //		btQQlogin=(Button) findViewById(R.id.bt_qqlogin);
+		
+		tvForgetPsw=(TextView) findViewById(R.id.tv_forget_psw);
+		tvForgetPsw.setText(Html.fromHtml("<u><font color=\"#023cfa\">忘记密码？</font></u>"));
 		
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setText("登录");
