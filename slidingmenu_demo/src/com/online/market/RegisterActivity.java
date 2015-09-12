@@ -167,10 +167,10 @@ public class RegisterActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				String phonenum = etPhoneNum.getText().toString();
-				if(TextUtils.isEmpty(phonenum)){
-					toastMsg("手机号为空");
-					return;
-				}
+//				if(TextUtils.isEmpty(phonenum)){
+//					toastMsg("手机号为空");
+//					return;
+//				}
 				boolean isMoblieLogic=MobileUtil.isMobileNO(phonenum);
 				if(!isMoblieLogic){
 					toastMsg("手机号非法，请填写正确的手机号");

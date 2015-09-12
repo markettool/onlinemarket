@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				
+				startActivity(ResetPswActivity.class);
 			}
 		});
     }

@@ -15,6 +15,7 @@ public class SettingActivity extends BaseActivity {
 	private TextView tvAbout;
 	private TextView tvFeedback;
 	private Button btLogout;
+	private TextView tvResetPsw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class SettingActivity extends BaseActivity {
 	protected void initView() {
 		tvAbout = (TextView) findViewById(R.id.tvAbout);
 		tvFeedback=(TextView) findViewById(R.id.feedback);
+		tvResetPsw=(TextView) findViewById(R.id.tvResetPsw);
+
 		btLogout = (Button) findViewById(R.id.logout);
 		mBtnTitleMiddle.setVisibility(View.VISIBLE);
 		mBtnTitleMiddle.setTextColor(getResources().getColor(R.color.white));
@@ -45,6 +48,14 @@ public class SettingActivity extends BaseActivity {
 	}
 
 	protected void setListeners() {
+		
+		tvResetPsw.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				startActivity(ResetPswActivity.class);
+			}
+		});
 		tvAbout.setOnClickListener(new OnClickListener() {
 
 			@Override

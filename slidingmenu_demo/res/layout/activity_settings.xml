@@ -20,24 +20,19 @@
         android:background="@drawable/bt_red_corner_bg"/>
 
     <TextView
-        android:id="@+id/tvModPsw"
+        android:id="@+id/tvResetPsw"
         android:layout_width="match_parent"
-        android:layout_height="50.0dip"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:drawablePadding="1.0dip"
         android:gravity="center_vertical"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="修改密码"
+        android:text="重置密码"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/common_entry_item_bg"
         android:textSize="16.0sp" 
-        android:visibility="gone"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@drawable/biz_pc_account_line"
-        android:visibility="gone" />
+        android:visibility="visible"/>
 
     <TextView
          android:id="@+id/tvAbout"
@@ -49,9 +44,11 @@
         android:paddingRight="10dip"
         android:text="关于"
         android:textColor="@color/black"
+        android:layout_below="@+id/tvResetPsw"
         android:textSize="16sp"
         android:background="@drawable/common_entry_item_bg"
         android:layout_marginTop="10dp" />
+    
     <TextView
          android:id="@+id/feedback"
         android:layout_width="match_parent"
