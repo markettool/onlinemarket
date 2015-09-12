@@ -4,6 +4,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -38,7 +40,7 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
 		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
 		ImageView ivMenu=ViewHolder.get(convertView, R.id.iv_menu);
-		ivMenu.setVisibility(View.GONE);
+//		ivMenu.setVisibility(View.GONE);
 		
 		final OrderBean bean=list.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
@@ -71,34 +73,42 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.black));
         	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.orange));
         }
-		final int pos=arg0;
+//		final int pos=arg0;
         ivMenu.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
-//				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+bean.getPhonenum()));  
-//                mContext.startActivity(intent); 
-                DialogUtil.dialog(mContext, "你确认取消订单吗？", "确认", new DialogInterface.OnClickListener() {
+                DialogUtil.dialog(mContext, "有疑问？联系我们。", "确认", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
+						String phonenum=null;
+						if(bean.getPacker()!=null){
+							phonenum=bean.getPacker();
+						}else if(bean.getDispatcher()!=null){
+							phonenum=bean.getDispatcher();
+						}else{
+							phonenum="17735103697";
+						}
+						Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phonenum));  
+		                mContext.startActivity(intent); 
 //						OrderBean bean=orderBeans.get(pos);
-						ProgressUtil.showProgress(mContext, "");
-						bean.delete(mContext, new DeleteListener() {
-							
-							@Override
-							public void onSuccess() {
-								ProgressUtil.closeProgress();
-								list.remove(pos);
-								notifyDataSetChanged();
-							}
-							
-							@Override
-							public void onFailure(int arg0, String arg1) {
-								ProgressUtil.closeProgress();
-								toastMsg(arg1);
-							}
-						});
+//						ProgressUtil.showProgress(mContext, "");
+//						bean.delete(mContext, new DeleteListener() {
+//							
+//							@Override
+//							public void onSuccess() {
+//								ProgressUtil.closeProgress();
+//								list.remove(pos);
+//								notifyDataSetChanged();
+//							}
+//							
+//							@Override
+//							public void onFailure(int arg0, String arg1) {
+//								ProgressUtil.closeProgress();
+//								toastMsg(arg1);
+//							}
+//						});
 						dialog.dismiss();
 					}
 				}, "取消",new DialogInterface.OnClickListener() {
