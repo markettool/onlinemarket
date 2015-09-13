@@ -1,5 +1,6 @@
 package com.online.market.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -51,7 +52,9 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderPaymethod.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
-        	tvOrderPaymethod.setText("货到付款：需支付 "+bean.getPrice()+" 元");
+        	DecimalFormat   df=new DecimalFormat("#.##");   
+    		String totalPriceStr=df.format(bean.getPrice());
+        	tvOrderPaymethod.setText("货到付款：需支付 "+totalPriceStr+" 元");
         }else {
         	tvOrderPaymethod.setText("在线已支付");
         }
@@ -63,7 +66,7 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
         	tvOrderAddress.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPhonenum.setTextColor(mContext.getResources().getColor(R.color.text_gray));
         	tvOrderPaymethod.setTextColor(mContext.getResources().getColor(R.color.text_gray));
-        	ivMenu.setVisibility(View.GONE);
+//        	ivMenu.setVisibility(View.GONE);
         }else
         //when status is not delived,set default
         {
