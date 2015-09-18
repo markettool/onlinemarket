@@ -1,14 +1,5 @@
 package com.online.market;
 
-import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.RequestSMSCodeListener;
-import cn.bmob.v3.listener.ResetPasswordByCodeListener;
-
-import com.online.market.utils.MobileUtil;
-import com.online.market.utils.ProgressUtil;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -17,7 +8,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
+import cn.bmob.v3.listener.ResetPasswordByCodeListener;
+
+import com.online.market.utils.MobileUtil;
+import com.online.market.utils.ProgressUtil;
 
 public class ResetPswActivity extends BaseActivity {
 	
