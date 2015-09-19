@@ -11,7 +11,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
+/***
+ * 邀请朋友
+ * @author majie
+ *
+ */
 public class InviteFriendActivity extends BaseActivity {
 	
 	private TextView tvCouponId;
@@ -92,7 +96,7 @@ public class InviteFriendActivity extends BaseActivity {
 		String appSecret = "f35727b904728c95ba8f015c8274b08d";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
-		wxHandler.setTargetUrl("http://onlinemarket.sinaapp.com/");
+		wxHandler.setTargetUrl("http://yun.baidu.com/s/1ntvOayl");
 		wxHandler.addToSocialSDK();
 		// 添加微信朋友圈
 		UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
