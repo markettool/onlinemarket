@@ -46,7 +46,11 @@ public class BaseFragment extends Fragment {
 	
 	/** toast **/
 	public void toastMsg(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+		try{
+	        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+		}catch(Exception e){
+			//有时候报空
+		}
 	}
 
 }
