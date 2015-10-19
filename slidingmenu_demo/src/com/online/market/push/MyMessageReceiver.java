@@ -1,5 +1,8 @@
 package com.online.market.push;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,7 +39,13 @@ public class MyMessageReceiver extends BroadcastReceiver {
 //        n.defaults |= Notification.DEFAULT_SOUND;
 //        n.flags = Notification.FLAG_AUTO_CANCEL;
 //        nm.notify(1, n);
-		MyNotify.notification(context, message);
+		try {
+			JSONObject object=new JSONObject(message);
+			String alert=object.getString("alert");
+			MyNotify.notification(context, alert);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
