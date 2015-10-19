@@ -11,6 +11,7 @@ import android.util.Log;
 import cn.bmob.push.PushConstants;
 
 import com.online.market.R;
+import com.online.market.notify.MyNotify;
 
 public class MyMessageReceiver extends BroadcastReceiver {
 
@@ -22,19 +23,20 @@ public class MyMessageReceiver extends BroadcastReceiver {
 		String message = intent.getStringExtra(PushConstants.EXTRA_PUSH_MESSAGE_STRING);
 		Log.i("onlinemarket", "收到的推送消息："+message);
 		// 发送通知
-		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		
-		Notification n = new Notification();  
-        n.icon = R.drawable.ic_launcher;  
-        n.tickerText = "天天在线";  
-        n.when = System.currentTimeMillis();  
-        //n.flags=Notification.FLAG_ONGOING_EVENT;  
-        Intent i = new Intent();  
-        PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);  
-        n.setLatestEventInfo(context, "消息", message, pi);  
-        n.defaults |= Notification.DEFAULT_SOUND;
-        n.flags = Notification.FLAG_AUTO_CANCEL;
-        nm.notify(1, n);
+//		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//		
+//		Notification n = new Notification();  
+//        n.icon = R.drawable.ic_launcher;  
+//        n.tickerText = "天天在线";  
+//        n.when = System.currentTimeMillis();  
+//        //n.flags=Notification.FLAG_ONGOING_EVENT;  
+//        Intent i = new Intent();  
+//        PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);  
+//        n.setLatestEventInfo(context, "消息", message, pi);  
+//        n.defaults |= Notification.DEFAULT_SOUND;
+//        n.flags = Notification.FLAG_AUTO_CANCEL;
+//        nm.notify(1, n);
+		MyNotify.notification(context, message);
 	}
 
 }

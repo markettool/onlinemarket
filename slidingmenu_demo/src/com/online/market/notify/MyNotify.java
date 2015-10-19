@@ -56,5 +56,20 @@ public class MyNotify {
 		            }
 		        });
 	}
+	
+	public static void notification(Context context,String message){
+		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE); 
+	    Notification notification = new Notification(R.drawable.ic_launcher,  
+	    		context.getString(R.string.app_name), System.currentTimeMillis()); 
+	    notification.flags = Notification.FLAG_AUTO_CANCEL;//点击后自动消失
+	    notification.icon = R.drawable.ic_launcher;  
+//	    notification.tickerText = "天天在线";  
+	    notification.when = System.currentTimeMillis();
+	    		 PendingIntent pendingintent = PendingIntent.getActivity(context, 0,  
+	    				 new Intent(context, CouponActivity.class), 0);  
+	    		 notification.setLatestEventInfo(context, "天天在线",  message,
+	    				 pendingintent); 
+	    manager.notify(1, notification);
+	}
 
 }

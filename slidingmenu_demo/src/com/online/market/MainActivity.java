@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -40,9 +41,10 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),SystemConfig.applicationId);
-		BmobPush.setDebugMode(true);
-		//
-		BmobPush.startWork(this, SystemConfig.applicationId);	
+		 // 使用推送服务时的初始化操作
+	    BmobInstallation.getCurrentInstallation(this).save();
+	    // 启动推送服务
+	    BmobPush.startWork(this, SystemConfig.applicationId);	
 
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);
