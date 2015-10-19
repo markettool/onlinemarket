@@ -12,12 +12,15 @@ import cn.bmob.v3.AsyncCustomEndpoints;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.CloudCodeListener;
 
-import com.online.market.CouponActivity;
 import com.online.market.MainActivity;
 import com.online.market.R;
 import com.online.market.beans.MyUser;
 import com.umeng.socialize.utils.Log;
-
+/***
+ * 
+ * @author fengyanying
+ *
+ */
 public class MyNotify {
 	
 	public static void couponNotify(final Context context){
