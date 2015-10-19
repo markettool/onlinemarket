@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderstatus);
 		TextView tvOrderdeliveTime=ViewHolder.get(convertView, R.id.orderdelivetime);
-		ImageView ivMenu=ViewHolder.get(convertView, R.id.iv_menu);
+		TextView ivMenu=ViewHolder.get(convertView, R.id.iv_menu);
+		ivMenu.setText(Html.fromHtml("<u><font color=\"#023cfa\">联系我们</font></u>"));
 //		ivMenu.setVisibility(View.GONE);
 		
 		final OrderBean bean=list.get(arg0);
@@ -87,11 +89,11 @@ public class MyOrderAdapter extends MyBaseAdapter<OrderBean> {
 					public void onClick(DialogInterface dialog, int arg1) {
 						String phonenum=null;
 						if(bean.getPacker()!=null){
-							phonenum=bean.getPacker();
+							phonenum="+86"+bean.getPacker();
 						}else if(bean.getDispatcher()!=null){
-							phonenum=bean.getDispatcher();
+							phonenum="+86"+bean.getDispatcher();
 						}else{
-							phonenum="17735103697";
+							phonenum="+8617735103697";
 						}
 						Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phonenum));  
 		                mContext.startActivity(intent); 
