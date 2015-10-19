@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -39,6 +40,9 @@ public class MainActivity extends SlidingFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		Bmob.initialize(getApplicationContext(),SystemConfig.applicationId);
+		BmobPush.setDebugMode(true);
+		//
+		BmobPush.startWork(this, SystemConfig.applicationId);	
 
 		topButton = (ImageView) findViewById(R.id.topButton);
 		topButton.setOnClickListener(this);

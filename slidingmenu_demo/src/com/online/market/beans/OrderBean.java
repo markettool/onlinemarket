@@ -29,6 +29,7 @@ public class OrderBean extends BmobObject {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String receiver;
+	private String unit;
 	private String address;
 	private String phonenum;
 	private float price;
@@ -101,6 +102,12 @@ public class OrderBean extends BmobObject {
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 }

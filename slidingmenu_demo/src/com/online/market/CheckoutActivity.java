@@ -334,6 +334,7 @@ public class CheckoutActivity extends BaseActivity {
 		bean.setAddress(unitStr+" "+roomnumStr);
 		bean.setDispatcher("untreated");
 		bean.setPacker("untreated");
+		bean.setUnit(unitStr);
 		bean.setPhonenum(phonenumStr);
 		bean.setShopcarts(shopcarts);
 		bean.setPayMethod(paymethod);
