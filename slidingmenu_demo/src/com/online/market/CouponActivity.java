@@ -49,7 +49,7 @@ public class CouponActivity extends BaseActivity {
 			return;
 		}
 		queryCoupons();
-		MyNotify.couponNotify(this);
+//		MyNotify.couponNotify(this);
 	}
 	
 	private void queryCoupons(){

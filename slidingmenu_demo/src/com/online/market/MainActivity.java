@@ -54,7 +54,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		
 		updateVersion();
 		
-		MyNotify.couponNotify(this);
+//		MyNotify.couponNotify(this);
 		
 	}
 	
