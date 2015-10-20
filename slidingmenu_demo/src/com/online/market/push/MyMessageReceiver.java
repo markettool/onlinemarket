@@ -14,6 +14,7 @@ import android.util.Log;
 import cn.bmob.push.PushConstants;
 
 import com.online.market.R;
+import com.online.market.beans.CouponBean;
 import com.online.market.notify.MyNotify;
 
 public class MyMessageReceiver extends BroadcastReceiver {
@@ -41,8 +42,18 @@ public class MyMessageReceiver extends BroadcastReceiver {
 //        nm.notify(1, n);
 		try {
 			JSONObject object=new JSONObject(message);
-			String alert=object.getString("alert");
-			MyNotify.notification(context, alert);
+			String type=object.getString("type");
+			String extra=object.getString("extra");
+			//赠送代金券
+			if("give".equals(type)){
+				CouponBean c=new CouponBean();
+				c.setUsername(username)
+				MyNotify.notification(context, "尊敬的用户，天天在线系统赠送了您一张代金券");
+			}
+			//消息提示
+			else if("alert".equals(type)){
+				MyNotify.notification(context, extra);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

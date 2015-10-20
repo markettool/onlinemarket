@@ -17,8 +17,8 @@ import com.online.market.R;
 import com.online.market.beans.MyUser;
 import com.umeng.socialize.utils.Log;
 /***
- * 
- * @author fengyanying
+ * notify的工具类
+ * @author MAJIE
  *
  */
 public class MyNotify {
