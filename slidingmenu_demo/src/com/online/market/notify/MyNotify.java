@@ -12,6 +12,7 @@ import cn.bmob.v3.AsyncCustomEndpoints;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.CloudCodeListener;
 
+import com.online.market.CouponActivity;
 import com.online.market.MainActivity;
 import com.online.market.R;
 import com.online.market.beans.MyUser;
@@ -54,7 +55,7 @@ public class MyNotify {
 //		            	    		 notification.setLatestEventInfo(context, "天天在线", "您邀请的好友第一次消费，奖励你2元通用券，可直接抵扣现金。",  
 //		            	    				 pendingintent); 
 //		            	    manager.notify(1, notification);
-		            	    notification(context, "您邀请的好友第一次消费，奖励你2元通用券，可直接抵扣现金。");
+		            	    notification(context, "您邀请的好友第一次消费，奖励你2元通用券，可直接抵扣现金。",CouponActivity.class);
 		            }
 		            @Override
 		            public void onFailure(int code, String msg) {
@@ -62,7 +63,7 @@ public class MyNotify {
 		        });
 	}
 	
-	public static void notification(Context context,String message){
+	public static void notification(Context context,String message,Class c){
 		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE); 
 	    Notification notification = new Notification(R.drawable.ic_launcher,  
 	    		context.getString(R.string.app_name), System.currentTimeMillis()); 
@@ -71,7 +72,7 @@ public class MyNotify {
 //	    notification.tickerText = "天天在线";  
 	    notification.when = System.currentTimeMillis();
 	    		 PendingIntent pendingintent = PendingIntent.getActivity(context, 0,  
-	    				 new Intent(context, MainActivity.class), 0);  
+	    				 new Intent(context, c), 0);  
 	    		 notification.setLatestEventInfo(context, "天天在线",  message,
 	    				 pendingintent); 
 	    manager.notify(1, notification);
