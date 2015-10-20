@@ -51,13 +51,15 @@ public class MyMessageReceiver extends BroadcastReceiver {
 			//赠送代金券
 			if("give".equals(type)){ 
 				MyUser myUser=BmobUser.getCurrentUser(context, MyUser.class); 
-				CouponBean c=new CouponBean();
-				c.setUsername(myUser.getUsername());
-				c.setAmount(1);
-				c.setLimit(8);
-				c.setViewed(0);
-				c.save(context);
-				MyNotify.notification(context, extra,CouponActivity.class);
+				if(myUser!=null){
+					CouponBean c=new CouponBean();
+					c.setUsername(myUser.getUsername());
+					c.setAmount(1);
+					c.setLimit(8);
+					c.setViewed(0);
+					c.save(context);
+					MyNotify.notification(context, extra,CouponActivity.class);
+				}
 			}
 			//消息提示
 			else if("alert".equals(type)){
